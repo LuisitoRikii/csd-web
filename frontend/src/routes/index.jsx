@@ -52,9 +52,7 @@ export const AppRoutes = () => {
           path="/admin"
           element={
             <ProtectedRoute>
-              <AdminShell>
-                <AdminDashboardPage />
-              </AdminShell>
+              <AdminDashboardPage />
             </ProtectedRoute>
           }
         />
@@ -62,9 +60,7 @@ export const AppRoutes = () => {
           path="/admin/services"
           element={
             <ProtectedRoute>
-              <AdminShell>
-                <AdminServicesPage />
-              </AdminShell>
+              <AdminServicesPage />
             </ProtectedRoute>
           }
         />
@@ -72,9 +68,9 @@ export const AppRoutes = () => {
           path="/admin/projects"
           element={
             <ProtectedRoute>
-              <AdminShell>
+              
                 <AdminProjectsPage />
-              </AdminShell>
+              
             </ProtectedRoute>
           }
         />
@@ -82,9 +78,9 @@ export const AppRoutes = () => {
           path="/admin/categories"
           element={
             <ProtectedRoute>
-              <AdminShell>
+              
                 <AdminCategoriesPage />
-              </AdminShell>
+      
             </ProtectedRoute>
           }
         />
@@ -92,9 +88,9 @@ export const AppRoutes = () => {
           path="/admin/quotes"
           element={
             <ProtectedRoute>
-              <AdminShell>
+              
                 <AdminQuotesPage />
-              </AdminShell>
+              
             </ProtectedRoute>
           }
         />
@@ -102,9 +98,9 @@ export const AppRoutes = () => {
           path="/admin/appointments"
           element={
             <ProtectedRoute>
-              <AdminShell>
+              
                 <AdminAppointmentsPage />
-              </AdminShell>
+              
             </ProtectedRoute>
           }
         />
@@ -112,9 +108,9 @@ export const AppRoutes = () => {
           path="/admin/blog"
           element={
             <ProtectedRoute>
-              <AdminShell>
+              
                 <AdminBlogPage />
-              </AdminShell>
+              
             </ProtectedRoute>
           }
         />
@@ -122,9 +118,9 @@ export const AppRoutes = () => {
           path="/admin/messages"
           element={
             <ProtectedRoute>
-              <AdminShell>
+              
                 <AdminMessagesPage />
-              </AdminShell>
+              
             </ProtectedRoute>
           }
         />
@@ -132,9 +128,9 @@ export const AppRoutes = () => {
           path="/admin/settings"
           element={
             <ProtectedRoute>
-              <AdminShell>
+              
                 <AdminSettingsPage />
-              </AdminShell>
+              
             </ProtectedRoute>
           }
         />
@@ -142,9 +138,9 @@ export const AppRoutes = () => {
           path="/admin/users"
           element={
             <ProtectedRoute>
-              <AdminShell>
+              
                 <AdminUsersPage />
-              </AdminShell>
+              
             </ProtectedRoute>
           }
         />

@@ -10,6 +10,7 @@ import { Process } from '@/components/sections/Process'
 import { Testimonials } from '@/components/sections/Testimonials'
 import { CTA } from '@/components/sections/CTA'
 import { VerticalBrushConnector, TippedBucketDrip } from '@/components/svg/PaintConnectors'
+import { PaintRevealSection } from '@/components/svg/PaintRevealSection'
 import { FloatingActions } from '@/components/layout/FloatingActions'
 
 export const HomePage = () => {
@@ -59,8 +60,10 @@ export const HomePage = () => {
 
       <Hero />
       <Marquee />
-      <About />
-      <Services />
+      <PaintRevealSection>
+        <About />
+        <Services />
+      </PaintRevealSection>
       <Portfolio />
       <Process />
       <Testimonials />

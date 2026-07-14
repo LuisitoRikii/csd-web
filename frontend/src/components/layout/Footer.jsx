@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { ArrowUpRight, Instagram, Facebook, Music2, Youtube, MapPin, Phone, Mail, Clock } from 'lucide-react'
 import { BUSINESS, SOCIAL, WHATSAPP_NUMBER } from '@/config'
+import logo from '@/assets/logo.png'
 
 export const Footer = () => {
   const { t } = useTranslation()
@@ -12,24 +13,6 @@ export const Footer = () => {
       <div className="container-x py-20 lg:py-28 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
           <div className="lg:col-span-5">
-            <Link to="/" className="flex items-center gap-2 mb-6">
-              <svg width="44" height="44" viewBox="0 0 64 64">
-                <defs>
-                  <linearGradient id="logoFG" x1="0" y1="0" x2="64" y2="64">
-                    <stop offset="0%" stopColor="#06B6D4" />
-                    <stop offset="50%" stopColor="#8B5CF6" />
-                    <stop offset="100%" stopColor="#D946EF" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M16 44 L20 20 L24 18 L32 16 L40 18 L44 20 L48 44 L40 40 L32 42 L24 40 Z"
-                  fill="url(#logoFG)"
-                />
-                <circle cx="32" cy="32" r="5" fill="#F5F3EE" />
-              </svg>
-              <span className="font-serif text-2xl tracking-tight">CSD</span>
-            </Link>
-
             <p className="text-2xl lg:text-3xl font-serif leading-tight max-w-md mb-8">
               {t('footer.tagline')}
             </p>
@@ -162,10 +145,6 @@ export const Footer = () => {
 
         <div className="mt-16 lg:mt-20 pt-8 border-t border-line flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p className="text-xs text-steel">{t('footer.legal')}</p>
-          <p className="text-xs text-steel flex items-center gap-2">
-            {t('footer.rights')}
-            <span className="w-2 h-2 rounded-full bg-magenta animate-pulse" />
-          </p>
         </div>
       </div>
 

@@ -82,12 +82,6 @@ export const ServicesPage = () => {
                   </div>
 
                   <div className={`lg:col-span-7 ${flip ? 'lg:order-1' : ''}`}>
-                    <div
-                      className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
-                      style={{ background: `${s.color}15`, color: s.color }}
-                    >
-                      <Icon size={26} strokeWidth={1.5} />
-                    </div>
                     <h2 className="font-serif text-display-md tracking-tight mb-4">{title}</h2>
                     <p className="text-lg text-charcoal/80 mb-4">{desc}</p>
                     {longDesc && (

@@ -7,7 +7,18 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react'
 const HERO_VIDEO =
   'https://cdn.pixabay.com/video/2020/03/27/34125-399680914_large.mp4'
 const HERO_FALLBACK_IMG =
-  'https://images.unsplash.com/photo-1559563458-527698bf5295?w=2400&auto=format&fit=crop&q=85'
+  '/src/assets/x.png'
+
+// Textura de grano en SVG (feTurbulence), codificada como data URI para no depender de un archivo externo
+const GRAIN_SVG = `data:image/svg+xml;utf8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.9 0" />
+    </filter>
+    <rect width="100%" height="100%" filter="url(#grain)" />
+  </svg>
+`)}`
 
 export const Hero = () => {
   const { t } = useTranslation()
@@ -53,17 +64,23 @@ export const Hero = () => {
             className="w-full h-full object-cover"
           />
         )}
-        {/* Subtle dark overlay for legibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/15 to-canvas" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/40 via-transparent to-transparent" />
+        {/* Oscurecido leve, solo para legibilidad general */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/25 via-transparent to-ink/30" />
+        {/* Refuerzo suave del lado izquierdo, donde vive el texto */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/40 via-ink/10 to-transparent" />
+        {/* Grano semi-transparente sobre toda la imagen */}
+        <div
+          className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none"
+          style={{ backgroundImage: `url("${GRAIN_SVG}")`, backgroundRepeat: 'repeat' }}
+        />
       </motion.div>
 
       {/* Content */}
       <motion.div
-        className="relative z-20 h-full container-x flex flex-col justify-end pb-24 lg:pb-32"
+        className="relative z-20 h-full container-x flex flex-col justify-center"
         style={{ opacity, y: titleY }}
       >
-        <h1 className="font-serif text-paper text-display-xl max-w-6xl tracking-tight">
+        <h1 className="font-serif text-paper text-display-xl max-w-6xl tracking-tight [text-shadow:0_4px_15px_rgba(0,0,0,0.6),0_1px_3px_rgba(0,0,0,0.8)]">
           <motion.span
             className="block"
             initial={{ y: '100%', opacity: 0 }}
@@ -79,7 +96,7 @@ export const Hero = () => {
             transition={{ duration: 1.2, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
             {t('hero.title_l2')}{' '}
-            <span className="italic font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan via-violet to-magenta">
+            <span className="italic font-light text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white">
               {t('hero.title_l3')}
             </span>
           </motion.span>
@@ -89,7 +106,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-6 max-w-xl text-paper/90 text-base lg:text-lg leading-relaxed"
+          className="mt-6 max-w-xl text-paper/90 text-base lg:text-lg leading-relaxed [text-shadow:0_2px_12px_rgba(0,0,0,0.55)]"
         >
           {t('hero.description')}
         </motion.p>

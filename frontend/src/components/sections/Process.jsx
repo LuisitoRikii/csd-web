@@ -47,9 +47,9 @@ export const Process = () => {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Connecting line */}
+          {/* Connecting line - aligned to the vertical center of the icon circles (w-16 h-16 -> center at 32px = top-8) */}
           <svg
-            className="absolute left-0 right-0 top-1/2 -translate-y-1/2 hidden lg:block"
+            className="absolute left-0 right-0 top-8 hidden lg:block"
             height="2"
             width="100%"
             preserveAspectRatio="none"

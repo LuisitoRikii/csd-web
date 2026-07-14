@@ -5,6 +5,8 @@ import {
   Settings, LogOut, Menu, X, Users, ChevronRight, Search,
 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
+import logo from '@/assets/logo.png'
+
 
 const NAV = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
@@ -44,17 +46,6 @@ export const AdminShell = ({ children, title, subtitle, actions }) => {
       {/* Sidebar */}
       <aside className="hidden lg:flex lg:flex-col lg:w-64 border-r border-line bg-cream">
         <Link to="/" className="flex items-center gap-2 p-6 border-b border-line">
-          <svg width="36" height="36" viewBox="0 0 64 64">
-            <defs>
-              <linearGradient id="logoAdm" x1="0" y1="0" x2="64" y2="64">
-                <stop offset="0%" stopColor="#06B6D4" />
-                <stop offset="50%" stopColor="#8B5CF6" />
-                <stop offset="100%" stopColor="#D946EF" />
-              </linearGradient>
-            </defs>
-            <path d="M16 44 L20 20 L24 18 L32 16 L40 18 L44 20 L48 44 L40 40 L32 42 L24 40 Z" fill="url(#logoAdm)" />
-            <circle cx="32" cy="32" r="5" fill="#F5F3EE" />
-          </svg>
           <div>
             <span className="font-serif text-lg leading-none block">CSD Admin</span>
             <span className="text-[10px] tracking-[0.2em] uppercase text-steel">Studio Panel</span>
@@ -112,17 +103,6 @@ export const AdminShell = ({ children, title, subtitle, actions }) => {
       <div className="lg:hidden fixed top-0 inset-x-0 z-40 bg-cream border-b border-line">
         <div className="flex items-center justify-between p-4">
           <Link to="/" className="flex items-center gap-2">
-            <svg width="32" height="32" viewBox="0 0 64 64">
-              <defs>
-                <linearGradient id="logoAdmM" x1="0" y1="0" x2="64" y2="64">
-                  <stop offset="0%" stopColor="#06B6D4" />
-                  <stop offset="50%" stopColor="#8B5CF6" />
-                  <stop offset="100%" stopColor="#D946EF" />
-                </linearGradient>
-              </defs>
-              <path d="M16 44 L20 20 L24 18 L32 16 L40 18 L44 20 L48 44 L40 40 L32 42 L24 40 Z" fill="url(#logoAdmM)" />
-              <circle cx="32" cy="32" r="5" fill="#F5F3EE" />
-            </svg>
             <span className="font-serif">Admin</span>
           </Link>
           <button onClick={() => setOpen(true)} className="p-2"><Menu size={20} /></button>
