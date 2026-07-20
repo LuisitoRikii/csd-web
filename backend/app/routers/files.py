@@ -22,6 +22,7 @@ from pydantic import BaseModel
 from app.core.config import settings
 from app.middlewares.deps import require_admin
 from app.models.user import User
+from app.utils.files import validate_media_content
 
 router = APIRouter(prefix="/files", tags=["Files"])
 
@@ -248,9 +249,15 @@ async def upload_file(
     if not os.path.isdir(target_dir):
         raise HTTPException(status_code=400, detail="Target folder does not exist")
 
+    content_type = (file.content_type or "").split(";", 1)[0].lower()
+    allowed_types = settings.ALLOWED_IMAGE_TYPES + settings.ALLOWED_VIDEO_TYPES
+    if content_type not in allowed_types:
+        raise HTTPException(status_code=415, detail="Only images and videos are allowed")
+
     safe_name = os.path.basename(file.filename or "file")
-    if not safe_name:
-        safe_name = f"upload-{int(time.time())}"
+    if "." not in safe_name:
+        raise HTTPException(status_code=415, detail="File extension required")
+    extension = safe_name.rsplit(".", 1)[-1].lower()
 
     # Avoid collisions: prefix with timestamp + uuid
     import uuid
@@ -266,6 +273,13 @@ async def upload_file(
                 os.remove(final_path)
                 raise HTTPException(status_code=413, detail="File too large")
             out.write(chunk)
+
+    try:
+        with open(final_path, "rb") as uploaded:
+            validate_media_content(uploaded.read(), content_type, extension)
+    except HTTPException:
+        os.remove(final_path)
+        raise
 
     rel = to_rel(final_path)
     return {"path": rel, "name": safe_name, "size": size, "size_human": human_size(size)}

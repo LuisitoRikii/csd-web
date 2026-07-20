@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import { RevealText } from '@/components/ui/RevealText'
 import { IMG } from './Hero'
+import { useSiteSettings } from '@/hooks/useSiteSettings'
 
 const fade = {
   initial: { opacity: 0, y: 24 },
@@ -14,6 +15,7 @@ const fade = {
 
 export const About = () => {
   const { t } = useTranslation()
+  const { about } = useSiteSettings()
 
   return (
     <section id="about" className="relative py-24 lg:py-36 bg-paper">
@@ -50,7 +52,7 @@ export const About = () => {
               className="relative rounded-3xl overflow-hidden aspect-[4/5] mb-12"
             >
               <img
-                src={IMG.paintingInterior}
+                src={about.imageUrl || IMG.paintingInterior}
                 alt={t('about.story_caption')}
                 className="h-full w-full object-cover"
                 loading="lazy"

@@ -13,10 +13,11 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str = "sqlite:///./csd_good_services.db"
 
-    UPLOAD_DIR: str = os.path.join(os.path.dirname(os.path.dirname(__file__)), "uploads")
+    UPLOAD_DIR: str = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "uploads")
     MAX_UPLOAD_SIZE: int = 50 * 1024 * 1024
+    MAX_BATCH_UPLOAD_SIZE: int = 200 * 1024 * 1024
     ALLOWED_IMAGE_TYPES: List[str] = ["image/jpeg", "image/png", "image/webp", "image/jpg"]
-    ALLOWED_VIDEO_TYPES: List[str] = ["video/mp4", "video/webm", "video/quicktime"]
+    ALLOWED_VIDEO_TYPES: List[str] = ["video/mp4"]
 
     SMTP_HOST: str = "smtp.gmail.com"
     SMTP_PORT: int = 587

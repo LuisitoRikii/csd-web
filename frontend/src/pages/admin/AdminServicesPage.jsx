@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { Plus, Edit2, Trash2, Search, Images, GripVertical } from 'lucide-react'
+import { Plus, Edit2, Trash2, Search, Images } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { serviceService, projectService } from '@/services'
@@ -9,6 +9,7 @@ import { Modal } from '@/components/admin/Modal'
 import { ConfirmModal } from '@/components/admin/ConfirmModal'
 import { Input } from '@/components/admin/Input'
 import { AdminShell } from '@/components/admin/AdminShell'
+import { ImageUploader } from '@/components/admin/ImageUploader'
 import { useForm } from 'react-hook-form'
 
 const empty = {
@@ -20,6 +21,8 @@ const empty = {
   long_description_en: '',
   long_description_es: '',
   icon: 'Brush',
+  image_url: '',
+  long_image_url: '',
   color: '#8A04F0',
   order: 0,
   is_featured: false,
@@ -180,11 +183,14 @@ const ServiceModal = ({ open, onClose, initial, onSubmit }) => {
   const [selectedProjectIds, setSelectedProjectIds] = useState(() =>
     (initial?.projects || []).map((p) => p.id)
   )
+  const [uploadsInProgress, setUploadsInProgress] = useState(0)
+  const isUploading = uploadsInProgress > 0
 
   useEffect(() => {
     if (initial) {
       reset(initial)
       setSelectedProjectIds((initial.projects || []).map((p) => p.id))
+      setUploadsInProgress(0)
     }
   }, [initial, reset])
 
@@ -219,12 +225,17 @@ const ServiceModal = ({ open, onClose, initial, onSubmit }) => {
       return next
     })
 
+  const handleUploadingChange = (active) => {
+    setUploadsInProgress((current) => Math.max(0, current + (active ? 1 : -1)))
+  }
+
   const onFormSubmit = (data) => {
+    if (isUploading) return
     onSubmit({ ...data, project_ids: selectedProjectIds })
   }
 
   return (
-    <Modal open={open} onClose={onClose} title={initial?.id ? 'Edit service' : 'New service'} size="xl">
+    <Modal open={open} onClose={onClose} closeDisabled={isUploading} title={initial?.id ? 'Edit service' : 'New service'} size="xl">
       <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Input label={t('admin.field_slug')}>
@@ -262,6 +273,29 @@ const ServiceModal = ({ open, onClose, initial, onSubmit }) => {
           </Input>
           <Input label="Long description (ES)">
             <textarea rows={3} {...register('long_description_es')} className="input-base resize-none" />
+          </Input>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input label="Imagen principal">
+            <ImageUploader
+              value={watch('image_url') ? [watch('image_url')] : []}
+              onChange={(urls) => setValue('image_url', urls[0] || '', { shouldDirty: true })}
+              multiple={false}
+              maxFiles={1}
+              folder="services"
+              onUploadingChange={handleUploadingChange}
+            />
+          </Input>
+          <Input label="Imagen de detalle">
+            <ImageUploader
+              value={watch('long_image_url') ? [watch('long_image_url')] : []}
+              onChange={(urls) => setValue('long_image_url', urls[0] || '', { shouldDirty: true })}
+              multiple={false}
+              maxFiles={1}
+              folder="services"
+              onUploadingChange={handleUploadingChange}
+            />
           </Input>
         </div>
 
@@ -391,11 +425,11 @@ const ServiceModal = ({ open, onClose, initial, onSubmit }) => {
             </label>
           </div>
           <div className="flex justify-end gap-3">
-            <button type="button" onClick={onClose} className="px-4 py-2 rounded-xl border border-line text-sm">
+            <button type="button" onClick={onClose} disabled={isUploading} className="px-4 py-2 rounded-xl border border-line text-sm disabled:opacity-50">
               {t('admin.cancel')}
             </button>
-            <button type="submit" className="px-5 py-2.5 rounded-xl bg-ink text-paper text-sm">
-              {t('admin.save')}
+            <button type="submit" disabled={isUploading} className="px-5 py-2.5 rounded-xl bg-ink text-paper text-sm disabled:opacity-50">
+              {isUploading ? 'Subiendo…' : t('admin.save')}
             </button>
           </div>
         </div>

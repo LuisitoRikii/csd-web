@@ -77,6 +77,7 @@ export const VIDEOS = {
 
 export const Hero = () => {
   const { t } = useTranslation()
+  const { hero, raw } = useSiteSettings()
   const ref = useRef(null)
   const videoRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
@@ -85,12 +86,16 @@ export const Hero = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
   const titleY = useTransform(scrollYProgress, [0, 1], [0, 80])
   const [videoError, setVideoError] = useState(false)
+  const videoUrl = raw && 'hero_video_url' in raw ? hero.videoUrl : HERO_VIDEO
+  const fallbackImage = hero.imageUrl || hero.fallbackImage || HERO_FALLBACK_IMG
 
   useEffect(() => {
+    setVideoError(false)
     if (videoRef.current) {
+      videoRef.current.load()
       videoRef.current.play().catch(() => {})
     }
-  }, [])
+  }, [videoUrl])
 
   return (
     <section ref={ref} className="relative h-screen min-h-[700px] w-full overflow-hidden bg-canvas">
@@ -99,8 +104,9 @@ export const Hero = () => {
         className="absolute inset-0 z-0"
         style={{ y, scale }}
       >
-        {!videoError ? (
+        {videoUrl && !videoError ? (
           <video
+            key={videoUrl}
             ref={videoRef}
             autoPlay
             muted
@@ -108,13 +114,13 @@ export const Hero = () => {
             playsInline
             onError={() => setVideoError(true)}
             className="w-full h-full object-cover"
-            poster={HERO_FALLBACK_IMG}
+            poster={fallbackImage}
           >
-            <source src={HERO_VIDEO} type="video/mp4" />
+            <source src={videoUrl} />
           </video>
         ) : (
           <img
-            src={HERO_FALLBACK_IMG}
+            src={fallbackImage}
             alt="Artist painting a mural"
             className="w-full h-full object-cover"
           />

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException
 from typing import List
-import os
+from app.core.config import settings
 from app.middlewares.deps import require_admin
 from app.models.user import User
 from app.utils.files import save_file, delete_file
@@ -14,7 +14,7 @@ async def upload_image(
     folder: str = Form("images"),
     current_user: User = Depends(require_admin),
 ):
-    return {"url": await save_file(file, folder)}
+    return {"url": await save_file(file, folder, settings.ALLOWED_IMAGE_TYPES)}
 
 
 @router.post("/images")
@@ -23,9 +23,20 @@ async def upload_images(
     folder: str = Form("images"),
     current_user: User = Depends(require_admin),
 ):
+    if len(files) > 20:
+        raise HTTPException(status_code=400, detail="A maximum of 20 images is allowed")
+    total_size = sum(file.size or 0 for file in files)
+    if total_size > settings.MAX_BATCH_UPLOAD_SIZE:
+        raise HTTPException(status_code=413, detail="Image batch is too large")
+
     urls = []
-    for f in files:
-        urls.append(await save_file(f, folder))
+    try:
+        for file in files:
+            urls.append(await save_file(file, folder, settings.ALLOWED_IMAGE_TYPES))
+    except Exception:
+        for url in urls:
+            delete_file(url)
+        raise
     return {"urls": urls}
 
 
@@ -35,7 +46,7 @@ async def upload_video(
     folder: str = Form("videos"),
     current_user: User = Depends(require_admin),
 ):
-    return {"url": await save_file(file, folder)}
+    return {"url": await save_file(file, folder, settings.ALLOWED_VIDEO_TYPES)}
 
 
 @router.delete("/delete")
