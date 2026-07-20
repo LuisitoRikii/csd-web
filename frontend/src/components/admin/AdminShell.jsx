@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, Briefcase, ImageIcon, Calendar, MessageSquare, FileText,
-  Settings, LogOut, Menu, X, Users, ChevronRight, Search,
+  Settings, LogOut, Menu, X, Users, ChevronRight, Search, Folder, KeyRound,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/contexts/AuthContext'
+import { ChangePasswordModal } from './ChangePasswordModal'
 import logo from '@/assets/logo.png'
 
 
@@ -17,6 +19,7 @@ const NAV = [
   { to: '/admin/appointments', icon: Calendar, label: 'Appointments' },
   { to: '/admin/blog', icon: MessageSquare, label: 'Blog' },
   { to: '/admin/messages', icon: MessageSquare, label: 'Messages' },
+  { to: '/admin/files', icon: Folder, label: 'Files' },
   { to: '/admin/settings', icon: Settings, label: 'Settings' },
   { to: '/admin/users', icon: Users, label: 'Team' },
 ]
@@ -26,6 +29,7 @@ export const AdminShell = ({ children, title, subtitle, actions }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const [open, setOpen] = useState(false)
+  const [showChangePwd, setShowChangePwd] = useState(false)
 
   useEffect(() => {
     setOpen(false)
@@ -44,7 +48,7 @@ export const AdminShell = ({ children, title, subtitle, actions }) => {
   return (
     <div className="min-h-screen bg-canvas text-ink flex">
       {/* Sidebar */}
-      <aside className="hidden lg:flex lg:flex-col lg:w-64 border-r border-line bg-cream">
+      <aside className="hidden lg:flex lg:flex-col lg:w-64 border-r border-line bg-subtle">
         <Link to="/" className="flex items-center gap-2 p-6 border-b border-line">
           <div>
             <span className="font-serif text-lg leading-none block">CSD Admin</span>
@@ -76,7 +80,7 @@ export const AdminShell = ({ children, title, subtitle, actions }) => {
 
         <div className="p-4 border-t border-line">
           <div className="flex items-center gap-3 p-3 rounded-xl bg-paper mb-2">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan via-violet to-magenta text-paper flex items-center justify-center text-sm font-medium">
+            <div className="w-9 h-9 rounded-full bg-violet text-paper flex items-center justify-center text-sm font-medium">
               {user?.full_name?.[0]?.toUpperCase() || 'A'}
             </div>
             <div className="flex-1 min-w-0">
@@ -85,8 +89,15 @@ export const AdminShell = ({ children, title, subtitle, actions }) => {
             </div>
           </div>
           <button
-            onClick={handleLogout}
+            type="button"
+            onClick={() => setShowChangePwd(true)}
             className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm text-charcoal hover:bg-paper transition-colors"
+          >
+            <KeyRound size={14} /> Change password
+          </button>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 mt-1 rounded-xl text-sm text-charcoal hover:bg-paper transition-colors"
           >
             <LogOut size={14} /> Logout
           </button>
@@ -100,7 +111,7 @@ export const AdminShell = ({ children, title, subtitle, actions }) => {
       </aside>
 
       {/* Mobile top bar */}
-      <div className="lg:hidden fixed top-0 inset-x-0 z-40 bg-cream border-b border-line">
+      <div className="lg:hidden fixed top-0 inset-x-0 z-40 bg-subtle border-b border-line">
         <div className="flex items-center justify-between p-4">
           <Link to="/" className="flex items-center gap-2">
             <span className="font-serif">Admin</span>
@@ -123,7 +134,7 @@ export const AdminShell = ({ children, title, subtitle, actions }) => {
                   key={item.to}
                   to={item.to}
                   onClick={() => setOpen(false)}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-cream transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-subtle transition-colors"
                 >
                   <Icon size={18} />
                   <span>{item.label}</span>
@@ -157,6 +168,8 @@ export const AdminShell = ({ children, title, subtitle, actions }) => {
         )}
         <div>{children}</div>
       </main>
+
+      <ChangePasswordModal open={showChangePwd} onClose={() => setShowChangePwd(false)} />
     </div>
   )
 }

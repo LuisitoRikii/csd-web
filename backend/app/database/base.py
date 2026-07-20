@@ -1,6 +1,6 @@
 from app.database.session import Base
 from app.models.user import User
-from app.models.service import Service
+from app.models.service import Service, ServiceProject
 from app.models.project import Project, ProjectImage, ProjectVideo
 from app.models.category import Category
 from app.models.quote import Quote, QuoteImage

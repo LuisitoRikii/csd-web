@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database.session import Base
 
@@ -23,3 +24,26 @@ class Service(Base):
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
+
+    # M2M relationship to Project — powers the per-service gallery.
+    project_links = relationship(
+        "ServiceProject",
+        back_populates="service",
+        cascade="all, delete-orphan",
+        order_by="ServiceProject.order.asc()",
+    )
+
+
+class ServiceProject(Base):
+    """Junction table — associates projects with services for the per-service gallery."""
+
+    __tablename__ = "service_projects"
+
+    id = Column(Integer, primary_key=True, index=True)
+    service_id = Column(Integer, ForeignKey("services.id", ondelete="CASCADE"), nullable=False, index=True)
+    project_id = Column(Integer, ForeignKey("projects.id", ondelete="CASCADE"), nullable=False, index=True)
+    order = Column(Integer, default=0)
+    created_at = Column(DateTime, server_default=func.now())
+
+    service = relationship("Service", back_populates="project_links")
+    project = relationship("Project")

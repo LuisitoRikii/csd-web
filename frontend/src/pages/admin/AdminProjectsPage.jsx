@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { Plus, Edit2, Trash2, Search } from 'lucide-react'
 import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
@@ -36,6 +37,7 @@ const empty = {
 }
 
 export const AdminProjectsPage = () => {
+  const { t } = useTranslation()
   const qc = useQueryClient()
   const [open, setOpen] = useState(false)
   const [editing, setEditing] = useState(null)
@@ -64,14 +66,14 @@ export const AdminProjectsPage = () => {
 
   return (
     <AdminShell
-      subtitle="Studio"
-      title="Projects"
+      subtitle={t('admin.subtitle_studio')}
+      title={t('admin.card_projects')}
       actions={
         <button
           onClick={() => { setEditing(null); setOpen(true) }}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-ink text-paper text-sm"
         >
-          <Plus size={16} /> New Project
+          <Plus size={16} /> {t('admin.field_published')}
         </button>
       }
     >
@@ -82,7 +84,7 @@ export const AdminProjectsPage = () => {
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search projects..."
+              placeholder={t('admin.search_projects')}
               className="flex-1 bg-transparent outline-none text-sm"
             />
           </div>
@@ -97,17 +99,17 @@ export const AdminProjectsPage = () => {
               transition={{ delay: i * 0.03 }}
               className="group rounded-3xl bg-paper border border-line overflow-hidden hover:border-ink/30 transition-all"
             >
-              <div className="relative aspect-[4/3] bg-cream">
+              <div className="relative aspect-[4/3] bg-subtle">
                 {p.cover_image ? (
                   <img src={p.cover_image} alt={p.title_en} className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-steel">
-                    No image
+                  <div className="w-full h-full flex items-center justify-center text-steel text-sm">
+                    —
                   </div>
                 )}
                 <div className="absolute top-3 left-3 flex gap-2">
-                  {p.is_featured && <span className="px-2 py-1 rounded-full bg-amber-500 text-paper text-xs">Featured</span>}
-                  {!p.is_published && <span className="px-2 py-1 rounded-full bg-rose-500 text-paper text-xs">Draft</span>}
+                  {p.is_featured && <span className="px-2 py-1 rounded-full bg-paper text-brand text-xs border border-brand-light">{t('admin.badge_featured')}</span>}
+                  {!p.is_published && <span className="px-2 py-1 rounded-full bg-paper text-steel text-xs border border-line">{t('admin.badge_draft')}</span>}
                 </div>
               </div>
               <div className="p-4">
@@ -116,10 +118,10 @@ export const AdminProjectsPage = () => {
                 <div className="flex justify-between items-center mt-3">
                   <span className="text-xs text-steel">{p.view_count || 0} views</span>
                   <div className="flex gap-1">
-                    <button onClick={() => { setEditing(p); setOpen(true) }} className="w-8 h-8 rounded-full hover:bg-cream flex items-center justify-center">
+                    <button onClick={() => { setEditing(p); setOpen(true) }} className="w-8 h-8 rounded-full hover:bg-subtle flex items-center justify-center" aria-label={t('admin.edit')}>
                       <Edit2 size={14} />
                     </button>
-                    <button onClick={() => setConfirm(p)} className="w-8 h-8 rounded-full hover:bg-red-50 text-red-600 flex items-center justify-center">
+                    <button onClick={() => setConfirm(p)} className="w-8 h-8 rounded-full hover:bg-red-50 text-red-600 flex items-center justify-center" aria-label={t('admin.delete')}>
                       <Trash2 size={14} />
                     </button>
                   </div>
@@ -142,37 +144,37 @@ export const AdminProjectsPage = () => {
         open={!!confirm}
         onClose={() => setConfirm(null)}
         onConfirm={() => deleteM.mutate(confirm.id)}
-        title="Delete project?"
-        message={`"${confirm?.title_en}" will be permanently removed.`}
+        title={t('admin.delete_project_confirm')}
       />
     </AdminShell>
   )
 }
 
 const ProjectModal = ({ open, onClose, initial, categories, onSubmit }) => {
+  const { t } = useTranslation()
   const { register, handleSubmit, reset } = useForm({ defaultValues: initial })
 
   return (
-    <Modal open={open} onClose={onClose} title={initial?.id ? 'Edit Project' : 'New Project'} size="lg">
+    <Modal open={open} onClose={onClose} title={initial?.id ? t('admin.edit') + ' ' + t('admin.field_published') : t('admin.new')} size="lg">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Slug" required>
+          <Input label={t('admin.field_slug')} required>
             <input {...register('slug', { required: true })} className="input-base" />
           </Input>
-          <Input label="Year">
+          <Input label={t('admin.field_year')}>
             <input {...register('year')} className="input-base" />
           </Input>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Title (EN)" required><input {...register('title_en', { required: true })} className="input-base" /></Input>
-          <Input label="Title (ES)" required><input {...register('title_es', { required: true })} className="input-base" /></Input>
+          <Input label={t('admin.field_title_en')} required><input {...register('title_en', { required: true })} className="input-base" /></Input>
+          <Input label={t('admin.field_title_es')} required><input {...register('title_es', { required: true })} className="input-base" /></Input>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          <Input label="Description (EN)" required><textarea rows={3} {...register('description_en', { required: true })} className="input-base resize-none" /></Input>
-          <Input label="Description (ES)" required><textarea rows={3} {...register('description_es', { required: true })} className="input-base resize-none" /></Input>
+          <Input label={t('admin.field_description_en')} required><textarea rows={3} {...register('description_en', { required: true })} className="input-base resize-none" /></Input>
+          <Input label={t('admin.field_description_es')} required><textarea rows={3} {...register('description_es', { required: true })} className="input-base resize-none" /></Input>
         </div>
         <div className="grid grid-cols-3 gap-4">
-          <Input label="Category">
+          <Input label={t('admin.field_category')}>
             <select {...register('category_id')} className="input-base">
               <option value="">—</option>
               {categories.map((c) => <option key={c.id} value={c.id}>{c.name_en}</option>)}
@@ -181,29 +183,13 @@ const ProjectModal = ({ open, onClose, initial, categories, onSubmit }) => {
           <Input label="Location"><input {...register('location')} className="input-base" /></Input>
           <Input label="Client"><input {...register('client')} className="input-base" /></Input>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Input label="Duration"><input {...register('duration')} className="input-base" /></Input>
-          <Input label="Services used"><input {...register('services_used')} className="input-base" /></Input>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Input label="Long description (EN)"><textarea rows={3} {...register('long_description_en')} className="input-base resize-none" /></Input>
-          <Input label="Long description (ES)"><textarea rows={3} {...register('long_description_es')} className="input-base resize-none" /></Input>
-        </div>
-        <div className="grid grid-cols-3 gap-4">
-          <Input label="Cover image URL"><input {...register('cover_image')} className="input-base" /></Input>
-          <Input label="Before image"><input {...register('before_image')} className="input-base" /></Input>
-          <Input label="After image"><input {...register('after_image')} className="input-base" /></Input>
-        </div>
         <div className="flex items-center gap-6">
-          <label className="flex items-center gap-2 text-sm"><input type="checkbox" {...register('is_featured')} /> Featured</label>
-          <label className="flex items-center gap-2 text-sm"><input type="checkbox" {...register('is_published')} /> Published</label>
-          <Input label="Order">
-            <input type="number" {...register('order')} className="input-base w-24" />
-          </Input>
+          <label className="flex items-center gap-2 text-sm"><input type="checkbox" {...register('is_featured')} /> {t('admin.badge_featured')}</label>
+          <label className="flex items-center gap-2 text-sm"><input type="checkbox" {...register('is_published')} /> {t('admin.badge_published')}</label>
         </div>
         <div className="flex justify-end gap-3 pt-4 border-t border-line">
-          <button type="button" onClick={onClose} className="px-4 py-2 rounded-xl border border-line text-sm">Cancel</button>
-          <button type="submit" className="px-5 py-2.5 rounded-xl bg-ink text-paper text-sm">Save</button>
+          <button type="button" onClick={onClose} className="px-4 py-2 rounded-xl border border-line text-sm">{t('admin.cancel')}</button>
+          <button type="submit" className="px-5 py-2.5 rounded-xl bg-ink text-paper text-sm">{t('admin.save')}</button>
         </div>
       </form>
     </Modal>

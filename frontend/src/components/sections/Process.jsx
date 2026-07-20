@@ -2,44 +2,41 @@ import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { ClipboardList, MapPin, FileText, Hammer, CheckCircle2 } from 'lucide-react'
 
+// The process flows through the tri-color spectrum: mint → violet → magenta → violet → mint
 const STEPS = [
-  { titleKey: 'step_1_title', descKey: 'step_1_desc', icon: ClipboardList, color: '#06B6D4' },
-  { titleKey: 'step_2_title', descKey: 'step_2_desc', icon: MapPin, color: '#8B5CF6' },
-  { titleKey: 'step_3_title', descKey: 'step_3_desc', icon: FileText, color: '#D946EF' },
-  { titleKey: 'step_4_title', descKey: 'step_4_desc', icon: Hammer, color: '#F97316' },
-  { titleKey: 'step_5_title', descKey: 'step_5_desc', icon: CheckCircle2, color: '#06B6D4' },
+  { titleKey: 'step_1_title', descKey: 'step_1_desc', Icon: ClipboardList, color: '#91F2D7', tone: 'mint' },
+  { titleKey: 'step_2_title', descKey: 'step_2_desc', Icon: MapPin,       color: '#8A04F0', tone: 'violet' },
+  { titleKey: 'step_3_title', descKey: 'step_3_desc', Icon: FileText,     color: '#D925A9', tone: 'magenta' },
+  { titleKey: 'step_4_title', descKey: 'step_4_desc', Icon: Hammer,       color: '#8A04F0', tone: 'violet' },
+  { titleKey: 'step_5_title', descKey: 'step_5_desc', Icon: CheckCircle2, color: '#91F2D7', tone: 'mint' },
 ]
+
+const fade = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+}
 
 export const Process = () => {
   const { t } = useTranslation()
 
-  const steps = STEPS.map((step) => ({
-    ...step,
-    title: t(`process.${step.titleKey}`),
-    desc: t(`process.${step.descKey}`),
-  }))
-
   return (
-    <section id="process" className="relative py-32 lg:py-48 bg-cream">
-      <div className="container-x relative z-10">
-        <div className="max-w-3xl mb-20">
+    <section id="process" className="relative py-24 lg:py-36">
+      <div className="container-x">
+        <div className="max-w-3xl mb-16 lg:mb-20">
           <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif text-display-lg tracking-tight"
+            {...fade}
+            className="font-serif text-display-lg tracking-tight text-ink text-balance"
           >
             {t('process.title_l1')}
             <br />
-            <span className="italic font-light">{t('process.title_l2')}</span>
+            <span className="italic font-light text-charcoal">{t('process.title_l2')}</span>
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-6 text-charcoal/80 text-lg"
+            {...fade}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="mt-6 text-charcoal/80 text-lg max-w-2xl leading-relaxed"
           >
             {t('process.subtitle')}
           </motion.p>
@@ -47,59 +44,66 @@ export const Process = () => {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Connecting line - aligned to the vertical center of the icon circles (w-16 h-16 -> center at 32px = top-8) */}
-          <svg
-            className="absolute left-0 right-0 top-8 hidden lg:block"
-            height="2"
-            width="100%"
-            preserveAspectRatio="none"
-            viewBox="0 0 1440 2"
+          {/* Flowing gradient connector — the spectrum line behind the icons */}
+          <div
             aria-hidden="true"
-          >
-            <motion.line
-              x1="0" y1="1" x2="1440" y2="1"
-              stroke="#0B0B12"
-              strokeWidth="1"
-              strokeDasharray="4 6"
-              initial={{ pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 1.8 }}
-            />
-          </svg>
+            className="absolute left-0 right-0 top-8 hidden lg:block h-[2px] bg-gradient-spectrum rounded-full opacity-90"
+          />
 
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-6 relative">
-            {steps.map((step, i) => {
-              const Icon = step.icon
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 relative">
+            {STEPS.map((step, i) => {
+              const Icon = step.Icon
               return (
                 <motion.div
-                  key={i}
+                  key={step.titleKey}
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-50px' }}
-                  transition={{ duration: 0.7, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                   className="relative"
                 >
                   <div className="text-center lg:text-left">
-                    <div
-                      className="relative inline-flex w-16 h-16 rounded-full items-center justify-center mb-5 transition-transform duration-500 hover:scale-110"
-                      style={{ background: '#FAFAF7', border: `2px solid ${step.color}` }}
-                    >
-                      <Icon size={20} style={{ color: step.color }} strokeWidth={1.6} />
-                      <span className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-ink text-paper text-xs font-mono flex items-center justify-center">
+                    <div className="relative inline-block mb-5">
+                      <div
+                        className="relative inline-flex w-16 h-16 rounded-full items-center justify-center bg-paper transition-transform duration-500 ease-out group-hover:-translate-y-1"
+                        style={{
+                          border: `2px solid ${step.color}`,
+                          boxShadow: `0 8px 24px -10px ${step.color}80`,
+                        }}
+                      >
+                        <Icon size={20} style={{ color: step.color }} strokeWidth={1.8} />
+                      </div>
+                      {/* Step number badge — spectrum gradient */}
+                      <span
+                        className="absolute -top-2 -right-2 w-7 h-7 rounded-full text-paper text-xs font-mono flex items-center justify-center bg-gradient-spectrum shadow-soft"
+                        aria-hidden="true"
+                      >
                         0{i + 1}
                       </span>
                     </div>
 
-                    <h3 className="font-serif text-2xl tracking-tight mb-2">{step.title}</h3>
-                    <p className="text-sm text-charcoal/70 leading-relaxed max-w-xs mx-auto lg:mx-0">
-                      {step.desc}
+                    <h3 className="font-serif text-2xl tracking-tight text-ink mb-2">
+                      {t(`process.${step.titleKey}`)}
+                    </h3>
+                    <p className="text-sm text-charcoal/75 leading-relaxed max-w-xs mx-auto lg:mx-0">
+                      {t(`process.${step.descKey}`)}
                     </p>
                   </div>
 
-                  {/* Mobile connector */}
-                  {i < steps.length - 1 && (
-                    <div className="lg:hidden h-12 w-px bg-line mx-auto my-2" />
+                  {/* Mobile connector — gradient line that mirrors the spectrum */}
+                  {i < STEPS.length - 1 && (
+                    <div
+                      className="lg:hidden h-12 w-[2px] mx-auto my-2 rounded-full"
+                      style={{
+                        background: i === 0
+                          ? 'linear-gradient(180deg, #91F2D7, #8A04F0)'
+                          : i === 1
+                            ? 'linear-gradient(180deg, #8A04F0, #D925A9)'
+                            : i === 2
+                              ? 'linear-gradient(180deg, #D925A9, #8A04F0)'
+                              : 'linear-gradient(180deg, #8A04F0, #91F2D7)',
+                      }}
+                    />
                   )}
                 </motion.div>
               )

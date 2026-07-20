@@ -19,7 +19,7 @@ export const BUSINESS = {
 }
 
 export const SOCIAL = {
-  instagram: 'https://instagram.com/csdgoodservices',
+  instagram: 'https://www.instagram.com/csd_good_services/',
   facebook: 'https://facebook.com/csdgoodservices',
   tiktok: 'https://tiktok.com/@csdgoodservices',
   youtube: '',

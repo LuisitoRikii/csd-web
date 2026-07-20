@@ -1,37 +1,46 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Helmet } from 'react-helmet-async'
 import { Check, ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { PageHero } from '@/components/ui/PageHero'
+import { SEO, buildBreadcrumbSchema } from '@/components/ui/SEO'
 import { CTA } from '@/components/sections/CTA'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { APP_BASE_URL } from '@/config'
 
 export const AboutPage = () => {
   const { t } = useTranslation()
   const { lang } = useLanguage()
 
-  const values = [
-    { title: t('about.value_1_title'), desc: t('about.value_1_desc'), color: '#06B6D4' },
-    { title: t('about.value_2_title'), desc: t('about.value_2_desc'), color: '#8B5CF6' },
-    { title: t('about.value_3_title'), desc: t('about.value_3_desc'), color: '#D946EF' },
-    { title: t('about.value_4_title'), desc: t('about.value_4_desc'), color: '#F97316' },
+  const valueKeys = [
+    { key: 1, color: '#5B2A8F' },
+    { key: 2, color: '#A37052' },
+    { key: 3, color: '#7DD8BC' },
+    { key: 4, color: '#5B2A8F' },
   ]
 
   const team = [
-    { name: 'Carlos Diaz', role: 'Founder · Senior Painter', img: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&auto=format&fit=crop&q=85' },
-    { name: 'Sofía Martín', role: 'Lead Muralist', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=85' },
-    { name: 'Daniel Reyes', role: 'Epoxy Specialist', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f8d?w=400&auto=format&fit=crop&q=85' },
-    { name: 'Maya Patel', role: 'Project Director', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=85' },
+    { key: 'founder',    role: t('about_page.team_card_role_founder') },
+    { key: 'muralist',   role: t('about_page.team_card_role_muralist') },
+    { key: 'epoxy',      role: t('about_page.team_card_role_epoxy') },
+    { key: 'pm',         role: t('about_page.team_card_role_pm') },
   ]
+
+  const title = lang === 'es' ? 'Nosotros | CSD Good Services' : 'About | CSD Good Services'
+  const description = lang === 'es'
+    ? 'Conoce al equipo detrás de CSD Good Services. Contratistas licenciados en Miami especializados en pintura, epóxico, murales y remodelación.'
+    : 'Meet the team behind CSD Good Services. Licensed Miami contractors specializing in painting, epoxy, murals and remodeling since 2014.'
 
   return (
     <>
-      <Helmet>
-        <title>{lang === 'es' ? 'Nosotros | CSD Good Services' : 'About | CSD Good Services'}</title>
-        <link rel="canonical" href={`${APP_BASE_URL}/about`} />
-      </Helmet>
+      <SEO
+        title={title}
+        description={description}
+        path="/about"
+        schema={buildBreadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'About', path: '/about' },
+        ])}
+      />
 
       <PageHero
         title={lang === 'es' ? 'Una empresa nacida' : 'A studio born from'}
@@ -63,7 +72,7 @@ export const AboutPage = () => {
               <div className="rounded-3xl overflow-hidden aspect-[4/5]">
                 <img
                   src="https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1600&auto=format&fit=crop&q=85"
-                  alt="Mural artist at work"
+                  alt=""
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -73,21 +82,22 @@ export const AboutPage = () => {
       </section>
 
       {/* Values */}
-      <section className="py-20 lg:py-32 bg-cream">
+      <section className="py-20 lg:py-32 bg-subtle">
         <div className="container-x">
           <div className="max-w-2xl mb-16">
             <h2 className="font-serif text-display-md tracking-tight">
-              {lang === 'es' ? 'Lo que defendemos' : 'What we stand for'}
+              {t('about.values_heading')}
             </h2>
+            <p className="mt-4 text-charcoal/80 max-w-lg">{t('about.values_subtitle')}</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-line border border-line rounded-2xl overflow-hidden">
-            {values.map((v, i) => (
+            {valueKeys.map((v) => (
               <motion.div
-                key={v.title}
+                key={v.key}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                transition={{ delay: v.key * 0.1 }}
                 className="bg-canvas p-8 lg:p-10"
               >
                 <div
@@ -96,8 +106,12 @@ export const AboutPage = () => {
                 >
                   <Check size={20} style={{ color: v.color }} strokeWidth={2.5} />
                 </div>
-                <h3 className="font-serif text-2xl tracking-tight mb-2">{v.title}</h3>
-                <p className="text-sm text-charcoal/80 leading-relaxed">{v.desc}</p>
+                <h3 className="font-serif text-2xl tracking-tight mb-2">
+                  {t(`about.value_${v.key}_title`)}
+                </h3>
+                <p className="text-sm text-charcoal/80 leading-relaxed">
+                  {t(`about.value_${v.key}_desc`)}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -109,28 +123,27 @@ export const AboutPage = () => {
         <div className="container-x">
           <div className="max-w-2xl mb-16">
             <h2 className="font-serif text-display-md tracking-tight">
-              {lang === 'es' ? 'El equipo' : 'The team'}
+              {t('about.team_heading')}
             </h2>
-            <p className="mt-4 text-charcoal/80 max-w-lg">
-              {lang === 'es'
-                ? 'Artesanos senior, cada uno especializado en su disciplina.'
-                : 'Senior craftsmen, each specialized in their own craft.'}
-            </p>
+            <p className="mt-4 text-charcoal/80 max-w-lg">{t('about.team_subtitle')}</p>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
             {team.map((m, i) => (
               <motion.div
-                key={m.name}
+                key={m.key}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 className="group"
               >
-                <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-cream mb-4">
-                  <img src={m.img} alt={m.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-subtle mb-4">
+                  <img
+                    src={`https://images.unsplash.com/photo-1568602471${i === 0 ? '122-7832951cc4c5' : i === 1 ? '577-b2c045efd7' : i === 2 ? '578-b0f6a4d8' : '577-b29d4f5d5'}-?w=400&auto=format&fit=crop&q=85`}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h3 className="font-serif text-xl tracking-tight">{m.name}</h3>
                 <p className="text-sm text-steel">{m.role}</p>
               </motion.div>
             ))}

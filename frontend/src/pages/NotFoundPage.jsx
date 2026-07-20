@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Helmet } from 'react-helmet-async'
 import { ArrowUpRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { SEO } from '@/components/ui/SEO'
 
 export const NotFoundPage = () => {
+  const { t } = useTranslation()
   return (
     <>
-      <Helmet><title>404 | CSD</title></Helmet>
+      <SEO title={`${t('not_found.title')} | CSD Good Services`} path="/404" noindex />
       <section className="min-h-screen flex items-center justify-center bg-canvas">
         <div className="text-center px-6">
           <motion.h1
@@ -15,7 +17,7 @@ export const NotFoundPage = () => {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="font-serif text-[20vw] lg:text-[14rem] leading-none tracking-tight"
           >
-            404
+            {t('not_found.title')}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -23,7 +25,7 @@ export const NotFoundPage = () => {
             transition={{ delay: 0.2 }}
             className="mt-4 text-charcoal/80 max-w-md mx-auto"
           >
-            We couldn't find the page you're looking for. Let's get you back to the studio.
+            {t('not_found.message')}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -31,8 +33,8 @@ export const NotFoundPage = () => {
             transition={{ delay: 0.3 }}
             className="mt-8"
           >
-            <Link to="/" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-ink text-paper text-sm">
-              Back to home <ArrowUpRight size={16} />
+            <Link to="/" className="btn-primary">
+              {t('not_found.cta')} <ArrowUpRight size={16} />
             </Link>
           </motion.div>
         </div>

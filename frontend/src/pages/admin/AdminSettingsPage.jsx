@@ -1,12 +1,22 @@
 import { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { Save } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { settingsService } from '@/services'
 import { AdminShell } from '@/components/admin/AdminShell'
 import { Input } from '@/components/admin/Input'
 
+const GROUP_LABELS = {
+  general: 'General',
+  contact: 'Contact',
+  social: 'Social',
+  media: 'Media',
+  seo: 'SEO',
+}
+
 export const AdminSettingsPage = () => {
+  const { t } = useTranslation()
   const qc = useQueryClient()
   const { data: settings = [] } = useQuery({ queryKey: ['admin-settings'], queryFn: () => settingsService.list() })
   const [values, setValues] = useState({})
@@ -32,7 +42,7 @@ export const AdminSettingsPage = () => {
   const grouped = settings.filter((s) => s.group === activeGroup)
 
   return (
-    <AdminShell subtitle="Studio" title="Site Settings">
+    <AdminShell subtitle={t('admin.subtitle_studio')} title="Site Settings">
       <div className="p-6 lg:p-12 max-w-5xl">
 
       <div className="flex gap-2 mb-8 border-b border-line overflow-x-auto">
@@ -44,7 +54,7 @@ export const AdminSettingsPage = () => {
               activeGroup === g ? 'border-ink text-ink' : 'border-transparent text-steel hover:text-ink'
             }`}
           >
-            {g}
+            {GROUP_LABELS[g] || g}
           </button>
         ))}
       </div>
@@ -76,7 +86,7 @@ export const AdminSettingsPage = () => {
           className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-ink text-paper text-sm"
         >
           <Save size={16} />
-          {updateM.isPending ? 'Saving…' : 'Save Settings'}
+          {updateM.isPending ? '…' : t('admin.save')}
         </button>
       </form>
       </div>

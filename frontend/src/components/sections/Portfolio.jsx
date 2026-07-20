@@ -20,7 +20,7 @@ const MasonryItem = ({ project, idx, lang, onImageClick }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.8, delay: (idx % 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
-      className={`relative ${aspect} group overflow-hidden rounded-2xl cursor-pointer bg-cream`}
+      className={`relative ${aspect} group overflow-hidden rounded-2xl cursor-pointer bg-subtle`}
       data-cursor="image"
     >
       <Link to={`/portfolio/${project.slug}`}>
@@ -115,9 +115,12 @@ export const Portfolio = () => {
 
           <Link
             to="/portfolio"
-            className="hidden lg:inline-flex items-center gap-2 text-sm tracking-wide hover:text-cyan transition-colors"
+            className="hidden lg:inline-flex items-center gap-2 text-sm tracking-wide hover:text-violet transition-colors group"
           >
-            View all <ArrowUpRight size={16} />
+            View all
+            <span className="inline-flex w-7 h-7 rounded-full items-center justify-center bg-gradient-spectrum text-paper transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+              <ArrowUpRight size={12} />
+            </span>
           </Link>
         </div>
 

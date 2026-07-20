@@ -3,7 +3,7 @@ export const FormInput = ({ label, error, required, children }) => (
     {label && (
       <label className="text-xs tracking-[0.2em] uppercase text-steel mb-2 flex items-center gap-1">
         {label}
-        {required && <span className="text-magenta">*</span>}
+        {required && <span className="text-ink/60">*</span>}
       </label>
     )}
     {children}
