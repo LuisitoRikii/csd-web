@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional, List
 from datetime import datetime
 
@@ -75,10 +75,11 @@ class ProjectBase(BaseModel):
 
 
 class ProjectCreate(ProjectBase):
-    images: Optional[List[str]] = []
+    images: List[str] = Field(default_factory=list)
 
 
 class ProjectUpdate(BaseModel):
+    slug: Optional[str] = None
     title_en: Optional[str] = None
     title_es: Optional[str] = None
     description_en: Optional[str] = None
@@ -98,13 +99,14 @@ class ProjectUpdate(BaseModel):
     is_featured: Optional[bool] = None
     is_published: Optional[bool] = None
     order: Optional[int] = None
+    images: Optional[List[str]] = None
 
 
 class ProjectResponse(ProjectBase):
     id: int
     view_count: int
     created_at: datetime
-    images: List[ProjectImageResponse] = []
+    images: List[ProjectImageResponse] = Field(default_factory=list)
     category: Optional[CategoryResponse] = None
 
     class Config:

@@ -67,7 +67,7 @@ const VideoCard = ({ video, isEs }) => {
           aria-hidden="true"
           onError={() => setErrored(true)}
         >
-          <source src={video.src} type="video/mp4" />
+          <source src={video.src} />
         </video>
       ) : (
         <img

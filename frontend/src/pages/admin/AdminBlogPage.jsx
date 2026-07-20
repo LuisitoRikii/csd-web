@@ -105,11 +105,15 @@ export const AdminBlogPage = () => {
 const PostModal = ({ open, onClose, initial, onSubmit }) => {
   const { t } = useTranslation()
   const { register, handleSubmit, reset, setValue, watch } = useForm({ defaultValues: initial })
-  useEffect(() => { if (initial) reset(initial) }, [initial, reset])
+  const [isUploading, setIsUploading] = useState(false)
+  useEffect(() => {
+    if (initial) reset(initial)
+    setIsUploading(false)
+  }, [initial, reset])
 
   return (
-    <Modal open={open} onClose={onClose} title={initial?.id ? t('admin.edit') : t('admin.new')} size="lg">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <Modal open={open} onClose={onClose} closeDisabled={isUploading} title={initial?.id ? t('admin.edit') : t('admin.new')} size="lg">
+      <form onSubmit={handleSubmit((data) => { if (!isUploading) onSubmit(data) })} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <Input label={t('admin.field_slug')}><input {...register('slug', { required: true })} className="input-base" /></Input>
           <Input label={t('admin.field_category')}><input {...register('category')} className="input-base" placeholder={t('admin.field_slug_placeholder')} /></Input>
@@ -127,7 +131,14 @@ const PostModal = ({ open, onClose, initial, onSubmit }) => {
           <Input label={t('admin.field_content_es')}><textarea rows={8} {...register('content_es', { required: true })} className="input-base resize-y" /></Input>
         </div>
         <Input label={t('admin.field_cover_image')}>
-          <ImageUploader value={watch('cover_image') ? [watch('cover_image')] : []} onChange={(v) => setValue('cover_image', v[0] || '')} multiple={false} />
+          <ImageUploader
+            value={watch('cover_image') ? [watch('cover_image')] : []}
+            onChange={(urls) => setValue('cover_image', urls[0] || '', { shouldDirty: true })}
+            onUploadingChange={setIsUploading}
+            multiple={false}
+            maxFiles={1}
+            folder="blog"
+          />
         </Input>
         <div className="grid grid-cols-3 gap-4">
           <Input label={t('admin.field_read_time')}><input type="number" {...register('read_time')} className="input-base" /></Input>
@@ -144,8 +155,8 @@ const PostModal = ({ open, onClose, initial, onSubmit }) => {
           <label className="flex items-center gap-2 text-sm"><input type="checkbox" {...register('is_published')} /> {t('admin.badge_published')}</label>
         </div>
         <div className="flex justify-end gap-3 pt-4 border-t border-line">
-          <button type="button" onClick={onClose} className="px-4 py-2 rounded-xl border border-line text-sm">{t('admin.cancel')}</button>
-          <button type="submit" className="px-5 py-2.5 rounded-xl bg-ink text-paper text-sm">{t('admin.save')}</button>
+          <button type="button" onClick={onClose} disabled={isUploading} className="px-4 py-2 rounded-xl border border-line text-sm disabled:opacity-50">{t('admin.cancel')}</button>
+          <button type="submit" disabled={isUploading} className="px-5 py-2.5 rounded-xl bg-ink text-paper text-sm disabled:opacity-50">{isUploading ? 'Subiendo…' : t('admin.save')}</button>
         </div>
       </form>
     </Modal>

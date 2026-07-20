@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { settingsService } from '@/services'
+import { resolveMediaUrl } from '@/config'
 
 const parse = (v, fallback) => {
   if (v == null || v === '') return fallback
@@ -32,13 +33,13 @@ export function useSiteSettings() {
     isLoading,
 
     hero: {
-      videoUrl: get('hero_video_url', ''),
-      imageUrl: get('hero_image_url', ''),
-      fallbackImage: get('hero_fallback_image', '/logo.png'),
+      videoUrl: resolveMediaUrl(get('hero_video_url', '')),
+      imageUrl: resolveMediaUrl(get('hero_image_url', '')),
+      fallbackImage: resolveMediaUrl(get('hero_fallback_image', '/logo.png')),
     },
 
     about: {
-      imageUrl: get('about_image_url', ''),
+      imageUrl: resolveMediaUrl(get('about_image_url', '')),
       editorialQuoteEn: get('home_about_quote_en', ''),
       editorialQuoteEs: get('home_about_quote_es', ''),
       sideNoteEn: get('home_about_side_note_en', ''),
@@ -54,11 +55,19 @@ export function useSiteSettings() {
     },
 
     beforeAfter: {
-      pairs: parse(get('home_before_after_pairs'), []),
+      pairs: parse(get('home_before_after_pairs'), []).map((pair) => ({
+        ...pair,
+        before: resolveMediaUrl(pair.before),
+        after: resolveMediaUrl(pair.after),
+      })).filter((pair) => pair.before && pair.after),
     },
 
     videos: {
-      list: parse(get('home_videos_list'), []),
+      list: parse(get('home_videos_list'), []).map((video) => ({
+        ...video,
+        src: resolveMediaUrl(video.src),
+        poster: resolveMediaUrl(video.poster),
+      })).filter((video) => video.src),
     },
 
     marquee: {

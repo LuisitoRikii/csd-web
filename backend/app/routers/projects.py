@@ -101,8 +101,23 @@ def update_project(
         raise HTTPException(status_code=404, detail="Project not found")
 
     data = payload.model_dump(exclude_unset=True)
+    images = data.pop("images", None)
     for field, value in data.items():
         setattr(project, field, value)
+
+    if images is not None:
+        existing_images = {image.image_url: image for image in project.images}
+        retained_urls = set()
+        for idx, image_url in enumerate(images):
+            retained_urls.add(image_url)
+            existing = existing_images.get(image_url)
+            if existing:
+                existing.order = idx
+            else:
+                db.add(ProjectImage(project_id=project.id, image_url=image_url, order=idx))
+        for image_url, image in existing_images.items():
+            if image_url not in retained_urls:
+                db.delete(image)
 
     db.commit()
     db.refresh(project)

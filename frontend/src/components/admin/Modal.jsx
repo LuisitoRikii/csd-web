@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 
-export const Modal = ({ open, onClose, title, children, size = 'md' }) => {
+export const Modal = ({ open, onClose, title, children, size = 'md', closeDisabled = false }) => {
   useEffect(() => {
     if (open) document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = '' }
@@ -16,7 +16,7 @@ export const Modal = ({ open, onClose, title, children, size = 'md' }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={closeDisabled ? undefined : onClose}
             className="fixed inset-0 z-[100] bg-ink/40 backdrop-blur-sm"
           />
           <motion.div
@@ -36,7 +36,7 @@ export const Modal = ({ open, onClose, title, children, size = 'md' }) => {
               {title && (
                 <div className="flex items-center justify-between p-6 border-b border-line">
                   <h2 className="font-serif text-2xl tracking-tight">{title}</h2>
-                  <button onClick={onClose} className="p-2 hover:bg-subtle rounded-full transition-colors">
+                  <button type="button" onClick={onClose} disabled={closeDisabled} className="p-2 hover:bg-subtle rounded-full transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
                     <X size={18} />
                   </button>
                 </div>

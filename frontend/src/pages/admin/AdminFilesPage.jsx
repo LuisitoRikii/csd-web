@@ -1,9 +1,9 @@
 import { useState, useMemo, useCallback, useRef } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import {
-  Folder, FolderOpen, File as FileIcon, Download, Trash2, Upload,
+  Folder, FolderOpen, Download, Trash2, Upload,
   ChevronRight, ChevronDown, ArrowUp, HardDrive, Search,
   FileText, Image as ImageIcon, FileVideo, FileArchive, FileCode,
 } from 'lucide-react'
@@ -13,7 +13,7 @@ import { AdminShell } from '@/components/admin/AdminShell'
 import { ConfirmModal } from '@/components/admin/ConfirmModal'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 
-const ACCEPTED = '*'
+const ACCEPTED = 'image/jpeg,image/png,image/webp,video/mp4'
 
 function pickIcon(mime, name) {
   const ext = (name?.split('.').pop() || '').toLowerCase()
@@ -26,7 +26,7 @@ function pickIcon(mime, name) {
   return FileText
 }
 
-const TreeNode = ({ node, depth = 0, onNavigate, onDelete, t }) => {
+const TreeNode = ({ node, depth = 0, onNavigate, onDelete, onDownload, t }) => {
   const reduced = useReducedMotion()
   const [open, setOpen] = useState(depth < 2)
   const isDir = node.type === 'directory'
@@ -73,13 +73,13 @@ const TreeNode = ({ node, depth = 0, onNavigate, onDelete, t }) => {
             <span className="text-sm font-medium truncate text-ink">{node.name}</span>
           </button>
         ) : (
-          <a
-            href={filesService.downloadUrl(node.path)}
-            download
-            className="flex items-center gap-2 flex-1 min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet rounded"
+          <button
+            type="button"
+            onClick={() => onDownload?.(node)}
+            className="flex items-center gap-2 flex-1 min-w-0 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet rounded"
           >
             <span className="text-sm truncate text-ink">{node.name}</span>
-          </a>
+          </button>
         )}
 
         <span className="hidden sm:inline text-xs text-steel tabular-nums shrink-0 w-20 text-right">
@@ -87,26 +87,15 @@ const TreeNode = ({ node, depth = 0, onNavigate, onDelete, t }) => {
         </span>
 
         <div className="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
-          {isDir ? (
-            <a
-              href={filesService.zipUrl(node.path)}
-              className="w-7 h-7 rounded-md flex items-center justify-center hover:bg-muted text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
-              aria-label={t('files_download_folder') + ' ' + node.name}
-              title={t('files_download_folder')}
-            >
-              <Download size={13} aria-hidden="true" />
-            </a>
-          ) : (
-            <a
-              href={filesService.downloadUrl(node.path)}
-              download
-              className="w-7 h-7 rounded-md flex items-center justify-center hover:bg-muted text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
-              aria-label={t('files_download_file') + ' ' + node.name}
-              title={t('files_download_file')}
-            >
-              <Download size={13} aria-hidden="true" />
-            </a>
-          )}
+          <button
+            type="button"
+            onClick={() => onDownload?.(node)}
+            className="w-7 h-7 rounded-md flex items-center justify-center hover:bg-muted text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+            aria-label={(isDir ? t('files_download_folder') : t('files_download_file')) + ' ' + node.name}
+            title={isDir ? t('files_download_folder') : t('files_download_file')}
+          >
+            <Download size={13} aria-hidden="true" />
+          </button>
           <button
             type="button"
             onClick={() => onDelete?.(node)}
@@ -128,6 +117,7 @@ const TreeNode = ({ node, depth = 0, onNavigate, onDelete, t }) => {
               depth={depth + 1}
               onNavigate={onNavigate}
               onDelete={onDelete}
+              onDownload={onDownload}
               t={t}
             />
           ))}
@@ -204,6 +194,15 @@ export const AdminFilesPage = () => {
     [handleFiles]
   )
 
+  const download = useCallback(async (node) => {
+    try {
+      if (node.type === 'directory') await filesService.downloadZip(node.path)
+      else await filesService.download(node.path)
+    } catch {
+      toast.error(t('common.error'))
+    }
+  }, [t])
+
   const filteredChildren = useMemo(() => {
     if (!tree?.children) return []
     if (!search.trim()) return tree.children
@@ -234,12 +233,13 @@ export const AdminFilesPage = () => {
       title={t('files_title')}
       actions={
         <div className="flex items-center gap-2">
-          <a
-            href={filesService.zipUrl(path)}
+          <button
+            type="button"
+            onClick={() => download({ type: 'directory', path })}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-ink/15 text-sm hover:bg-subtle transition-colors"
           >
             <Download size={14} /> {t('files_download_folder')}
-          </a>
+          </button>
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
@@ -375,6 +375,7 @@ export const AdminFilesPage = () => {
                       node={child}
                       onNavigate={navigate}
                       onDelete={(n) => setConfirm(n)}
+                      onDownload={download}
                       t={t}
                     />
                   ))
@@ -384,6 +385,7 @@ export const AdminFilesPage = () => {
                       node={child}
                       onNavigate={navigate}
                       onDelete={(n) => setConfirm(n)}
+                      onDownload={download}
                       t={t}
                     />
                   ))}

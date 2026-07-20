@@ -1,7 +1,8 @@
+import mimetypes
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse, Response, StreamingResponse
 from app.core.config import settings
 from app.database.session import engine, Base
 from app.database.base import (
@@ -36,7 +37,57 @@ def create_app() -> FastAPI:
         for folder in ["images", "videos", "blog", "quotes"]:
             os.makedirs(os.path.join(settings.UPLOAD_DIR, folder), exist_ok=True)
 
-    app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads")
+    @app.get("/uploads/{file_path:path}", include_in_schema=False)
+    def serve_upload(file_path: str, request: Request):
+        root = os.path.realpath(settings.UPLOAD_DIR)
+        full_path = os.path.realpath(os.path.join(root, file_path))
+        if not full_path.startswith(root + os.sep) or not os.path.isfile(full_path):
+            return Response(status_code=404)
+
+        size = os.path.getsize(full_path)
+        media_type = mimetypes.guess_type(full_path)[0] or "application/octet-stream"
+        range_header = request.headers.get("range")
+        if not range_header or not range_header.startswith("bytes="):
+            return FileResponse(full_path, media_type=media_type, headers={"Accept-Ranges": "bytes"})
+
+        try:
+            start_value, end_value = range_header.removeprefix("bytes=").split(",", 1)[0].split("-", 1)
+            if start_value:
+                start = int(start_value)
+                end = int(end_value) if end_value else size - 1
+            else:
+                suffix_length = int(end_value)
+                start = max(0, size - suffix_length)
+                end = size - 1
+            if start < 0 or start >= size or end < start:
+                raise ValueError
+            end = min(end, size - 1)
+        except (TypeError, ValueError):
+            return Response(status_code=416, headers={"Content-Range": f"bytes */{size}"})
+
+        length = end - start + 1
+
+        def stream_range():
+            with open(full_path, "rb") as uploaded:
+                uploaded.seek(start)
+                remaining = length
+                while remaining > 0:
+                    chunk = uploaded.read(min(64 * 1024, remaining))
+                    if not chunk:
+                        break
+                    remaining -= len(chunk)
+                    yield chunk
+
+        return StreamingResponse(
+            stream_range(),
+            status_code=206,
+            media_type=media_type,
+            headers={
+                "Accept-Ranges": "bytes",
+                "Content-Range": f"bytes {start}-{end}/{size}",
+                "Content-Length": str(length),
+            },
+        )
 
     from app.routers import (
         auth, users, services, categories, projects,

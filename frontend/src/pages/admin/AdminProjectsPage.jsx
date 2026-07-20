@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { Plus, Edit2, Trash2, Search } from 'lucide-react'
@@ -10,6 +10,7 @@ import { ConfirmModal } from '@/components/admin/ConfirmModal'
 import { Input } from '@/components/admin/Input'
 import { AdminShell } from '@/components/admin/AdminShell'
 import { ImageUploader } from '@/components/admin/ImageUploader'
+import { MediaUploader } from '@/components/admin/MediaUploader'
 import { useForm } from 'react-hook-form'
 
 const empty = {
@@ -62,6 +63,10 @@ export const AdminProjectsPage = () => {
 
   const filtered = projects.filter((p) =>
     p.title_en?.toLowerCase().includes(search.toLowerCase())
+  )
+  const projectInitial = useMemo(
+    () => editing ? { ...editing, images: editing.images?.map((image) => image.image_url) || [] } : empty,
+    [editing]
   )
 
   return (
@@ -135,7 +140,7 @@ export const AdminProjectsPage = () => {
       <ProjectModal
         open={open}
         onClose={() => setOpen(false)}
-        initial={editing ? { ...editing, images: editing.images?.map((i) => i.image_url) || [] } : empty}
+        initial={projectInitial}
         categories={categories}
         onSubmit={(data) => editing ? updateM.mutate({ id: editing.id, data }) : createM.mutate(data)}
       />
@@ -152,11 +157,31 @@ export const AdminProjectsPage = () => {
 
 const ProjectModal = ({ open, onClose, initial, categories, onSubmit }) => {
   const { t } = useTranslation()
-  const { register, handleSubmit, reset } = useForm({ defaultValues: initial })
+  const { register, handleSubmit, reset, setValue, watch } = useForm({ defaultValues: initial })
+  const [uploadsInProgress, setUploadsInProgress] = useState(0)
+  const isUploading = uploadsInProgress > 0
+
+  useEffect(() => {
+    reset(initial)
+    setUploadsInProgress(0)
+  }, [initial, reset])
+
+  const handleUploadingChange = (active) => {
+    setUploadsInProgress((current) => Math.max(0, current + (active ? 1 : -1)))
+  }
+
+  const submit = (data) => {
+    if (isUploading) return
+    onSubmit({
+      ...data,
+      category_id: data.category_id ? Number(data.category_id) : null,
+      order: Number(data.order) || 0,
+    })
+  }
 
   return (
-    <Modal open={open} onClose={onClose} title={initial?.id ? t('admin.edit') + ' ' + t('admin.field_published') : t('admin.new')} size="lg">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <Modal open={open} onClose={onClose} closeDisabled={isUploading} title={initial?.id ? t('admin.edit') + ' ' + t('admin.field_published') : t('admin.new')} size="lg">
+      <form onSubmit={handleSubmit(submit)} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <Input label={t('admin.field_slug')} required>
             <input {...register('slug', { required: true })} className="input-base" />
@@ -173,6 +198,57 @@ const ProjectModal = ({ open, onClose, initial, categories, onSubmit }) => {
           <Input label={t('admin.field_description_en')} required><textarea rows={3} {...register('description_en', { required: true })} className="input-base resize-none" /></Input>
           <Input label={t('admin.field_description_es')} required><textarea rows={3} {...register('description_es', { required: true })} className="input-base resize-none" /></Input>
         </div>
+        <Input label={t('admin.field_cover_image')}>
+          <ImageUploader
+            value={watch('cover_image') ? [watch('cover_image')] : []}
+            onChange={(urls) => setValue('cover_image', urls[0] || '', { shouldDirty: true })}
+            multiple={false}
+            maxFiles={1}
+            folder="projects/images"
+            onUploadingChange={handleUploadingChange}
+          />
+        </Input>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input label="Imagen antes">
+            <ImageUploader
+              value={watch('before_image') ? [watch('before_image')] : []}
+              onChange={(urls) => setValue('before_image', urls[0] || '', { shouldDirty: true })}
+              multiple={false}
+              maxFiles={1}
+              folder="projects/images"
+              onUploadingChange={handleUploadingChange}
+            />
+          </Input>
+          <Input label="Imagen después">
+            <ImageUploader
+              value={watch('after_image') ? [watch('after_image')] : []}
+              onChange={(urls) => setValue('after_image', urls[0] || '', { shouldDirty: true })}
+              multiple={false}
+              maxFiles={1}
+              folder="projects/images"
+              onUploadingChange={handleUploadingChange}
+            />
+          </Input>
+        </div>
+        <Input label="Galería de imágenes">
+          <ImageUploader
+            value={watch('images') || []}
+            onChange={(urls) => setValue('images', urls, { shouldDirty: true })}
+            folder="projects/images"
+            onUploadingChange={handleUploadingChange}
+          />
+        </Input>
+        <Input label="Vídeo del proyecto">
+          <MediaUploader
+            type="video"
+            value={watch('video_url') ? [watch('video_url')] : []}
+            onChange={(urls) => setValue('video_url', urls[0] || '', { shouldDirty: true })}
+            multiple={false}
+            maxFiles={1}
+            folder="projects/videos"
+            onUploadingChange={handleUploadingChange}
+          />
+        </Input>
         <div className="grid grid-cols-3 gap-4">
           <Input label={t('admin.field_category')}>
             <select {...register('category_id')} className="input-base">
@@ -188,8 +264,8 @@ const ProjectModal = ({ open, onClose, initial, categories, onSubmit }) => {
           <label className="flex items-center gap-2 text-sm"><input type="checkbox" {...register('is_published')} /> {t('admin.badge_published')}</label>
         </div>
         <div className="flex justify-end gap-3 pt-4 border-t border-line">
-          <button type="button" onClick={onClose} className="px-4 py-2 rounded-xl border border-line text-sm">{t('admin.cancel')}</button>
-          <button type="submit" className="px-5 py-2.5 rounded-xl bg-ink text-paper text-sm">{t('admin.save')}</button>
+          <button type="button" onClick={onClose} disabled={isUploading} className="px-4 py-2 rounded-xl border border-line text-sm disabled:opacity-50">{t('admin.cancel')}</button>
+          <button type="submit" disabled={isUploading} className="px-5 py-2.5 rounded-xl bg-ink text-paper text-sm disabled:opacity-50">{isUploading ? 'Subiendo…' : t('admin.save')}</button>
         </div>
       </form>
     </Modal>

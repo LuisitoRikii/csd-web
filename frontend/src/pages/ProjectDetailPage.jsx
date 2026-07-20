@@ -14,7 +14,7 @@ import toast from 'react-hot-toast'
 
 export const ProjectDetailPage = () => {
   const { slug } = useParams()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { lang } = useLanguage()
   const [lightbox, setLightbox] = useState({ open: false, slides: [], index: 0 })
 
@@ -160,6 +160,16 @@ export const ProjectDetailPage = () => {
               className="h-full w-full object-cover"
             />
           </motion.div>
+        )}
+
+        {project.video_url && (
+          <section className="py-16 bg-ink">
+            <div className="container-x">
+              <video controls playsInline preload="metadata" poster={project.cover_image || undefined} className="w-full max-h-[80vh] rounded-3xl bg-black">
+                <source src={project.video_url} />
+              </video>
+            </div>
+          </section>
         )}
 
         <section className="py-24 bg-canvas">
