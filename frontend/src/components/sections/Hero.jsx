@@ -3,11 +3,12 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import heroFallbackImg from '@/assets/x.png'
 
 const HERO_VIDEO =
   'https://cdn.pixabay.com/video/2020/03/27/34125-399680914_large.mp4'
 const HERO_FALLBACK_IMG =
-  '/src/assets/x.png'
+  heroFallbackImg
 
 // Textura de grano en SVG (feTurbulence), codificada como data URI para no depender de un archivo externo
 const GRAIN_SVG = `data:image/svg+xml;utf8,${encodeURIComponent(`

@@ -60,21 +60,7 @@ export const Services = () => {
                 className="group relative rounded-2xl border border-paper/15 bg-paper/[0.06] backdrop-blur-xl p-8 lg:p-9 transition-colors duration-500 hover:bg-paper/[0.1] overflow-hidden"
               >
                 <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-10">
-                    <div
-                      className="relative w-14 h-14 rounded-2xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
-                      style={{ background: `${s.color}22`, color: s.color }}
-                    >
-                      {/* drip hanging off the icon box, echoing the background art */}
-                      <span
-                        className="absolute left-1/2 -bottom-2 -translate-x-1/2 w-2 h-3 rounded-b-full"
-                        style={{ background: s.color, opacity: 0.7 }}
-                      />
-                    </div>
-                    <span className="text-paper/30 text-sm font-mono">
-                      0{i + 1}
-                    </span>
-                  </div>
+                  
 
                   <h3 className="font-serif text-2xl lg:text-3xl tracking-tight text-paper mb-3 transition-colors group-hover:text-cyan">
                     {title}
