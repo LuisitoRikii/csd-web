@@ -1,111 +1,195 @@
-import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { ArrowUpRight, Brush, Palette, Sparkles, Hammer, Home, Building2, Wrench, ClipboardCheck, Box, Construction, Brush as Walls, Sparkle, ChevronRight } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Autoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
 import { serviceService } from '@/services'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { Images } from 'lucide-react'
+import { ServiceGalleryModal } from '@/components/ui/ServiceGalleryModal'
 
-const iconMap = {
-  Home, Building2, Palette, Sparkles, Brush, Hammer, Wrench, ClipboardCheck, Box, Construction, Walls, Sparkle,
+const fade = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
+  transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
 }
 
 export const Services = () => {
   const { t } = useTranslation()
   const { lang } = useLanguage()
+  const isEs = lang === 'es'
+  const [activeService, setActiveService] = useState(null)
+
   const { data: services = [] } = useQuery({
-    queryKey: ['services'],
+    queryKey: ['services-home'],
     queryFn: () => serviceService.list(),
   })
 
   return (
-    <section id="services" className="relative py-32 lg:py-48 text-paper">
-      <div className="container-x relative z-10">
-        <div className="max-w-3xl mb-20">
+    <section id="services" className="relative py-20 lg:py-28 bg-subtle">
+      <div className="container-x">
+        <div className="max-w-2xl mb-10 lg:mb-12">
           <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="font-serif text-display-lg tracking-tight text-paper"
+            {...fade}
+            className="font-serif text-display-md tracking-tight text-ink text-balance"
           >
             {t('services.title_l1')}
             <br />
-            <span className="italic font-light">{t('services.title_l2')}</span>
+            <span className="italic font-light text-charcoal">{t('services.title_l2')}</span>
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-6 text-paper/70 text-lg max-w-2xl leading-relaxed"
+            {...fade}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="mt-4 text-charcoal/80 text-base lg:text-lg max-w-xl leading-relaxed"
           >
             {t('services.subtitle')}
           </motion.p>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.slice(0, 9).map((s, i) => {
-            const Icon = iconMap[s.icon] || Brush
-            const title = lang === 'es' ? s.title_es : s.title_en
-            const desc = lang === 'es' ? s.description_es : s.description_en
+      <motion.div
+        {...fade}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="pl-5 md:pl-10 lg:pl-16"
+      >
+        <Swiper
+          modules={[Navigation, Autoplay]}
+          spaceBetween={28}
+          slidesPerView={1.3}
+          navigation
+          autoplay={{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+          loop
+          breakpoints={{
+            640:  { slidesPerView: 1.9, spaceBetween: 30 },
+            900:  { slidesPerView: 2.5, spaceBetween: 32 },
+            1200: { slidesPerView: 3.2, spaceBetween: 34 },
+            1440: { slidesPerView: 3.8, spaceBetween: 36 },
+          }}
+          style={{
+            '--swiper-navigation-color': '#0F1117',
+            '--swiper-navigation-size': '18px',
+            paddingRight: '5%',
+            paddingBottom: '20px',
+            paddingTop: '4px',
+          }}
+        >
+          {services.slice(0, 8).map((s, i) => {
+            const title = isEs ? s.title_es : s.title_en
+            const desc = isEs ? s.description_es : s.description_en
+            const img = s.image_url || s.cover_image
+            const galleryCount = (s.projects || []).length
+            const hasGallery = galleryCount > 0
 
             return (
-              <motion.div
-                key={s.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                className="group relative rounded-2xl border border-paper/15 bg-paper/[0.06] backdrop-blur-xl p-8 lg:p-9 transition-colors duration-500 hover:bg-paper/[0.1] overflow-hidden"
-              >
-                <div className="relative z-10">
-                  
+              <SwiperSlide key={s.id || s.slug || title} className="!h-auto">
+                <motion.div
+                  initial={{ opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.7, delay: (i % 4) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  className="h-full"
+                >
+                  <div className="group relative flex h-full flex-col">
+                    <button
+                      type="button"
+                      onClick={() => hasGallery && setActiveService(s)}
+                      aria-label={
+                        hasGallery
+                          ? isEs
+                            ? `Abrir galería de ${s.title_es}`
+                            : `Open gallery for ${s.title_en}`
+                          : title
+                      }
+                      className="block w-full text-left aspect-[4/3] rounded-2xl overflow-hidden bg-subtle relative focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-2 focus-visible:ring-offset-subtle"
+                    >
+                      {img ? (
+                        <img
+                          src={img}
+                          alt={title}
+                          loading="lazy"
+                          className="h-full w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center text-steel text-xs uppercase tracking-[0.18em]">
+                          {title}
+                        </div>
+                      )}
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/30 via-ink/0 to-ink/0 opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
 
-                  <h3 className="font-serif text-2xl lg:text-3xl tracking-tight text-paper mb-3 transition-colors group-hover:text-cyan">
-                    {title}
-                  </h3>
-                  <p className="text-paper/70 text-sm leading-relaxed mb-6">
-                    {desc}
-                  </p>
+                      {hasGallery && (
+                        <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-paper/95 backdrop-blur text-ink text-[10px] uppercase tracking-[0.16em] font-semibold">
+                          <Images size={10} aria-hidden="true" />
+                          {galleryCount}
+                        </span>
+                      )}
 
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-paper/50 group-hover:text-cyan transition-colors"
-                  >
-                    {t('services.cta_quote')}
-                    <ChevronRight size={14} className="transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out"
+                        style={{ background: 'linear-gradient(95deg, #91F2D7 0%, #8A04F0 50%, #D925A9 100%)' }}
+                      />
+                    </button>
 
-                <div
-                  className="absolute -right-10 -bottom-10 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-700"
-                  style={{ background: `${s.color}40` }}
-                />
-                <div
-                  className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: s.color }}
-                />
-              </motion.div>
+                    <div className="relative mt-5 h-[2px] w-full overflow-hidden bg-line/70 rounded-full">
+                      <span className="absolute inset-y-0 left-0 w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out bg-gradient-spectrum" />
+                    </div>
+
+                    <div className="mt-4 flex flex-1 flex-col">
+                      <h3 className="font-serif text-lg tracking-tight text-ink leading-tight transition-colors duration-300 group-hover:text-violet">
+                        {title}
+                      </h3>
+                      <p className="mt-2 flex-1 text-sm leading-snug text-charcoal/75 line-clamp-2">
+                        {desc}
+                      </p>
+
+                      {hasGallery ? (
+                        <button
+                          type="button"
+                          onClick={() => setActiveService(s)}
+                          className="mt-4 inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.16em] text-ink/60 hover:text-violet transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-2 focus-visible:ring-offset-subtle rounded-full w-fit"
+                        >
+                          {t('services.view_gallery')}
+                          <span className="tabular-nums opacity-70">{galleryCount}</span>
+                        </button>
+                      ) : (
+                        <Link
+                          to="/contact"
+                          className="mt-4 inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.16em] text-ink/60 hover:text-violet transition-colors w-fit"
+                        >
+                          {t('services.cta_quote')}
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              </SwiperSlide>
             )
           })}
-        </div>
+        </Swiper>
+      </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-12 text-center"
+      <motion.div
+        {...fade}
+        className="mt-10 text-center"
+      >
+        <Link
+          to="/services"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-ink text-paper text-sm font-medium hover:bg-graphite transition-all"
         >
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-paper text-ink text-sm font-medium hover:bg-cyan hover:text-paper transition-all"
-          >
-            {t('services.view_all')}
-            <ArrowUpRight size={16} />
-          </Link>
-        </motion.div>
-      </div>
+          {t('services.view_all')}
+        </Link>
+      </motion.div>
+
+      <ServiceGalleryModal
+        service={activeService}
+        open={!!activeService}
+        onClose={() => setActiveService(null)}
+      />
     </section>
   )
 }

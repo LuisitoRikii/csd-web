@@ -11,4 +11,5 @@ class DashboardStats(BaseModel):
     total_appointments: int
     pending_appointments: int
     total_messages: int
+    unread_messages: int = 0
     total_clients: int

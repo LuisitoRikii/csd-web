@@ -8,10 +8,12 @@ export const PageHero = ({ title, subtitle, accent }) => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="font-serif text-display-lg tracking-tight max-w-4xl"
+          className="font-serif text-display-lg tracking-tight max-w-4xl text-ink"
         >
           {title}{' '}
-          {accent && <span className="italic font-light text-transparent bg-clip-text bg-gradient-to-r from-cyan via-violet to-magenta">{accent}</span>}
+          {accent && (
+            <span className="italic font-light text-brand">{accent}</span>
+          )}
         </motion.h1>
         {subtitle && (
           <motion.p

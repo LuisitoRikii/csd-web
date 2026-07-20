@@ -4,50 +4,59 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Corporate palette - light, premium, airy
-        canvas: '#FAFAF7',         // Off-white background
-        cream: '#F5F3EE',          // Warm cream
-        paper: '#FFFFFF',
-        ink: '#0B0B12',            // Deep ink for text (not pure black)
-        graphite: '#1F1F28',
-        charcoal: '#3A3A45',
-        steel: '#6B6B7A',
-        silver: '#A8A8B5',
-        fog: '#E5E4E0',
-        line: '#DCDAD3',
-        // Accent — corporate triad (cyan / magenta / violet)
-        cyan: {
-          DEFAULT: '#06B6D4',
-          50: '#ECFEFF',
-          100: '#CFFAFE',
-          200: '#A5F3FC',
-          300: '#67E8F9',
-          400: '#22D3EE',
-          500: '#06B6D4',
-          600: '#0891B2',
-          700: '#0E7490',
-        },
-        magenta: {
-          DEFAULT: '#D946EF',
-          50: '#FDF4FF',
-          100: '#FAE8FF',
-          200: '#F5D0FE',
-          300: '#F0ABFC',
-          400: '#E879F9',
-          500: '#D946EF',
-          600: '#C026D3',
+        // Tri-color accent system — the only chromatic voices on top of white/black.
+        // mint (cool), violet (anchor), magenta (fire) — used as sharp accents,
+        // never as page-wide backgrounds.
+        mint: {
+          DEFAULT: '#91F2D7',
+          dark:    '#5BCFAE',
+          deep:    '#2DA88A',
+          tint:    '#E8FCF6',
         },
         violet: {
-          DEFAULT: '#8B5CF6',
-          50: '#F5F3FF',
-          100: '#EDE9FE',
-          200: '#DDD6FE',
-          300: '#C4B5FD',
-          400: '#A78BFA',
-          500: '#8B5CF6',
-          600: '#7C3AED',
-          700: '#6D28D9',
+          DEFAULT: '#8A04F0',
+          dark:    '#6A03BD',
+          deep:    '#3D0170',
+          light:   '#A535F2',
+          tint:    '#F4E8FE',
         },
+        magenta: {
+          DEFAULT: '#D925A9',
+          dark:    '#A91B82',
+          deep:    '#6B1152',
+          light:   '#E967C2',
+          tint:    '#FCEDF6',
+        },
+
+        // Surfaces — clean white-dominant canvas, subtle cool grays for rhythm.
+        canvas:  '#FFFFFF',
+        paper:   '#FFFFFF',
+        subtle:  '#F8F9FB',
+        muted:   '#F1F3F6',
+        ash:     '#EAECEF',
+
+        // Text hierarchy — pure neutral, near-black for max contrast on white.
+        ink:      '#000000',
+        graphite: '#0A0A0F',
+        charcoal: '#1F1F26',
+        steel:    '#5A5F6B',
+        silver:   '#9CA1AE',
+        line:     '#E5E7EB',
+
+        // Backwards-compatible single accent (mapped to violet for cohesion).
+        brand: {
+          DEFAULT: '#8A04F0',
+          dark:    '#6A03BD',
+          light:   '#A535F2',
+          tint:    '#F4E8FE',
+          ink:     '#000000',
+        },
+
+        // Status
+        ok:   '#16A34A',
+        warn: '#D97706',
+        err:  '#DC2626',
+        info: '#2563EB',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
@@ -56,18 +65,23 @@ export default {
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       fontSize: {
-        'display-xl': ['clamp(3.5rem, 9vw, 8rem)', { lineHeight: '0.95', letterSpacing: '-0.04em' }],
-        'display-lg': ['clamp(2.8rem, 7vw, 6rem)', { lineHeight: '1', letterSpacing: '-0.035em' }],
-        'display-md': ['clamp(2rem, 5vw, 4rem)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
-        'display-sm': ['clamp(1.5rem, 3vw, 2.5rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-        'eyebrow': ['0.75rem', { lineHeight: '1', letterSpacing: '0.2em' }],
+        'display-xl': ['clamp(3rem, 7.5vw, 6.5rem)', { lineHeight: '1', letterSpacing: '-0.035em' }],
+        'display-lg': ['clamp(2.4rem, 5.5vw, 4.5rem)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
+        'display-md': ['clamp(1.9rem, 4vw, 3.25rem)', { lineHeight: '1.1', letterSpacing: '-0.025em' }],
+        'display-sm': ['clamp(1.4rem, 2.4vw, 2rem)',   { lineHeight: '1.2', letterSpacing: '-0.02em' }],
+        'eyebrow': ['0.72rem', { lineHeight: '1.2', letterSpacing: '0.22em' }],
+      },
+      backgroundImage: {
+        // Signature tri-color gradient — locked order: mint → violet → magenta.
+        'gradient-spectrum': 'linear-gradient(95deg, #91F2D7 0%, #8A04F0 50%, #D925A9 100%)',
       },
       animation: {
-        'marquee': 'marquee 40s linear infinite',
-        'marquee-slow': 'marquee 60s linear infinite',
+        'marquee': 'marquee 50s linear infinite',
+        'marquee-slow': 'marquee 80s linear infinite',
         'float': 'float 6s ease-in-out infinite',
-        'blob': 'blob 20s ease-in-out infinite',
+        'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
         'spin-slow': 'spin 30s linear infinite',
+        'fade-up': 'fadeUp 0.8s ease-out both',
       },
       keyframes: {
         marquee: {
@@ -76,20 +90,34 @@ export default {
         },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-12px)' },
+          '50%': { transform: 'translateY(-10px)' },
         },
-        blob: {
-          '0%, 100%': { borderRadius: '60% 40% 30% 70%/60% 30% 70% 40%' },
-          '50%': { borderRadius: '30% 60% 70% 40%/50% 60% 30% 60%' },
+        pulseSoft: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.6' },
+        },
+        fadeUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       boxShadow: {
-        'soft': '0 4px 30px -8px rgba(11, 11, 18, 0.06)',
-        'lift': '0 24px 60px -20px rgba(11, 11, 18, 0.18)',
-        'glow': '0 0 60px -10px rgba(139, 92, 246, 0.4)',
+        'soft':   '0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 4px 16px -4px rgba(0, 0, 0, 0.06)',
+        'lift':   '0 24px 56px -20px rgba(0, 0, 0, 0.18)',
+        'card':   '0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 8px 24px -8px rgba(0, 0, 0, 0.08)',
+        'card-hover': '0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 16px 40px -12px rgba(0, 0, 0, 0.14)',
+        // Subtle tri-color glows — used sparingly to support the sober palette.
+        'glow-mint':    '0 12px 28px -10px rgba(145, 242, 215, 0.55)',
+        'glow-vibe':    '0 14px 36px -12px rgba(138, 4, 240, 0.38), 0 10px 24px -10px rgba(217, 37, 169, 0.30)',
+        'focus':        '0 0 0 3px rgba(138, 4, 240, 0.28)',
       },
       transitionTimingFunction: {
         'smooth': 'cubic-bezier(0.22, 1, 0.36, 1)',
+        'soft': 'cubic-bezier(0.4, 0, 0.2, 1)',
+      },
+      maxWidth: {
+        'container': '1440px',
+        'reading': '640px',
       },
     },
   },

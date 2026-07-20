@@ -8,9 +8,8 @@ import Lightbox from 'yet-another-react-lightbox'
 import 'yet-another-react-lightbox/styles.css'
 import { projectService, categoryService } from '@/services'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { Helmet } from 'react-helmet-async'
-import { APP_BASE_URL } from '@/config'
 import { PageHero } from '@/components/ui/PageHero'
+import { SEO, buildBreadcrumbSchema } from '@/components/ui/SEO'
 
 export const PortfolioPage = () => {
   const { t } = useTranslation()
@@ -39,12 +38,22 @@ export const PortfolioPage = () => {
     setLightbox({ open: true, slides: imgs, index: 0 })
   }
 
+  const title = lang === 'es' ? 'Portafolio | CSD Good Services' : 'Portfolio | CSD Good Services'
+  const description = lang === 'es'
+    ? 'Proyectos recientes de pintura, remodelación, epóxico y murales en Miami. Antes y después, cocinas, baños, fachadas y más.'
+    : 'Recent painting, remodeling, epoxy and mural projects in Miami. Before and after, kitchens, bathrooms, facades and more.'
+
   return (
     <>
-      <Helmet>
-        <title>{lang === 'es' ? 'Portafolio | CSD Good Services' : 'Portfolio | CSD Good Services'}</title>
-        <link rel="canonical" href={`${APP_BASE_URL}/portfolio`} />
-      </Helmet>
+      <SEO
+        title={title}
+        description={description}
+        path="/portfolio"
+        schema={buildBreadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Portfolio', path: '/portfolio' },
+        ])}
+      />
 
       <PageHero
         title={t('portfolio.title_l1')}
@@ -82,7 +91,7 @@ export const PortfolioPage = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: (i % 6) * 0.05 }}
-                  className={`mb-5 break-inside-avoid relative ${aspect} group overflow-hidden rounded-2xl bg-cream`}
+                  className={`mb-5 break-inside-avoid relative ${aspect} group overflow-hidden rounded-2xl bg-subtle`}
                   data-cursor="image"
                 >
                   <Link to={`/portfolio/${p.slug}`}>

@@ -3,13 +3,12 @@ import { useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
-import { Helmet } from 'react-helmet-async'
 import { CheckCircle2, Calendar as CalIcon } from 'lucide-react'
 import { appointmentService, serviceService } from '@/services'
 import { useLanguage } from '@/contexts/LanguageContext'
 import toast from 'react-hot-toast'
 import { PageHero } from '@/components/ui/PageHero'
-import { APP_BASE_URL } from '@/config'
+import { SEO, buildBreadcrumbSchema } from '@/components/ui/SEO'
 
 const TIME_SLOTS = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00']
 
@@ -47,10 +46,19 @@ export const AppointmentPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{lang === 'es' ? 'Agendar Visita | CSD' : 'Schedule Visit | CSD'}</title>
-        <link rel="canonical" href={`${APP_BASE_URL}/appointment`} />
-      </Helmet>
+      <SEO
+        title={lang === 'es' ? 'Agendar Visita | CSD Good Services' : 'Schedule a Visit | CSD Good Services'}
+        description={
+          lang === 'es'
+            ? 'Agenda una visita gratuita en Miami para tu proyecto de pintura, epóxico, murales o remodelación con CSD Good Services.'
+            : 'Book a free on-site visit in Miami for your painting, epoxy, murals or remodeling project with CSD Good Services.'
+        }
+        path="/appointment"
+        schema={buildBreadcrumbSchema([
+          { name: 'Home', path: '/' },
+          { name: 'Schedule a Visit', path: '/appointment' },
+        ])}
+      />
 
       <PageHero title={t('appointment_page.title')} subtitle={t('appointment_page.subtitle')} />
 
@@ -124,7 +132,7 @@ export const AppointmentPage = () => {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-3 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900"
+                className="flex items-center gap-3 p-4 rounded-2xl bg-brand-tint border border-brand-light text-brand"
               >
                 <CheckCircle2 size={20} />
                 <span className="text-sm">{t('appointment_page.success_desc')}</span>
@@ -137,10 +145,17 @@ export const AppointmentPage = () => {
   )
 }
 
-const Input = ({ label, error, children }) => (
-  <div>
-    <label className="text-xs tracking-[0.2em] uppercase text-steel mb-2 block">{label}</label>
-    {children}
-    {error && <span className="text-xs text-red-600 mt-1.5 block">Required</span>}
-  </div>
-)
+const Input = ({ label, error, children }) => {
+  const { t } = useTranslation()
+  return (
+    <div>
+      <label className="text-xs tracking-[0.2em] uppercase text-steel mb-2 block">{label}</label>
+      {children}
+      {error && (
+        <span className="text-xs text-red-600 mt-1.5 block">
+          {t('appointment_page.error_required')}
+        </span>
+      )}
+    </div>
+  )
+}

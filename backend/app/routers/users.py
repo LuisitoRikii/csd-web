@@ -4,7 +4,9 @@ from sqlalchemy import or_
 from typing import Optional
 from app.database.session import get_db
 from app.models.user import User
-from app.schemas.user import UserCreate, UserUpdate, UserResponse
+from app.schemas.user import (
+    UserCreate, UserUpdate, UserResponse, ResetPasswordRequest,
+)
 from app.middlewares.deps import get_current_user, require_admin
 from app.core.security import get_password_hash
 from app.core.config import settings
@@ -106,3 +108,19 @@ def delete_user(
     db.delete(user)
     db.commit()
     return None
+
+
+@router.post("/{user_id}/reset-password")
+def admin_reset_password(
+    user_id: int,
+    payload: ResetPasswordRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin),
+):
+    """Admin resets another user's password without needing the current one."""
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    user.hashed_password = get_password_hash(payload.new_password)
+    db.commit()
+    return {"success": True}

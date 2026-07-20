@@ -3,6 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X } from 'lucide-react'
 import { WHATSAPP_NUMBER } from '@/config'
 
+// Using the mint accent (instead of WhatsApp green) to stay on-palette.
+// Mint #91F2D7 reads as a fresh teal-green and remains visually similar enough
+// to communicate the WhatsApp affordance while honoring the tri-color system.
+const WA_BG = '#91F2D7'
+
 export const FloatingActions = () => {
   const [open, setOpen] = useState(false)
 
@@ -11,49 +16,72 @@ export const FloatingActions = () => {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            initial={{ opacity: 0, y: 16, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className="bg-paper rounded-2xl shadow-lift p-5 w-72 border border-line"
+            exit={{ opacity: 0, y: 8, scale: 0.97 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="bg-paper rounded-2xl shadow-lift w-72 border border-line overflow-hidden"
           >
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan via-violet to-magenta flex items-center justify-center text-paper font-bold text-sm">
-                CS
+            <div className="px-5 pt-5 pb-3 flex items-start justify-between gap-3 border-b border-line/70">
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-10 h-10 rounded-full text-ink flex items-center justify-center text-sm font-semibold"
+                  style={{ background: WA_BG }}
+                >
+                  CS
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-ink">CSD Good Services</p>
+                  <p className="text-xs text-steel flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-mint animate-pulse" />
+                    Typically replies in minutes
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-medium">CSD Studio</p>
-                <p className="text-xs text-steel flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Typically replies in minutes
-                </p>
-              </div>
+              <button
+                onClick={() => setOpen(false)}
+                className="text-steel hover:text-ink transition-colors"
+                aria-label="Close"
+              >
+                <X size={16} />
+              </button>
             </div>
-            <p className="text-sm text-charcoal mb-4">
-              Hello 👋 How can we help you transform your space today?
-            </p>
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hello! I'd like to learn more about your services.`}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-full bg-emerald-500 text-paper text-sm font-medium hover:bg-emerald-600 transition-colors"
-            >
-              <MessageCircle size={16} />
-              Start Chat
-            </a>
+            <div className="px-5 py-4">
+              <p className="text-sm text-charcoal leading-relaxed">
+                Hello — how can we help with your home today?
+              </p>
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hello! I'd like to learn more about your services.`}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-4 flex items-center justify-center gap-2 w-full py-3 rounded-full text-ink text-sm font-semibold transition-all hover:shadow-glow-mint"
+                style={{ background: WA_BG }}
+              >
+                <MessageCircle size={16} />
+                Start Chat on WhatsApp
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <button
+      <motion.button
         onClick={() => setOpen((o) => !o)}
-        className="w-14 h-14 rounded-full bg-ink text-paper shadow-lift flex items-center justify-center hover:bg-graphite transition-colors relative"
+        whileTap={{ scale: 0.92 }}
+        whileHover={{ scale: 1.06 }}
+        transition={{ type: 'spring', stiffness: 380, damping: 22 }}
+        className="relative w-14 h-14 rounded-full text-ink shadow-glow-mint flex items-center justify-center"
+        style={{ background: WA_BG }}
         aria-label="WhatsApp"
       >
-        {open ? <X size={20} /> : <MessageCircle size={22} />}
+        {open ? <X size={20} /> : <MessageCircle size={20} />}
         {!open && (
-          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-cyan animate-pulse" />
+          <span
+            className="absolute inset-0 rounded-full animate-ping opacity-30"
+            style={{ background: WA_BG }}
+          />
         )}
-      </button>
+      </motion.button>
     </div>
   )
 }

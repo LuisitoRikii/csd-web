@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from app.database.session import SessionLocal, Base
 import app.database.base  # noqa: F401  (ensures all models are registered with Base)
 from app.models.user import User
-from app.models.service import Service
+from app.models.service import Service, ServiceProject
 from app.models.category import Category
 from app.models.project import Project, ProjectImage
 from app.models.setting import SiteSettings
@@ -10,12 +10,184 @@ from app.models.blog import BlogPost
 from app.core.security import get_password_hash
 from app.core.config import settings
 from datetime import datetime
+import json
 
 # All Unsplash images verified 200 OK for the CSD Good Services site.
 # These are real photos of murals, painting, epoxy, remodeling and interiors.
 
 HERO_FALLBACK = "https://images.unsplash.com/photo-1559563458-527698bf5295?w=2400&auto=format&fit=crop&q=85"
 ABOUT_IMAGE = "https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1600&auto=format&fit=crop&q=85"
+
+
+# === Site-wide home content (stored as JSON in SiteSettings) ===
+
+MARQUEE_ITEMS = [
+    "Interior Painting",
+    "Exterior Painting",
+    "Home Remodeling",
+    "Epoxy Resin Floors",
+    "Epoxy Countertops",
+    "Custom Murals",
+    "Home Repairs",
+    "General Maintenance",
+    "Property Cleaning",
+    "Commercial Painting",
+]
+
+WHY_US_REASONS = [
+    {
+        "icon": "ShieldCheck",
+        "title_en": "Licensed & insured",
+        "title_es": "Licenciados y asegurados",
+        "body_en": "Full general contracting license and liability coverage on every project.",
+        "body_es": "Licencia completa de contratista general y cobertura de responsabilidad.",
+    },
+    {
+        "icon": "Clock4",
+        "title_en": "Respect for your time",
+        "title_es": "Respeto por tu tiempo",
+        "body_en": "Crews arrive on time, workdays are scheduled and timelines are written.",
+        "body_es": "Equipos puntuales, jornadas planificadas y plazos por escrito.",
+    },
+    {
+        "icon": "Wallet",
+        "title_en": "Transparent pricing",
+        "title_es": "Precios transparentes",
+        "body_en": "Itemized quotes. No hidden fees. Change orders you actually approve.",
+        "body_es": "Cotizaciones por ítems. Sin cargos ocultos. Cambios que apruebas.",
+    },
+]
+
+PROCESS_STEPS = [
+    {
+        "title_en": "Consultation",
+        "title_es": "Consulta",
+        "desc_en": "We listen to your goals, walk the space and define the scope together — on-site or virtual.",
+        "desc_es": "Escuchamos tus objetivos, recorremos el espacio y definimos el alcance juntos — en sitio o virtual.",
+        "icon": "ClipboardList",
+        "color": "#91F2D7",
+        "tone": "mint",
+    },
+    {
+        "title_en": "Proposal",
+        "title_es": "Propuesta",
+        "desc_en": "A detailed, itemized quote with timeline, materials and phases — no hidden costs.",
+        "desc_es": "Cotización detallada y por ítems, con plazos, materiales y fases — sin costos ocultos.",
+        "icon": "FileText",
+        "color": "#8A04F0",
+        "tone": "violet",
+    },
+    {
+        "title_en": "Execution",
+        "title_es": "Ejecución",
+        "desc_en": "Senior crew on site. Daily progress. Respectful of your home or business.",
+        "desc_es": "Equipo senior en obra. Avance diario. Respeto por tu hogar o negocio.",
+        "icon": "Hammer",
+        "color": "#D925A9",
+        "tone": "magenta",
+    },
+    {
+        "title_en": "Walk-through",
+        "title_es": "Recorrido final",
+        "desc_en": "Final inspection together. Every detail confirmed before we leave.",
+        "desc_es": "Inspección final juntos. Cada detalle confirmado antes de irnos.",
+        "icon": "CheckCircle2",
+        "color": "#91F2D7",
+        "tone": "mint",
+    },
+]
+
+BEFORE_AFTER_PAIRS = [
+    {
+        "key": "kitchen",
+        "tag": "tag_kitchen",
+        "title_en": "Pinecrest kitchen",
+        "title_es": "Cocina en Pinecrest",
+        "before": "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=1200&auto=format&fit=crop&q=85",
+        "after": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&auto=format&fit=crop&q=85",
+        "scope_en": "Full layout rework · cabinets · island · quartz",
+        "scope_es": "Reestructuración completa · gabinetes · isla · cuarzo",
+    },
+    {
+        "key": "bathroom",
+        "tag": "tag_bathroom",
+        "title_en": "Aventura primary bath",
+        "title_es": "Baño principal en Aventura",
+        "before": "https://images.unsplash.com/photo-1556909190-3c0e6ad26c78?w=1200&auto=format&fit=crop&q=85",
+        "after": "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&auto=format&fit=crop&q=85",
+        "scope_en": "Walk-in shower · porcelain tile · custom vanity",
+        "scope_es": "Ducha walk-in · porcelanato · vanidad a medida",
+    },
+    {
+        "key": "exterior",
+        "tag": "tag_exterior",
+        "title_en": "Coral Gables facade",
+        "title_es": "Fachada en Coral Gables",
+        "before": "https://images.unsplash.com/photo-1580587771525-78b9d27a32cc?w=1200&auto=format&fit=crop&q=85",
+        "after": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200&auto=format&fit=crop&q=85",
+        "scope_en": "Exterior repaint · wood repair · new entry detail",
+        "scope_es": "Pintura exterior · reparación de madera · nuevo acceso",
+    },
+    {
+        "key": "living",
+        "tag": "tag_living",
+        "title_en": "Coconut Grove living",
+        "title_es": "Sala en Coconut Grove",
+        "before": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1200&auto=format&fit=crop&q=85",
+        "after": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&auto=format&fit=crop&q=85",
+        "scope_en": "Open-concept reconfiguration · new flooring · paint",
+        "scope_es": "Reconfiguración abierta · nuevo piso · pintura",
+    },
+    {
+        "key": "bedroom",
+        "tag": "tag_bedroom",
+        "title_en": "Brickell guest bedroom",
+        "title_es": "Habitación en Brickell",
+        "before": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&auto=format&fit=crop&q=85",
+        "after": "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1200&auto=format&fit=crop&q=85",
+        "scope_en": "Drywall finishing · paint · custom closet",
+        "scope_es": "Acabado de drywall · pintura · clóset a medida",
+    },
+]
+
+VIDEOS_LIST = [
+    {
+        "id": "kitchen",
+        "label_en": "Kitchen Remodel · Time-lapse",
+        "label_es": "Remodelación de Cocina · Time-lapse",
+        "poster": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&auto=format&fit=crop&q=85",
+        "src": "https://cdn.pixabay.com/video/2022/03/27/113049-693920814_large.mp4",
+    },
+    {
+        "id": "painting",
+        "label_en": "Exterior Repaint · Crew at Work",
+        "label_es": "Pintura Exterior · Equipo en Obra",
+        "poster": "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1600&auto=format&fit=crop&q=85",
+        "src": "https://cdn.pixabay.com/video/2020/03/27/34125-399680914_large.mp4",
+    },
+    {
+        "id": "construction",
+        "label_en": "Foundation to Finish · Walkthrough",
+        "label_es": "De Cimientos a Acabados · Recorrido",
+        "poster": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&auto=format&fit=crop&q=85",
+        "src": "https://cdn.pixabay.com/video/2018/11/25/19449-303154154_large.mp4",
+    },
+]
+
+HOME_ABOUT_QUOTE_EN = '"We work as one team — one schedule, one source of accountability, one standard of quality."'
+HOME_ABOUT_QUOTE_ES = '"Trabajamos como un solo equipo: un cronograma, una fuente de responsabilidad, una garantía de calidad."'
+
+HOME_ABOUT_SIDE_NOTE_EN = (
+    "Today we offer complete solutions: painting, remodeling, epoxy resin, custom murals, "
+    "repairs, cleaning and recurring property maintenance — for homeowners, businesses and "
+    "property managers across South Florida."
+)
+
+HOME_ABOUT_SIDE_NOTE_ES = (
+    "Hoy ofrecemos soluciones integrales: pintura, remodelación, resina epóxica, murales personalizados, "
+    "reparaciones, limpieza y mantenimiento recurrente — para propietarios, negocios y administradores "
+    "de propiedades en todo el sur de Florida."
+)
 
 
 def seed_data():
@@ -25,6 +197,7 @@ def seed_data():
         _seed_categories(db)
         _seed_services(db)
         _seed_projects(db)
+        _seed_service_projects(db)
         _seed_blog(db)
         _seed_settings(db)
         db.commit()
@@ -516,6 +689,55 @@ def _seed_projects(db: Session):
             db.add(ProjectImage(project_id=project.id, image_url=img, order=idx))
 
 
+def _seed_service_projects(db: Session):
+    """Associate projects with services so each service has a gallery in the modal."""
+    if db.query(ServiceProject).count() > 0:
+        return
+
+    def add(service_slug, project_slug, order):
+        s = db.query(Service).filter(Service.slug == service_slug).first()
+        p = db.query(Project).filter(Project.slug == project_slug).first()
+        if s and p:
+            db.add(ServiceProject(service_id=s.id, project_id=p.id, order=order))
+
+    # Painting
+    add("residential-painting", "minimalist-family-home", 0)
+    add("residential-painting", "contemporary-penthouse", 1)
+    add("residential-painting", "restaurant-feature-wall", 2)
+
+    # Commercial Painting
+    add("commercial-painting", "restaurant-feature-wall", 0)
+    add("commercial-painting", "boutique-office", 1)
+    add("commercial-painting", "wynwood-restaurant-mural", 2)
+
+    # Artistic Murals
+    add("artistic-murals", "ocean-inspired-mural", 0)
+    add("artistic-murals", "wynwood-restaurant-mural", 1)
+    add("artistic-murals", "kids-room-dream-wall", 2)
+    add("artistic-murals", "boutique-office", 3)
+
+    # Epoxy Flooring
+    add("epoxy-flooring", "metallic-epoxy-garage", 0)
+    add("epoxy-flooring", "marble-epoxy-bathroom", 1)
+
+    # Epoxy Walls
+    add("epoxy-walls", "marble-epoxy-bathroom", 0)
+    add("epoxy-walls", "metallic-epoxy-garage", 1)
+
+    # Epoxy Countertops
+    add("epoxy-countertops", "river-epoxy-countertop", 0)
+    add("epoxy-countertops", "marble-epoxy-bathroom", 1)
+
+    # Remodeling
+    add("remodeling", "waterfront-modern-villa", 0)
+    add("remodeling", "contemporary-penthouse", 1)
+    add("remodeling", "open-plan-loft", 2)
+
+    # Renovations
+    add("renovations", "open-plan-loft", 0)
+    add("renovations", "waterfront-modern-villa", 1)
+
+
 def _seed_blog(db: Session):
     if db.query(BlogPost).count() > 0:
         return
@@ -585,21 +807,42 @@ def _seed_settings(db: Session):
         {"key": "contact_address", "value": "8215 NW 64th Street, Medley, FL 33166", "group": "contact", "label_en": "Address", "label_es": "Dirección"},
         {"key": "contact_hours_en", "value": "Mon-Sat: 8:00 AM - 6:00 PM", "group": "contact", "label_en": "Hours (EN)", "label_es": "Horario (EN)"},
         {"key": "contact_hours_es", "value": "Lun-Sáb: 8:00 AM - 6:00 PM", "group": "contact", "label_en": "Hours (ES)", "label_es": "Horario (ES)"},
-        {"key": "social_instagram", "value": "https://instagram.com/csdgoodservices", "group": "social", "label_en": "Instagram", "label_es": "Instagram"},
+        {"key": "social_instagram", "value": "https://www.instagram.com/csd_good_services/", "group": "social", "label_en": "Instagram", "label_es": "Instagram"},
         {"key": "social_facebook", "value": "https://facebook.com/csdgoodservices", "group": "social", "label_en": "Facebook", "label_es": "Facebook"},
         {"key": "social_tiktok", "value": "https://tiktok.com/@csdgoodservices", "group": "social", "label_en": "TikTok", "label_es": "TikTok"},
         {"key": "social_youtube", "value": "", "group": "social", "label_en": "YouTube", "label_es": "YouTube"},
-        {"key": "hero_video_url", "value": "", "group": "media", "label_en": "Hero Video URL", "label_es": "URL Video Hero"},
+        {"key": "hero_video_url", "value": "https://cdn.pixabay.com/video/2020/03/27/34125-399680914_large.mp4", "group": "media", "label_en": "Hero Video URL", "label_es": "URL Video Hero"},
         {"key": "hero_image_url", "value": HERO_FALLBACK, "group": "media", "label_en": "Hero Image", "label_es": "Imagen Hero"},
         {"key": "about_image_url", "value": ABOUT_IMAGE, "group": "media", "label_en": "About Image", "label_es": "Imagen Nosotros"},
         {"key": "google_maps_embed", "value": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.7!2d-80.325!3d25.825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b1234567890%3A0x0!2s8215%20NW%2064th%20St%2C%20Medley%2C%20FL%2033166!5e0!3m2!1sen!2sus!4v1700000000000", "group": "media", "label_en": "Google Maps Embed", "label_es": "Embed Google Maps"},
+
+        # === Home section content (JSON-encoded for rich structure) ===
+        {"key": "home_marquee_items", "value": json.dumps(MARQUEE_ITEMS), "group": "media", "label_en": "Marquee Items (JSON array)", "label_es": "Items Marquee (JSON)"},
+        {"key": "home_why_us_reasons", "value": json.dumps(WHY_US_REASONS), "group": "media", "label_en": "Why Us Reasons (JSON array)", "label_es": "Reasons Why Us (JSON)"},
+        {"key": "home_process_steps", "value": json.dumps(PROCESS_STEPS), "group": "media", "label_en": "Process Steps (JSON array)", "label_es": "Pasos del Proceso (JSON)"},
+        {"key": "home_before_after_pairs", "value": json.dumps(BEFORE_AFTER_PAIRS), "group": "media", "label_en": "Before/After Pairs (JSON array)", "label_es": "Pares Antes/Después (JSON)"},
+        {"key": "home_videos_list", "value": json.dumps(VIDEOS_LIST), "group": "media", "label_en": "Videos List (JSON array)", "label_es": "Lista de Videos (JSON)"},
+        {"key": "home_about_quote_en", "value": HOME_ABOUT_QUOTE_EN, "group": "media", "label_en": "About Editorial Quote (EN)", "label_es": "Cita Editorial About (EN)"},
+        {"key": "home_about_quote_es", "value": HOME_ABOUT_QUOTE_ES, "group": "media", "label_en": "About Editorial Quote (ES)", "label_es": "Cita Editorial About (ES)"},
+        {"key": "home_about_side_note_en", "value": HOME_ABOUT_SIDE_NOTE_EN, "group": "media", "label_en": "About Side Note (EN)", "label_es": "Nota lateral About (EN)"},
+        {"key": "home_about_side_note_es", "value": HOME_ABOUT_SIDE_NOTE_ES, "group": "media", "label_en": "About Side Note (ES)", "label_es": "Nota lateral About (ES)"},
+
         {"key": "seo_meta_title_en", "value": "CSD Good Services | Premium Space Transformations", "group": "seo", "label_en": "SEO Title (EN)", "label_es": "Título SEO (EN)"},
         {"key": "seo_meta_title_es", "value": "CSD Good Services | Transformaciones Premium de Espacios", "group": "seo", "label_en": "SEO Title (ES)", "label_es": "Título SEO (ES)"},
         {"key": "seo_meta_description_en", "value": "Artistic murals, epoxy flooring, remodeling and premium painting in Miami. Transform your space with CSD Good Services.", "group": "seo", "label_en": "SEO Description (EN)", "label_es": "Descripción SEO (EN)"},
         {"key": "seo_meta_description_es", "value": "Murales artísticos, pisos epóxicos, remodelaciones y pintura premium en Miami. Transforma tu espacio con CSD Good Services.", "group": "seo", "label_en": "SEO Description (ES)", "label_es": "Descripción SEO (ES)"},
     ]
     for s in defaults:
-        if not db.query(SiteSettings).filter(SiteSettings.key == s["key"]).first():
+        existing = db.query(SiteSettings).filter(SiteSettings.key == s["key"]).first()
+        if existing:
+            # Update mutable media/contact/social defaults in place so existing
+            # DBs pick up URL corrections (e.g. social handle changes). Skip
+            # if the admin has customized the value away from the seed default.
+            if s["key"] in {"social_instagram", "social_facebook", "social_tiktok", "social_youtube",
+                             "contact_phone", "contact_email", "contact_whatsapp",
+                             "contact_address", "contact_hours_en", "contact_hours_es"}:
+                existing.value = s["value"]
+        else:
             db.add(SiteSettings(**s))
 
 

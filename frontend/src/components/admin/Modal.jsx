@@ -36,7 +36,7 @@ export const Modal = ({ open, onClose, title, children, size = 'md' }) => {
               {title && (
                 <div className="flex items-center justify-between p-6 border-b border-line">
                   <h2 className="font-serif text-2xl tracking-tight">{title}</h2>
-                  <button onClick={onClose} className="p-2 hover:bg-cream rounded-full transition-colors">
+                  <button onClick={onClose} className="p-2 hover:bg-subtle rounded-full transition-colors">
                     <X size={18} />
                   </button>
                 </div>

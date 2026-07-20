@@ -10,81 +10,157 @@
 
   html {
     scroll-behavior: smooth;
-    background: #FAFAF7;
-    color: #0B0B12;
+    background: #FFFFFF;
+    color: #000000;
+    color-scheme: light;
+    text-rendering: optimizeLegibility;
   }
 
   body {
-    background: #FAFAF7;
-    color: #0B0B12;
+    background: #FFFFFF;
+    color: #000000;
     font-family: 'Inter', system-ui, sans-serif;
-    font-feature-settings: 'cv11', 'ss01', 'ss03';
-    overflow-x: hidden;
+    font-feature-settings: 'cv11', 'ss01';
+    /* `overflow-x: clip` prevents horizontal scrollbar without creating a
+       scrolling container — unlike `hidden`, it does NOT break `position:
+       sticky` on descendants (Safari + Chrome both honor this). */
+    overflow-x: clip;
+  }
+
+  .skip-link {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    background: #000000;
+    color: #FFFFFF;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: top 200ms ease;
+  }
+  .skip-link:focus {
+    top: 1rem;
+    outline: 2px solid #8A04F0;
+    outline-offset: 2px;
+  }
+
+  :focus-visible {
+    outline: 2px solid #8A04F0;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid #8A04F0;
+    outline-offset: 3px;
   }
 
   ::selection {
-    background: #0B0B12;
-    color: #FAFAF7;
+    background: #8A04F0;
+    color: #FFFFFF;
   }
 
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(11, 11, 18, 0.15);
-    border-radius: 10px;
-    border: 2px solid transparent;
-    background-clip: padding-box;
+    background: rgba(0, 0, 0, 0.18);
+    border-radius: 8px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(11, 11, 18, 0.3);
-    background-clip: padding-box;
+    background: rgba(0, 0, 0, 0.30);
   }
 
   h1, h2, h3, h4 {
     font-family: 'Fraunces', Georgia, serif;
-    font-weight: 500;
-    letter-spacing: -0.025em;
+    font-weight: 400;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer components {
-  /* Container */
   .container-x {
     @apply max-w-[1440px] mx-auto px-5 md:px-10 lg:px-16;
   }
 
-  /* Eyebrow label */
-  .eyebrow {
-    @apply text-eyebrow font-medium uppercase tracking-[0.2em];
+  /* Gradient text utility — applied via bg-clip on a span.
+     Order is strict: mint → violet → magenta (#91F2D7 → #8A04F0 → #D925A9). */
+  .text-gradient {
+    background: linear-gradient(95deg, #91F2D7 0%, #8A04F0 50%, #D925A9 100%);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+            color: transparent;
   }
 
-  /* Light noise overlay */
-  .grain::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-    opacity: 0.05;
-    pointer-events: none;
-    z-index: 1;
-    mix-blend-mode: multiply;
-  }
-
-  /* Premium button */
+  /* Primary CTA — sober gradient pill, spectrum order locked */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-ink text-paper font-medium text-sm tracking-wide transition-all duration-500 ease-smooth hover:shadow-lift hover:bg-graphite relative overflow-hidden;
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-paper font-medium text-sm tracking-wide transition-all duration-500 ease-smooth;
+    background: linear-gradient(95deg, #91F2D7 0%, #8A04F0 50%, #D925A9 100%);
+    background-size: 200% 100%;
+    background-position: 0% 50%;
+  }
+  .btn-primary:hover {
+    background-position: 100% 50%;
+    transform: translateY(-1px);
+  }
+  .btn-primary:focus-visible {
+    outline: 2px solid #8A04F0;
+    outline-offset: 3px;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-transparent text-ink border border-ink/15 font-medium text-sm tracking-wide transition-all duration-500 ease-smooth hover:bg-ink hover:text-paper hover:border-ink;
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-transparent text-ink border border-ink/20 font-medium text-sm tracking-wide transition-all duration-500 ease-smooth hover:bg-ink hover:text-paper hover:border-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
   }
 
-  /* Underline link */
+  .btn-light {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-paper text-ink font-medium text-sm tracking-wide transition-all duration-500 ease-smooth hover:bg-subtle hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
+  }
+
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full border border-paper/30 text-paper font-medium text-sm tracking-wide transition-all duration-500 ease-smooth hover:bg-paper/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-paper focus-visible:ring-offset-2 focus-visible:ring-offset-ink;
+  }
+
+  /* Marquee */
+  .marquee {
+    display: flex;
+    animation: marquee 50s linear infinite;
+  }
+
+  /* Card */
+  .card-soft {
+    @apply relative overflow-hidden rounded-2xl bg-paper border border-line transition-all duration-500 ease-smooth;
+  }
+  .card-soft:hover {
+    border-color: rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.05), 0 16px 40px -12px rgba(0, 0, 0, 0.12);
+  }
+
+  .bento-tile {
+    @apply relative overflow-hidden rounded-3xl bg-paper border border-line transition-all duration-500 ease-smooth;
+  }
+
+  .figure-frame {
+    @apply relative overflow-hidden rounded-2xl bg-muted;
+  }
+
+  .input-base {
+    @apply w-full px-4 py-3.5 rounded-2xl border border-line bg-paper text-sm focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/15 transition-colors placeholder:text-steel/60;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full bg-paper border border-line text-xs font-medium tracking-wide;
+  }
+
+  /* Gradient underline link — the underline IS the brand */
   .link-underline {
     @apply relative inline-flex items-center gap-1 text-ink transition-colors;
   }
@@ -110,98 +186,54 @@
     50.01% { transform: scaleX(0); transform-origin: left; }
     100% { transform: scaleX(1); transform-origin: left; }
   }
-
-  /* Card hover */
-  .card-hover {
-    @apply transition-all duration-700 ease-smooth;
-  }
-  .card-hover:hover {
-    transform: translateY(-6px);
-  }
-
-  /* Marquee */
-  .marquee {
-    display: flex;
-    animation: marquee 40s linear infinite;
-  }
-
-  /* Section divider — paint stroke */
-  .stroke-divider {
-    height: 60px;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  /* Bento tile */
-  .bento-tile {
-    @apply relative overflow-hidden rounded-3xl bg-paper border border-line/60 transition-all duration-700 ease-smooth;
-  }
-  .bento-tile:hover {
-    border-color: rgba(11, 11, 18, 0.15);
-  }
-
-  /* Editorial figure */
-  .figure-frame {
-    @apply relative overflow-hidden rounded-2xl bg-cream;
-  }
-
-  /* Input — used across forms */
-  .input-base {
-    @apply w-full px-4 py-3.5 rounded-2xl border border-line bg-paper text-sm focus:outline-none focus:border-ink/40 transition-colors placeholder:text-steel/60;
-  }
-
-  /* Glass chip */
-  .chip {
-    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full bg-paper border border-line text-xs font-medium tracking-wide;
-  }
-
-  /* Outline typography (display) */
-  .text-outline {
-    -webkit-text-stroke: 1px rgba(11, 11, 18, 0.25);
-    color: transparent;
-  }
-
-  /* Quote mark */
-  .quote-mark::before {
-    content: '“';
-    @apply text-magenta font-serif;
-  }
-
-  /* Custom cursor hidden on small screens */
-  @media (max-width: 1024px) {
-    .custom-cursor { display: none; }
-  }
 }
 
 @layer utilities {
   .bg-grid {
-    background-image: linear-gradient(to right, rgba(11, 11, 18, 0.04) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(11, 11, 18, 0.04) 1px, transparent 1px);
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
   .bg-dots {
-    background-image: radial-gradient(rgba(11, 11, 18, 0.08) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
     background-size: 24px 24px;
   }
 
-  /* Parallax helper */
-  .parallax-slow { will-change: transform; }
+  .text-balance {
+    text-wrap: balance;
+  }
 
-  /* Smooth scroll container */
+  .parallax-slow { will-change: transform; }
   .scroll-smooth { scroll-behavior: smooth; }
 
-  /* Text reveal mask */
-  .text-reveal {
-    background: linear-gradient(90deg, transparent, #0B0B12 50%, transparent);
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
+  .text-outline {
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.18);
     color: transparent;
-    animation: shimmer 4s linear infinite;
   }
-  @keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
+
+  .scrim-dark {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.50) 100%);
+  }
+  .scrim-left {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.08) 60%, transparent 100%);
+  }
+  .scrim-violet {
+    background: linear-gradient(180deg, rgba(138, 4, 240, 0.0) 0%, rgba(106, 3, 189, 0.6) 100%);
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

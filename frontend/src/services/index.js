@@ -5,6 +5,7 @@ const unwrap = (p) => p.then((r) => r.data)
 export const authService = {
   login: (payload) => unwrap(api.post('/auth/login', payload)),
   me: () => unwrap(api.get('/auth/me')),
+  changePassword: (payload) => unwrap(api.post('/auth/change-password', payload)),
   logout: () => {
     localStorage.removeItem('csd_token')
     localStorage.removeItem('csd_user')
@@ -17,6 +18,7 @@ export const serviceService = {
   create: (data) => unwrap(api.post('/services', data)),
   update: (id, data) => unwrap(api.put(`/services/${id}`, data)),
   remove: (id) => unwrap(api.delete(`/services/${id}`)),
+  setProjects: (id, projectIds) => unwrap(api.put(`/services/${id}/projects`, projectIds)),
 }
 
 export const projectService = {
@@ -80,6 +82,31 @@ export const settingsService = {
 export const dashboardService = {
   stats: () => unwrap(api.get('/dashboard/stats')),
   recent: () => unwrap(api.get('/dashboard/recent')),
+  charts: (days = 30) => unwrap(api.get('/dashboard/charts', { params: { days } })),
+}
+
+export const filesService = {
+  tree: (path = '', depth = 3) =>
+    unwrap(api.get('/files/tree', { params: { path, depth } })),
+  diskUsage: () => unwrap(api.get('/files/disk-usage')),
+  downloadUrl: (path) => {
+    const base = API_BASE_URL.replace(/\/$/, '')
+    return `${base}/api/v1/files/download?path=${encodeURIComponent(path)}`
+  },
+  zipUrl: (path = '') => {
+    const base = API_BASE_URL.replace(/\/$/, '')
+    return `${base}/api/v1/files/download-zip?path=${encodeURIComponent(path)}`
+  },
+  upload: (file, path = '') => {
+    const form = new FormData()
+    form.append('file', file)
+    return unwrap(
+      api.post(`/files/upload?path=${encodeURIComponent(path)}`, form, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+    )
+  },
+  remove: (path) => unwrap(api.delete('/files', { params: { path } })),
 }
 
 export const userService = {
@@ -87,6 +114,8 @@ export const userService = {
   create: (data) => unwrap(api.post('/users', data)),
   update: (id, data) => unwrap(api.put(`/users/${id}`, data)),
   remove: (id) => unwrap(api.delete(`/users/${id}`)),
+  resetPassword: (id, newPassword) =>
+    unwrap(api.post(`/users/${id}/reset-password`, { new_password: newPassword })),
 }
 
 export const uploadService = {

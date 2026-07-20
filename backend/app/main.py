@@ -41,7 +41,7 @@ def create_app() -> FastAPI:
     from app.routers import (
         auth, users, services, categories, projects,
         quotes, appointments, blog, contact, uploads,
-        settings as settings_router, dashboard,
+        settings as settings_router, dashboard, files,
     )
 
     prefix = settings.API_V1_PREFIX
@@ -57,6 +57,7 @@ def create_app() -> FastAPI:
     app.include_router(uploads.router, prefix=prefix)
     app.include_router(settings_router.router, prefix=prefix)
     app.include_router(dashboard.router, prefix=prefix)
+    app.include_router(files.router, prefix=prefix)
 
     @app.get("/")
     def root():

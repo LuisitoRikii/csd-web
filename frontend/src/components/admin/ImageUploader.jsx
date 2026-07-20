@@ -36,7 +36,7 @@ export const ImageUploader = ({ value = [], onChange, multiple = true, maxFiles 
       <div
         {...getRootProps()}
         className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-colors ${
-          isDragActive ? 'border-cyan bg-cyan/5' : 'border-line bg-cream hover:border-ink/40'
+          isDragActive ? 'border-brand bg-brand/5' : 'border-line bg-subtle hover:border-ink/40'
         }`}
       >
         <input {...getInputProps()} />

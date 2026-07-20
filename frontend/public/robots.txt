@@ -1,3 +1,9 @@
 User-agent: *
 Allow: /
+
+# Block admin paths (admin runs on a separate subdomain in production;
+# this is a safety net in case it's ever served from the same origin).
+Disallow: /admin/
+Disallow: /api/
+
 Sitemap: https://csdgoodservices.com/sitemap.xml

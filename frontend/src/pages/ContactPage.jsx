@@ -4,13 +4,11 @@ import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { Mail, Phone, MapPin, Clock, CheckCircle2, ArrowUpRight, AlertCircle } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { Helmet } from 'react-helmet-async'
 import { contactService } from '@/services'
-import { BUSINESS } from '@/config'
+import { BUSINESS, WHATSAPP_NUMBER } from '@/config'
 import { useLanguage } from '@/contexts/LanguageContext'
-import { APP_BASE_URL } from '@/config'
-import { WHATSAPP_NUMBER } from '@/config'
 import { PageHero } from '@/components/ui/PageHero'
+import { SEO, buildBusinessSchema, buildBreadcrumbSchema } from '@/components/ui/SEO'
 
 export const ContactPage = () => {
   const { t } = useTranslation()
@@ -31,12 +29,19 @@ export const ContactPage = () => {
     }
   }
 
+  const title = lang === 'es' ? 'Contacto | CSD Good Services' : 'Contact | CSD Good Services'
+  const description = lang === 'es'
+    ? 'Contacta a CSD Good Services en Miami. Cotización gratis para pintura, epóxico, murales, remodelación y mantenimiento. Teléfono, email y WhatsApp.'
+    : 'Contact CSD Good Services in Miami. Free quotes for painting, epoxy, murals, remodeling and maintenance. Phone, email and WhatsApp available.'
+
   return (
     <>
-      <Helmet>
-        <title>{lang === 'es' ? 'Contacto | CSD Good Services' : 'Contact | CSD Good Services'}</title>
-        <link rel="canonical" href={`${APP_BASE_URL}/contact`} />
-      </Helmet>
+      <SEO
+        title={title}
+        description={description}
+        path="/contact"
+        schema={buildBusinessSchema(lang)}
+      />
 
       <PageHero title={t('contact_page.title')} subtitle={t('contact_page.subtitle')} />
 
@@ -49,7 +54,7 @@ export const ContactPage = () => {
                   <input
                     {...register('name', { required: true })}
                     className="input-base"
-                    placeholder="Jane Doe"
+                    placeholder={t('contact_page.placeholder_name')}
                   />
                 </Input>
                 <Input label={t('contact_page.email')} error={errors.email} required>
@@ -57,21 +62,21 @@ export const ContactPage = () => {
                     type="email"
                     {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
                     className="input-base"
-                    placeholder="jane@email.com"
+                    placeholder={t('contact_page.placeholder_email')}
                   />
                 </Input>
                 <Input label={t('contact_page.phone')} error={errors.phone}>
                   <input
                     {...register('phone')}
                     className="input-base"
-                    placeholder="+1 (555) 555-0123"
+                    placeholder={t('contact_page.placeholder_phone')}
                   />
                 </Input>
                 <Input label={t('contact_page.subject')} error={errors.subject}>
                   <input
                     {...register('subject')}
                     className="input-base"
-                    placeholder="Mural commission"
+                    placeholder={t('contact_page.placeholder_subject')}
                   />
                 </Input>
               </div>
@@ -81,7 +86,7 @@ export const ContactPage = () => {
                   {...register('message', { required: true, minLength: 10 })}
                   rows={6}
                   className="input-base resize-none"
-                  placeholder="Tell us about your space and your idea..."
+                  placeholder={t('contact_page.placeholder_message')}
                 />
               </Input>
 
@@ -98,7 +103,7 @@ export const ContactPage = () => {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-3 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900"
+                  className="flex items-center gap-3 p-4 rounded-2xl bg-brand-tint border border-brand-light text-brand"
                 >
                   <CheckCircle2 size={20} />
                   <span className="text-sm">{t('contact_page.success')}</span>
@@ -109,10 +114,10 @@ export const ContactPage = () => {
 
           <aside className="lg:col-span-5 space-y-8">
             <div className="space-y-5">
-              <ContactItem icon={MapPin} label="Address" value={BUSINESS.address} />
-              <ContactItem icon={Phone} label="Phone" value={BUSINESS.phone} href={`tel:${BUSINESS.phone}`} />
-              <ContactItem icon={Mail} label="Email" value={BUSINESS.email} href={`mailto:${BUSINESS.email}`} />
-              <ContactItem icon={Clock} label="Hours" value={BUSINESS.hours} />
+              <ContactItem icon={MapPin} label={t('contact_page.field_address')} value={BUSINESS.address} />
+              <ContactItem icon={Phone} label={t('contact_page.field_phone')} value={BUSINESS.phone} href={`tel:${BUSINESS.phone}`} />
+              <ContactItem icon={Mail} label={t('contact_page.field_email')} value={BUSINESS.email} href={`mailto:${BUSINESS.email}`} />
+              <ContactItem icon={Clock} label={t('contact_page.field_hours')} value={BUSINESS.hours} />
             </div>
 
             <a
@@ -122,15 +127,15 @@ export const ContactPage = () => {
               className="flex items-center justify-between p-6 rounded-3xl bg-emerald-500 text-paper hover:bg-emerald-600 transition-colors"
             >
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] opacity-80">Quick Chat</p>
-                <p className="font-serif text-2xl mt-1">WhatsApp</p>
+                <p className="text-xs uppercase tracking-[0.2em] opacity-80">{t('contact_page.whatsapp_label_1')}</p>
+                <p className="font-serif text-2xl mt-1">{t('contact_page.whatsapp_label_2')}</p>
               </div>
               <ArrowUpRight size={28} />
             </a>
 
             <div className="rounded-3xl overflow-hidden border border-line aspect-video">
               <iframe
-                title="Map"
+                title={t('contact_page.map_title')}
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.7!2d-80.325!3d25.825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b1234567890%3A0x0!2s8215%20NW%2064th%20St%2C%20Medley%2C%20FL%2033166!5e0!3m2!1sen!2sus"
                 className="w-full h-full"
                 style={{ border: 0 }}
@@ -144,25 +149,33 @@ export const ContactPage = () => {
   )
 }
 
-const Input = ({ label, error, required, children }) => (
-  <div>
-    <label className="text-xs tracking-[0.2em] uppercase text-steel mb-2 flex items-center gap-1">
-      {label}
-      {required && <span className="text-magenta">*</span>}
-    </label>
-    {children}
-    {error && (
-      <span className="text-xs text-red-600 mt-1.5 flex items-center gap-1.5">
-        <AlertCircle size={12} /> {error.type === 'required' ? 'Required' : error.type === 'minLength' ? 'Min 10 characters' : 'Invalid'}
-      </span>
-    )}
-  </div>
-)
+const Input = ({ label, error, required, children }) => {
+  const { t } = useTranslation()
+  return (
+    <div>
+      <label className="text-xs tracking-[0.2em] uppercase text-steel mb-2 flex items-center gap-1">
+        {label}
+        {required && <span className="text-ink/60">*</span>}
+      </label>
+      {children}
+      {error && (
+        <span className="text-xs text-red-600 mt-1.5 flex items-center gap-1.5">
+          <AlertCircle size={12} />
+          {error.type === 'required'
+            ? t('contact_page.error_required')
+            : error.type === 'pattern'
+              ? t('contact_page.error_invalid_email')
+              : t('common.invalid')}
+        </span>
+      )}
+    </div>
+  )
+}
 
 const ContactItem = ({ icon: Icon, label, value, href }) => {
   const content = (
     <>
-      <div className="w-11 h-11 rounded-full bg-cream flex items-center justify-center text-charcoal flex-shrink-0">
+      <div className="w-11 h-11 rounded-full bg-subtle flex items-center justify-center text-charcoal flex-shrink-0">
         <Icon size={18} strokeWidth={1.5} />
       </div>
       <div>

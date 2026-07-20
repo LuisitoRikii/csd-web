@@ -27,6 +27,7 @@ import { AdminBlogPage } from '@/pages/admin/AdminBlogPage'
 import { AdminMessagesPage } from '@/pages/admin/AdminMessagesPage'
 import { AdminSettingsPage } from '@/pages/admin/AdminSettingsPage'
 import { AdminUsersPage } from '@/pages/admin/AdminUsersPage'
+import { AdminFilesPage } from '@/pages/admin/AdminFilesPage'
 
 export const AppRoutes = () => {
   return (
@@ -128,9 +129,15 @@ export const AppRoutes = () => {
           path="/admin/settings"
           element={
             <ProtectedRoute>
-              
-                <AdminSettingsPage />
-              
+              <AdminSettingsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/files"
+          element={
+            <ProtectedRoute>
+              <AdminFilesPage />
             </ProtectedRoute>
           }
         />
@@ -138,9 +145,7 @@ export const AppRoutes = () => {
           path="/admin/users"
           element={
             <ProtectedRoute>
-              
-                <AdminUsersPage />
-              
+              <AdminUsersPage />
             </ProtectedRoute>
           }
         />
