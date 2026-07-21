@@ -29,10 +29,10 @@ export const AboutPage = () => {
     { key: 4, color: '#5B2A8F' },
   ]
 
-  const title = lang === 'es' ? 'Nosotros | CSD Good Services' : 'About | CSD Good Services'
+  const title = lang === 'es' ? 'Sobre CSD | Servicios del Hogar en Miami' : 'About | CSD Good Services'
   const description = lang === 'es'
-    ? 'Conoce al equipo detrás de CSD Good Services. Contratistas licenciados en Miami especializados en pintura, epóxico, murales y remodelación.'
-    : 'Meet the team behind CSD Good Services. Licensed Miami contractors specializing in painting, epoxy, murals and remodeling since 2014.'
+    ? 'CSD Good Services es una empresa de servicios del hogar en Miami: pintura, remodelación, limpieza y mantenimiento continuo. Un equipo para todo lo que tu casa necesita.'
+    : 'CSD Good Services is a Miami home services company for painting, remodeling, cleaning and ongoing maintenance. One team for everything your home needs.'
 
   return (
     <>
@@ -47,11 +47,11 @@ export const AboutPage = () => {
       />
 
       <PageHero
-        title={lang === 'es' ? 'Una empresa nacida' : 'A studio born from'}
-        accent={lang === 'es' ? 'de la pasión.' : 'obsession.'}
+        title={lang === 'es' ? 'Un equipo' : 'A trusted'}
+        accent={lang === 'es' ? 'de confianza para tu hogar.' : 'home services team.'}
       />
 
-      {/* Story */}
+      {/* Services we coordinate — replaces the old story block */}
       <section className="py-20 lg:py-32">
         <div className="container-x">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
@@ -75,7 +75,7 @@ export const AboutPage = () => {
             <div className="lg:col-span-5">
               <div className="rounded-3xl overflow-hidden aspect-[4/5]">
                 <img
-                  src={storyImage || "/d.jpg"}
+                  src={storyImage || "https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1600&auto=format&fit=crop&q=85"}
                   alt=""
                   className="w-full h-full object-cover"
                 />

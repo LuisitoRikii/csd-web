@@ -24,37 +24,37 @@ ABOUT_IMAGE = "https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1600&
 MARQUEE_ITEMS = [
     "Interior Painting",
     "Exterior Painting",
-    "Home Remodeling",
-    "Epoxy Resin Floors",
-    "Epoxy Countertops",
-    "Custom Murals",
-    "Home Repairs",
-    "General Maintenance",
-    "Property Cleaning",
-    "Commercial Painting",
+    "Bathroom Remodeling",
+    "Kitchen Remodeling",
+    "Window Cleaning",
+    "Pressure Washing",
+    "Pool Cleaning",
+    "Ceiling Cleaning",
+    "Property Maintenance",
+    "Drywall Repairs",
 ]
 
 WHY_US_REASONS = [
     {
-        "icon": "ShieldCheck",
-        "title_en": "Licensed & insured",
-        "title_es": "Licenciados y asegurados",
-        "body_en": "Full general contracting license and liability coverage on every project.",
-        "body_es": "Licencia completa de contratista general y cobertura de responsabilidad.",
+        "icon": "Users",
+        "title_en": "One trusted team",
+        "title_es": "Un equipo de confianza",
+        "body_en": "The same professional crew shows up every time. You get to know them, and they get to know your home.",
+        "body_es": "El mismo equipo profesional viene cada vez. Los conoces y conocen tu casa.",
     },
     {
         "icon": "Clock4",
-        "title_en": "Respect for your time",
-        "title_es": "Respeto por tu tiempo",
-        "body_en": "Crews arrive on time, workdays are scheduled and timelines are written.",
-        "body_es": "Equipos puntuales, jornadas planificadas y plazos por escrito.",
+        "title_en": "Reliable timing",
+        "title_es": "Puntualidad confiable",
+        "body_en": "Scheduled visits, on-time arrivals, and clear timelines. We tell you when something changes.",
+        "body_es": "Visitas programadas, llegadas puntuales y plazos claros. Te avisamos si algo cambia.",
     },
     {
         "icon": "Wallet",
         "title_en": "Transparent pricing",
         "title_es": "Precios transparentes",
-        "body_en": "Itemized quotes. No hidden fees. Change orders you actually approve.",
-        "body_es": "Cotizaciones por ítems. Sin cargos ocultos. Cambios que apruebas.",
+        "body_en": "Clear quotes, no hidden fees. You approve any change before we do it.",
+        "body_es": "Cotizaciones claras, sin cargos ocultos. Apruebas cualquier cambio antes de hacerlo.",
     },
 ]
 
@@ -62,35 +62,35 @@ PROCESS_STEPS = [
     {
         "title_en": "Consultation",
         "title_es": "Consulta",
-        "desc_en": "We listen to your goals, walk the space and define the scope together — on-site or virtual.",
-        "desc_es": "Escuchamos tus objetivos, recorremos el espacio y definimos el alcance juntos — en sitio o virtual.",
+        "desc_en": "We visit the space, listen to what you need and document the scope. Free of charge.",
+        "desc_es": "Vamos al espacio, escuchamos lo que necesitas y documentamos el alcance. Sin costo.",
         "icon": "ClipboardList",
         "color": "#91F2D7",
         "tone": "mint",
     },
     {
-        "title_en": "Proposal",
-        "title_es": "Propuesta",
-        "desc_en": "A detailed, itemized quote with timeline, materials and phases — no hidden costs.",
-        "desc_es": "Cotización detallada y por ítems, con plazos, materiales y fases — sin costos ocultos.",
+        "title_en": "Detailed quote",
+        "title_es": "Cotización detallada",
+        "desc_en": "A clear quote with timeline, materials and what's included. You know exactly what to expect.",
+        "desc_es": "Cotización clara con plazos, materiales y qué incluye. Sabes exactamente qué esperar.",
         "icon": "FileText",
         "color": "#8A04F0",
         "tone": "violet",
     },
     {
-        "title_en": "Execution",
-        "title_es": "Ejecución",
-        "desc_en": "Senior crew on site. Daily progress. Respectful of your home or business.",
-        "desc_es": "Equipo senior en obra. Avance diario. Respeto por tu hogar o negocio.",
+        "title_en": "Work day",
+        "title_es": "Jornada de trabajo",
+        "desc_en": "Professional crew, daily progress, clean job site. You know what's happening every day.",
+        "desc_es": "Cuadrilla profesional, avance diario, obra limpia. Sabes qué está pasando cada día.",
         "icon": "Hammer",
         "color": "#D925A9",
         "tone": "magenta",
     },
     {
-        "title_en": "Walk-through",
+        "title_en": "Walkthrough",
         "title_es": "Recorrido final",
-        "desc_en": "Final inspection together. Every detail confirmed before we leave.",
-        "desc_es": "Inspección final juntos. Cada detalle confirmado antes de irnos.",
+        "desc_en": "We inspect the work together, close the punch list and hand over warranty documents.",
+        "desc_es": "Revisamos el trabajo juntos, cerramos pendientes y entregamos garantía y documentos.",
         "icon": "CheckCircle2",
         "color": "#91F2D7",
         "tone": "mint",
@@ -174,19 +174,19 @@ VIDEOS_LIST = [
     },
 ]
 
-HOME_ABOUT_QUOTE_EN = '"We work as one team — one schedule, one source of accountability, one standard of quality."'
-HOME_ABOUT_QUOTE_ES = '"Trabajamos como un solo equipo: un cronograma, una fuente de responsabilidad, una garantía de calidad."'
+HOME_ABOUT_QUOTE_EN = '"One team for everything your home needs. Painting, remodeling, cleaning and maintenance — coordinated, reliable, easy."'
+HOME_ABOUT_QUOTE_ES = '"Un equipo para todo lo que tu hogar necesita. Pintura, remodelación, limpieza y mantenimiento — coordinado, confiable y fácil."'
 
 HOME_ABOUT_SIDE_NOTE_EN = (
-    "Today we offer complete solutions: painting, remodeling, epoxy resin, custom murals, "
-    "repairs, cleaning and recurring property maintenance — for homeowners, businesses and "
-    "property managers across South Florida."
+    "Today we offer painting, remodeling, deep cleaning and ongoing home maintenance — "
+    "for homeowners, property managers and businesses across Miami-Dade and Broward. "
+    "One team, one schedule, one number to call."
 )
 
 HOME_ABOUT_SIDE_NOTE_ES = (
-    "Hoy ofrecemos soluciones integrales: pintura, remodelación, resina epóxica, murales personalizados, "
-    "reparaciones, limpieza y mantenimiento recurrente — para propietarios, negocios y administradores "
-    "de propiedades en todo el sur de Florida."
+    "Hoy ofrecemos pintura, remodelación, limpieza profunda y mantenimiento continuo del hogar — "
+    "para propietarios, administradores de propiedades y negocios en Miami-Dade y Broward. "
+    "Un equipo, un cronograma, un número para llamar."
 )
 
 
@@ -225,10 +225,10 @@ def _seed_admin(db: Session):
 def _seed_categories(db: Session):
     categories = [
         {"slug": "painting", "name_en": "Painting", "name_es": "Pintura", "icon": "Paintbrush", "color": "#06B6D4", "order": 1, "description_en": "Professional interior & exterior painting", "description_es": "Pintura profesional interior y exterior"},
-        {"slug": "murals", "name_en": "Murals", "name_es": "Murales", "icon": "Palette", "color": "#D946EF", "order": 2, "description_en": "Custom artistic murals", "description_es": "Murales artísticos personalizados"},
-        {"slug": "epoxy", "name_en": "Epoxy", "name_es": "Resina Epóxica", "icon": "Sparkles", "color": "#8B5CF6", "order": 3, "description_en": "Epoxy flooring, walls & countertops", "description_es": "Pisos, paredes y mesones de resina epóxica"},
-        {"slug": "remodeling", "name_en": "Remodeling", "name_es": "Remodelación", "icon": "Hammer", "color": "#F97316", "order": 4, "description_en": "Complete space transformations", "description_es": "Transformación completa de espacios"},
-        {"slug": "cleaning", "name_en": "Cleaning", "name_es": "Limpieza", "icon": "Sparkle", "color": "#0EA5E9", "order": 5, "description_en": "Professional cleaning services", "description_es": "Servicios profesionales de limpieza"},
+        {"slug": "cleaning", "name_en": "Cleaning", "name_es": "Limpieza", "icon": "Sparkle", "color": "#0EA5E9", "order": 2, "description_en": "Professional cleaning services", "description_es": "Servicios profesionales de limpieza"},
+        {"slug": "remodeling", "name_en": "Remodeling", "name_es": "Remodelación", "icon": "Hammer", "color": "#F97316", "order": 3, "description_en": "Complete space transformations", "description_es": "Transformación completa de espacios"},
+        {"slug": "murals", "name_en": "Murals", "name_es": "Murales", "icon": "Palette", "color": "#D946EF", "order": 4, "description_en": "Custom artistic murals", "description_es": "Murales artísticos personalizados"},
+        {"slug": "epoxy", "name_en": "Epoxy", "name_es": "Resina Epóxica", "icon": "Sparkles", "color": "#8B5CF6", "order": 5, "description_en": "Epoxy flooring, walls & countertops", "description_es": "Pisos, paredes y mesones de resina epóxica"},
     ]
     for cat in categories:
         if not db.query(Category).filter(Category.slug == cat["slug"]).first():
@@ -241,10 +241,10 @@ def _seed_services(db: Session):
             "slug": "residential-painting",
             "title_en": "Residential Painting",
             "title_es": "Pintura Residencial",
-            "description_en": "Transform your home with premium painting services. Flawless finishes, color consultation and meticulous preparation.",
-            "description_es": "Transforma tu hogar con servicios de pintura premium. Acabados impecables, asesoría de color y preparación minuciosa.",
-            "long_description_en": "We treat every residential painting project as a unique creative expression. From color consulting to the final brushstroke, our craftsmen deliver finishes that elevate your living spaces.",
-            "long_description_es": "Tratamos cada proyecto residencial de pintura como una expresión creativa única. Desde la asesoría de color hasta la última pincelada, nuestros artesanos entregan acabados que elevan tus espacios.",
+            "description_en": "Interior and exterior painting for homes — repaints, color changes, accent walls and full finish work.",
+            "description_es": "Pintura interior y exterior para hogares — repintados, cambios de color, paredes de acento y acabados completos.",
+            "long_description_en": "From a single accent wall to a full home repaint, we handle interior and exterior residential painting with meticulous prep, premium materials and clean job sites. Same crew, on time.",
+            "long_description_es": "Desde una pared de acento hasta un repintado completo, manejamos pintura residencial interior y exterior con preparación minuciosa, materiales premium y obras limpias. La misma cuadrilla, a tiempo.",
             "icon": "Home",
             "image_url": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&auto=format&fit=crop&q=85",
             "long_image_url": "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1200&auto=format&fit=crop&q=85",
@@ -256,8 +256,10 @@ def _seed_services(db: Session):
             "slug": "commercial-painting",
             "title_en": "Commercial Painting",
             "title_es": "Pintura Comercial",
-            "description_en": "Elevate your brand experience with professional commercial painting. Minimal disruption, maximum impact.",
-            "description_es": "Eleva la experiencia de tu marca con pintura comercial profesional. Mínima interrupción, máximo impacto.",
+            "description_en": "Interior and exterior painting for offices, restaurants, retail and commercial properties.",
+            "description_es": "Pintura interior y exterior para oficinas, restaurantes, locales y propiedades comerciales.",
+            "long_description_en": "Office repaints, restaurant refreshes, retail buildouts — scheduled around your business hours with minimal disruption.",
+            "long_description_es": "Repintados de oficinas, refrescos de restaurantes, montajes de locales — programados alrededor del horario de tu negocio con mínima interrupción.",
             "icon": "Building2",
             "image_url": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&auto=format&fit=crop&q=85",
             "long_image_url": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&auto=format&fit=crop&q=85",
@@ -266,122 +268,204 @@ def _seed_services(db: Session):
             "is_featured": True,
         },
         {
-            "slug": "artistic-murals",
-            "title_en": "Artistic Murals",
-            "title_es": "Murales Artísticos",
-            "description_en": "Bespoke mural art that turns walls into statements. Painted by skilled artists, designed for your story.",
-            "description_es": "Arte mural a medida que convierte paredes en declaraciones. Pintado por artistas, diseñado para tu historia.",
-            "long_description_en": "Our mural artists collaborate with you from concept to execution. Each piece is hand-crafted, original and built to last — turning ordinary walls into unforgettable experiences.",
-            "long_description_es": "Nuestros artistas murales colaboran contigo del concepto a la ejecución. Cada pieza es hecha a mano, original y duradera — convirtiendo paredes ordinarias en experiencias inolvidables.",
-            "icon": "Palette",
-            "image_url": "https://images.unsplash.com/photo-1551524164-687a55dd1126?w=1200&auto=format&fit=crop&q=85",
-            "long_image_url": "https://images.unsplash.com/photo-1574169208507-84376144848b?w=1200&auto=format&fit=crop&q=85",
-            "color": "#D946EF",
+            "slug": "professional-cleaning",
+            "title_en": "Professional Cleaning",
+            "title_es": "Limpieza Profesional",
+            "description_en": "Deep, detail-focused cleaning for homes, offices, retail and investment properties.",
+            "description_es": "Limpieza profunda y detallada para hogares, oficinas, locales y propiedades de inversión.",
+            "long_description_en": "Weekly, bi-weekly, monthly or one-time deep cleaning. Professional equipment, eco-friendly products, and the same reliable crew each visit.",
+            "long_description_es": "Limpieza semanal, quincenal, mensual o de una vez. Equipo profesional, productos ecológicos y la misma cuadrilla confiable en cada visita.",
+            "icon": "Sparkle",
+            "image_url": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&auto=format&fit=crop&q=85",
+            "long_image_url": "https://images.unsplash.com/photo-1628177142898-93e36e04e130?w=1200&auto=format&fit=crop&q=85",
+            "color": "#06B6D4",
             "order": 3,
             "is_featured": True,
         },
         {
-            "slug": "epoxy-flooring",
-            "title_en": "Epoxy Flooring",
-            "title_es": "Pisos Epóxicos",
-            "description_en": "Industrial-grade epoxy floors with seamless beauty, unmatched durability and stunning finishes.",
-            "description_es": "Pisos epóxicos de grado industrial con belleza sin juntas, durabilidad incomparable y acabados impactantes.",
-            "icon": "Sparkles",
-            "image_url": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&auto=format&fit=crop&q=85",
-            "long_image_url": "https://images.unsplash.com/photo-1572883454114-1cf0031ede2a?w=1200&auto=format&fit=crop&q=85",
-            "color": "#8B5CF6",
+            "slug": "window-cleaning",
+            "title_en": "Window Cleaning",
+            "title_es": "Limpieza de Ventanas",
+            "description_en": "Streak-free window cleaning for homes, offices, storefronts and high-rise exteriors.",
+            "description_es": "Limpieza de ventanas sin rayas para hogares, oficinas, fachadas y exteriores en altura.",
+            "long_description_en": "Interior glass, exterior glass, storefronts and high-access windows. Professional squeegee work, pure water systems for spot-free results.",
+            "long_description_es": "Vidrio interior, vidrio exterior, fachadas y ventanas de difícil acceso. Trabajo profesional con escobilla, sistemas de agua pura para resultados sin manchas.",
+            "icon": "Droplets",
+            "image_url": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&auto=format&fit=crop&q=85",
+            "long_image_url": "https://images.unsplash.com/photo-1604147495798-57beb5d6af73?w=1200&auto=format&fit=crop&q=85",
+            "color": "#0EA5E9",
             "order": 4,
             "is_featured": True,
         },
         {
-            "slug": "epoxy-walls",
-            "title_en": "Epoxy Walls",
-            "title_es": "Paredes Epóxicas",
-            "description_en": "Seamless epoxy wall finishes that combine elegance with extreme durability. Perfect for kitchens, bathrooms and feature walls.",
-            "description_es": "Acabados epóxicos sin juntas que combinan elegancia con durabilidad extrema. Perfectos para cocinas, baños y paredes destacadas.",
-            "icon": "Walls",
-            "image_url": "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=1200&auto=format&fit=crop&q=85",
-            "long_image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&auto=format&fit=crop&q=85",
-            "color": "#A78BFA",
+            "slug": "ceiling-cleaning",
+            "title_en": "Ceiling Cleaning",
+            "title_es": "Limpieza de Techos",
+            "description_en": "Deep cleaning of ceilings, high beams, vents and hard-to-reach overhead surfaces.",
+            "description_es": "Limpieza profunda de techos, vigas altas, ductos y superficies elevadas de difícil acceso.",
+            "long_description_en": "Cobwebs, dust, smoke residue, vents and lighting fixtures — safely cleaned using lifts, ladders and pro equipment.",
+            "long_description_es": "Telarañas, polvo, residuos de humo, ductos y luminarias — limpiados de forma segura con plataformas, escaleras y equipo profesional.",
+            "icon": "Wind",
+            "image_url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&auto=format&fit=crop&q=85",
+            "long_image_url": "https://images.unsplash.com/photo-1527515637462-cff94bdccd47?w=1200&auto=format&fit=crop&q=85",
+            "color": "#22D3EE",
             "order": 5,
         },
         {
-            "slug": "epoxy-countertops",
-            "title_en": "Epoxy Countertops",
-            "title_es": "Mesones Epóxicos",
-            "description_en": "Custom epoxy countertops and tables with unique veining, depth and luxurious finish.",
-            "description_es": "Mesones y mesas de resina epóxica con vetas únicas, profundidad y acabado lujoso.",
-            "icon": "Box",
-            "image_url": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&auto=format&fit=crop&q=85",
-            "long_image_url": "https://images.unsplash.com/photo-1572883454114-1cf0031ede2a?w=1200&auto=format&fit=crop&q=85",
-            "color": "#7C3AED",
+            "slug": "pool-cleaning",
+            "title_en": "Pool Cleaning",
+            "title_es": "Limpieza de Piscinas",
+            "description_en": "Routine pool cleaning, water balancing and seasonal care for residential pools.",
+            "description_es": "Limpieza rutinaria de piscinas, balance del agua y cuidado estacional para piscinas residenciales.",
+            "long_description_en": "Weekly or bi-weekly visits: skimming, vacuuming, tile brushing, filter checks and full chemical balancing so your pool stays ready year-round.",
+            "long_description_es": "Visitas semanales o quincenales: skimming, aspirado, cepillado de azulejos, revisión de filtros y balance químico completo para que tu piscina esté lista todo el año.",
+            "icon": "Waves",
+            "image_url": "https://images.unsplash.com/photo-1572331165267-854da2b64206?w=1200&auto=format&fit=crop&q=85",
+            "long_image_url": "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200&auto=format&fit=crop&q=85",
+            "color": "#06B6D4",
             "order": 6,
+        },
+        {
+            "slug": "pressure-washing",
+            "title_en": "Pressure Washing",
+            "title_es": "Hidrolavado",
+            "description_en": "Driveways, patios, decks, pool decks, sidewalks and exterior walls cleaned and restored.",
+            "description_es": "Driveways, patios, decks, terrazas de piscina, aceras y muros exteriores limpios y restaurados.",
+            "long_description_en": "Commercial-grade pressure washing that removes years of grime, mildew and stains from concrete, pavers, wood, fences and stucco — without damaging surfaces.",
+            "long_description_es": "Hidrolavado de grado comercial que remueve años de mugre, moho y manchas de concreto, adoquines, madera, cercas y estuco — sin dañar las superficies.",
+            "icon": "SprayCan",
+            "image_url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&auto=format&fit=crop&q=85",
+            "long_image_url": "https://images.unsplash.com/photo-1581579188871-45ea61f2a0c8?w=1200&auto=format&fit=crop&q=85",
+            "color": "#0EA5E9",
+            "order": 7,
+            "is_featured": True,
+        },
+        {
+            "slug": "bathroom-remodeling",
+            "title_en": "Bathroom Remodeling",
+            "title_es": "Remodelación de Baños",
+            "description_en": "Complete bathroom renovations — tile, plumbing, fixtures, vanities and finishes.",
+            "description_es": "Renovaciones completas de baño — azulejo, plomería, accesorios, vanidades y acabados.",
+            "long_description_en": "From a quick refresh to a full gut renovation. Demolition, plumbing, electrical, tile, waterproofing, vanities, glass enclosures and finishes — coordinated by one team.",
+            "long_description_es": "Desde un refresh rápido hasta una renovación completa. Demolición, plomería, electricidad, azulejo, impermeabilización, vanidades, cerramientos de vidrio y acabados — coordinado por un solo equipo.",
+            "icon": "Bath",
+            "image_url": "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&auto=format&fit=crop&q=85",
+            "long_image_url": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&auto=format&fit=crop&q=85",
+            "color": "#F97316",
+            "order": 8,
+            "is_featured": True,
+        },
+        {
+            "slug": "kitchen-remodeling",
+            "title_en": "Kitchen Remodeling",
+            "title_es": "Remodelación de Cocinas",
+            "description_en": "Cabinetry, countertops, islands, tile, lighting and full kitchen renovations.",
+            "description_es": "Gabinetes, mesones, islas, azulejo, iluminación y remodelaciones completas de cocina.",
+            "long_description_en": "Custom cabinetry, stone or quartz countertops, tile backsplashes, lighting upgrades, appliance installs and layout reconfiguration — handled start to finish.",
+            "long_description_es": "Gabinetes a medida, mesones de piedra o cuarzo, backsplashes de azulejo, actualización de iluminación, instalación de electrodomésticos y reconfiguración del layout — manejado de principio a fin.",
+            "icon": "ChefHat",
+            "image_url": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&auto=format&fit=crop&q=85",
+            "long_image_url": "https://images.unsplash.com/photo-1556909190-3c0e6ad26c78?w=1200&auto=format&fit=crop&q=85",
+            "color": "#FB923C",
+            "order": 9,
+            "is_featured": True,
         },
         {
             "slug": "remodeling",
             "title_en": "Remodeling",
             "title_es": "Remodelación",
-            "description_en": "Complete renovation solutions — kitchens, bathrooms, full-home transformations and beyond.",
-            "description_es": "Soluciones completas de remodelación — cocinas, baños, transformaciones integrales y más.",
+            "description_en": "Full-home renovations, additions, layout changes and complete transformations.",
+            "description_es": "Renovaciones completas de hogar, ampliaciones, cambios de distribución y transformaciones integrales.",
+            "long_description_en": "Whole-home remodels, layout reconfiguration, additions and major repairs — demolition through finish, coordinated by a single project lead.",
+            "long_description_es": "Remodelaciones completas de hogar, reconfiguración de layout, ampliaciones y reparaciones mayores — desde demolición hasta acabado, coordinado por un solo líder de proyecto.",
             "icon": "Hammer",
             "image_url": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&auto=format&fit=crop&q=85",
             "long_image_url": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1200&auto=format&fit=crop&q=85",
             "color": "#F97316",
-            "order": 7,
+            "order": 10,
             "is_featured": True,
         },
         {
-            "slug": "renovations",
-            "title_en": "Renovations",
-            "title_es": "Renovaciones",
-            "description_en": "Modern, thoughtful renovations that breathe new life into your spaces.",
-            "description_es": "Renovaciones modernas y reflexivas que dan nueva vida a tus espacios.",
-            "icon": "Construction",
-            "image_url": "https://images.unsplash.com/photo-1490604001847-b712b0c2f967?w=1200&auto=format&fit=crop&q=85",
-            "long_image_url": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&auto=format&fit=crop&q=85",
-            "color": "#FB923C",
-            "order": 8,
-        },
-        {
             "slug": "general-repairs",
-            "title_en": "General Repairs",
-            "title_es": "Reparaciones Generales",
-            "description_en": "Reliable general repairs with attention to detail and lasting quality.",
-            "description_es": "Reparaciones generales confiables con atención al detalle y calidad duradera.",
+            "title_en": "Drywall & General Repairs",
+            "title_es": "Drywall y Reparaciones Generales",
+            "description_en": "Drywall patches, door and trim fixes, caulking, grout repairs and small jobs.",
+            "description_es": "Parches de drywall, arreglos de puertas y molduras, sellado, reparaciones de fragua y trabajos pequeños.",
+            "long_description_en": "Small jobs done the same week. Drywall patches, door adjustments, caulking, grout, tile replacement, fixture swaps and trim touch-ups.",
+            "long_description_es": "Trabajos pequeños atendidos en la misma semana. Parches de drywall, ajustes de puertas, sellado, fragua, reemplazo de azulejo, cambio de accesorios y retoques de molduras.",
             "icon": "Wrench",
             "image_url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&auto=format&fit=crop&q=85",
             "color": "#0EA5E9",
-            "order": 9,
+            "order": 11,
         },
         {
             "slug": "property-maintenance",
             "title_en": "Property Maintenance",
-            "title_es": "Mantenimiento de Propiedades",
-            "description_en": "Comprehensive property maintenance to preserve and enhance your investment.",
-            "description_es": "Mantenimiento integral de propiedades para preservar y mejorar tu inversión.",
+            "title_es": "Mantenimiento del Hogar",
+            "description_en": "Recurring maintenance plans for homes, rentals and investment properties.",
+            "description_es": "Planes de mantenimiento recurrente para hogares, alquileres y propiedades de inversión.",
+            "long_description_en": "Monthly or quarterly maintenance plans that keep your property in great shape: touch-up paint, caulking, filters, smoke detectors, gutters, small fixes and seasonal prep.",
+            "long_description_es": "Planes de mantenimiento mensual o trimestral que mantienen tu propiedad en gran estado: retoques de pintura, sellado, filtros, detectores de humo, canaletas, arreglos pequeños y preparación estacional.",
             "icon": "ClipboardCheck",
+            "image_url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop&q=85",
             "color": "#0891B2",
-            "order": 10,
-        },
-        {
-            "slug": "professional-cleaning",
-            "title_en": "Professional Cleaning",
-            "title_es": "Limpieza Profesional",
-            "description_en": "Deep, detail-obsessed cleaning for residential and commercial properties.",
-            "description_es": "Limpieza profunda y obsesiva con el detalle para propiedades residenciales y comerciales.",
-            "icon": "Sparkle",
-            "color": "#06B6D4",
-            "order": 11,
-        },
-        {
-            "slug": "decorative-finishes",
-            "title_en": "Decorative Finishes",
-            "title_es": "Acabados Decorativos",
-            "description_en": "Venetian plaster, textured finishes, metallic effects — unique surfaces that define a space.",
-            "description_es": "Estuco veneciano, acabados texturizados, efectos metálicos — superficies únicas que definen un espacio.",
-            "icon": "Brush",
-            "color": "#EC4899",
             "order": 12,
+        },
+        {
+            "slug": "artistic-murals",
+            "title_en": "Artistic Murals",
+            "title_es": "Murales Artísticos",
+            "description_en": "Hand-painted murals for homes, offices, restaurants and feature walls.",
+            "description_es": "Murales pintados a mano para hogares, oficinas, restaurantes y paredes destacadas.",
+            "long_description_en": "Custom murals designed and painted for your space — kids' rooms, restaurants, lobbies and accent walls.",
+            "long_description_es": "Murales personalizados diseñados y pintados para tu espacio — cuartos de niños, restaurantes, lobbies y paredes destacadas.",
+            "icon": "Palette",
+            "image_url": "https://images.unsplash.com/photo-1551524164-687a55dd1126?w=1200&auto=format&fit=crop&q=85",
+            "long_image_url": "https://images.unsplash.com/photo-1574169208507-84376144848b?w=1200&auto=format&fit=crop&q=85",
+            "color": "#D946EF",
+            "order": 13,
+        },
+        {
+            "slug": "epoxy-flooring",
+            "title_en": "Epoxy Flooring",
+            "title_es": "Pisos Epóxicos",
+            "description_en": "Seamless epoxy floors for garages, basements and commercial spaces.",
+            "description_es": "Pisos epóxicos sin juntas para garajes, sótanos y espacios comerciales.",
+            "long_description_en": "Solid color, metallic or flake epoxy systems. Slip-resistant, easy to clean and built to handle cars, equipment and daily wear.",
+            "long_description_es": "Sistemas epóxicos de color sólido, metálico o flake. Antideslizantes, fáciles de limpiar y hechos para aguantar autos, equipo y uso diario.",
+            "icon": "Sparkles",
+            "image_url": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&auto=format&fit=crop&q=85",
+            "long_image_url": "https://images.unsplash.com/photo-1572883454114-1cf0031ede2a?w=1200&auto=format&fit=crop&q=85",
+            "color": "#8B5CF6",
+            "order": 14,
+        },
+        {
+            "slug": "epoxy-walls",
+            "title_en": "Epoxy Walls",
+            "title_es": "Paredes Epóxicas",
+            "description_en": "Seamless epoxy wall finishes for bathrooms, kitchens and feature walls.",
+            "description_es": "Acabados epóxicos sin juntas para baños, cocinas y paredes destacadas.",
+            "long_description_en": "Seamless, grout-free wall finishes that combine elegance with extreme durability. Perfect for bathrooms, kitchen backsplashes and feature walls.",
+            "long_description_es": "Acabados sin juntas ni fragua que combinan elegancia con durabilidad extrema. Perfectos para baños, backsplashes de cocina y paredes destacadas.",
+            "icon": "Walls",
+            "image_url": "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=1200&auto=format&fit=crop&q=85",
+            "long_image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&auto=format&fit=crop&q=85",
+            "color": "#A78BFA",
+            "order": 15,
+        },
+        {
+            "slug": "epoxy-countertops",
+            "title_en": "Epoxy Countertops",
+            "title_es": "Mesones Epóxicos",
+            "description_en": "Custom epoxy countertops, islands and bar tops with unique finishes.",
+            "description_es": "Mesones, islas y barras de resina epóxica con acabados únicos.",
+            "long_description_en": "Hand-poured epoxy countertops with marble, river or custom effects. Heat-resistant, seamless and unique.",
+            "long_description_es": "Mesones de resina epóxica vaciados a mano con efectos mármol, río o personalizados. Resistentes al calor, sin juntas y únicos.",
+            "icon": "Box",
+            "image_url": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&auto=format&fit=crop&q=85",
+            "long_image_url": "https://images.unsplash.com/photo-1572883454114-1cf0031ede2a?w=1200&auto=format&fit=crop&q=85",
+            "color": "#7C3AED",
+            "order": 16,
         },
     ]
     for s in services:
@@ -400,6 +484,7 @@ def _seed_projects(db: Session):
     murals_cat = db.query(Category).filter(Category.slug == "murals").first()
     epoxy_cat = db.query(Category).filter(Category.slug == "epoxy").first()
     remodeling_cat = db.query(Category).filter(Category.slug == "remodeling").first()
+    cleaning_cat = db.query(Category).filter(Category.slug == "cleaning").first()
 
     projects = [
         # === Remodeling projects ===
@@ -407,17 +492,17 @@ def _seed_projects(db: Session):
             "slug": "waterfront-modern-villa",
             "title_en": "Waterfront Modern Villa",
             "title_es": "Villa Moderna Frente al Mar",
-            "description_en": "Complete interior transformation with bespoke finishes and a custom mural in the master suite.",
-            "description_es": "Transformación interior completa con acabados a medida y un mural personalizado en la suite principal.",
-            "long_description_en": "A complete turnkey transformation of a waterfront estate. Custom color palette, hand-painted feature wall, and continuous epoxy flooring throughout the social areas. Every detail was treated as a one-of-a-kind piece.",
-            "long_description_es": "Una transformación llave en mano de una propiedad frente al mar. Paleta personalizada, pared destacada pintada a mano, y pisos epóxicos continuos en las áreas sociales. Cada detalle fue tratado como una pieza única.",
+            "description_en": "Complete interior transformation with bespoke finishes and custom details throughout.",
+            "description_es": "Transformación interior completa con acabados a medida y detalles personalizados.",
+            "long_description_en": "A complete turnkey transformation of a waterfront estate. Custom color palette, hand-finished walls and continuous flooring throughout the social areas. Every detail handled by the same team.",
+            "long_description_es": "Una transformación llave en mano de una propiedad frente al mar. Paleta personalizada, paredes con acabado a mano y pisos continuos en las áreas sociales. Cada detalle manejado por el mismo equipo.",
             "category_id": remodeling_cat.id if remodeling_cat else None,
             "location": "Miami Beach, FL",
             "client": "Private Estate",
             "cover_image": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600&auto=format&fit=crop&q=85",
             "before_image": "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=1200&auto=format&fit=crop&q=85",
             "after_image": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&auto=format&fit=crop&q=85",
-            "services_used": "Remodeling, Painting, Epoxy Flooring, Artistic Mural",
+            "services_used": "Remodeling, Residential Painting",
             "duration": "8 weeks",
             "year": "2025",
             "is_featured": True,
@@ -426,6 +511,180 @@ def _seed_projects(db: Session):
                 "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600&auto=format&fit=crop&q=85",
                 "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1600&auto=format&fit=crop&q=85",
                 "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1600&auto=format&fit=crop&q=85",
+            ],
+        },
+        {
+            "slug": "pinecrest-kitchen",
+            "title_en": "Pinecrest Kitchen Refresh",
+            "title_es": "Cocina Pinecrest Renovada",
+            "description_en": "Layout rework, custom cabinetry, quartz island and full finish refresh.",
+            "description_es": "Reestructuración del layout, gabinetes a medida, isla de cuarzo y renovación completa de acabados.",
+            "long_description_en": "A complete kitchen refresh: layout rework, custom cabinets, quartz island with waterfall, full tile backsplash and fresh paint throughout the open social area.",
+            "long_description_es": "Una renovación completa de cocina: reestructuración del layout, gabinetes a medida, isla de cuarzo con cascada, backsplash de azulejo completo y pintura fresca en toda el área social abierta.",
+            "category_id": remodeling_cat.id if remodeling_cat else None,
+            "location": "Pinecrest, FL",
+            "cover_image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&auto=format&fit=crop&q=85",
+            "before_image": "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=1200&auto=format&fit=crop&q=85",
+            "after_image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&auto=format&fit=crop&q=85",
+            "services_used": "Kitchen Remodeling, Residential Painting",
+            "duration": "6 weeks",
+            "year": "2025",
+            "is_featured": True,
+            "order": 2,
+            "images": [
+                "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&auto=format&fit=crop&q=85",
+                "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=1600&auto=format&fit=crop&q=85",
+            ],
+        },
+        {
+            "slug": "master-bath-refresh",
+            "title_en": "Master Bath Refresh",
+            "title_es": "Baño Principal Renovado",
+            "description_en": "Walk-in shower, custom vanity, porcelain tile and modern fixtures.",
+            "description_es": "Ducha walk-in, vanity a medida, azulejo de porcelanato y accesorios modernos.",
+            "long_description_en": "A master bathroom gut renovation: walk-in shower with frameless glass, custom double vanity, porcelain tile and matte black fixtures throughout.",
+            "long_description_es": "Una renovación completa del baño principal: ducha walk-in con vidrio sin marco, vanity doble a medida, azulejo de porcelanato y accesorios negro mate en todo el espacio.",
+            "category_id": remodeling_cat.id if remodeling_cat else None,
+            "location": "Coral Gables, FL",
+            "cover_image": "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1600&auto=format&fit=crop&q=85",
+            "before_image": "https://images.unsplash.com/photo-1556909190-3c0e6ad26c78?w=1200&auto=format&fit=crop&q=85",
+            "after_image": "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1600&auto=format&fit=crop&q=85",
+            "services_used": "Bathroom Remodeling",
+            "duration": "4 weeks",
+            "year": "2025",
+            "is_featured": True,
+            "order": 3,
+            "images": [
+                "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1600&auto=format&fit=crop&q=85",
+                "https://images.unsplash.com/photo-1556909190-3c0e6ad26c78?w=1200&auto=format&fit=crop&q=85",
+            ],
+        },
+        {
+            "slug": "aventura-primary-bath",
+            "title_en": "Aventura Primary Bath",
+            "title_es": "Baño Principal en Aventura",
+            "description_en": "Walk-in shower, porcelain tile and custom vanity transformation.",
+            "description_es": "Transformación con ducha walk-in, azulejo de porcelanato y vanity a medida.",
+            "long_description_en": "Walk-in shower with porcelain tile, custom double vanity and frameless glass enclosure.",
+            "long_description_es": "Ducha walk-in con azulejo de porcelanato, vanity doble a medida y cerramiento de vidrio sin marco.",
+            "category_id": remodeling_cat.id if remodeling_cat else None,
+            "location": "Aventura, FL",
+            "cover_image": "https://images.unsplash.com/photo-1556228852-80b6e5eeff06?w=1200&auto=format&fit=crop&q=85",
+            "before_image": "https://images.unsplash.com/photo-1556909190-3c0e6ad26c78?w=1200&auto=format&fit=crop&q=85",
+            "after_image": "https://images.unsplash.com/photo-1556228852-80b6e5eeff06?w=1200&auto=format&fit=crop&q=85",
+            "services_used": "Bathroom Remodeling",
+            "duration": "3 weeks",
+            "year": "2024",
+            "is_featured": False,
+            "order": 4,
+            "images": [
+                "https://images.unsplash.com/photo-1556228852-80b6e5eeff06?w=1200&auto=format&fit=crop&q=85",
+            ],
+        },
+        # === Cleaning projects ===
+        {
+            "slug": "facade-pressure-wash",
+            "title_en": "Coral Gables Facade Refresh",
+            "title_es": "Fachada en Coral Gables Restaurada",
+            "description_en": "Full exterior wash, windows, walkways and entry detail restoration.",
+            "description_es": "Lavado exterior completo, ventanas, pasillos y restauración del acceso principal.",
+            "long_description_en": "A complete exterior refresh: pressure washing of stucco, walkways and patio, window cleaning inside and out, and entry door detail restoration.",
+            "long_description_es": "Una renovación exterior completa: hidrolavado de estuco, pasillos y patio, limpieza de ventanas por dentro y por fuera, y restauración del detalle de la puerta de entrada.",
+            "category_id": cleaning_cat.id if cleaning_cat else None,
+            "location": "Coral Gables, FL",
+            "cover_image": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1600&auto=format&fit=crop&q=85",
+            "before_image": "https://images.unsplash.com/photo-1580587771525-78b9d27a32cc?w=1200&auto=format&fit=crop&q=85",
+            "after_image": "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1600&auto=format&fit=crop&q=85",
+            "services_used": "Pressure Washing, Window Cleaning",
+            "duration": "2 days",
+            "year": "2025",
+            "is_featured": True,
+            "order": 5,
+            "images": [
+                "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1600&auto=format&fit=crop&q=85",
+                "https://images.unsplash.com/photo-1580587771525-78b9d27a32cc?w=1200&auto=format&fit=crop&q=85",
+            ],
+        },
+        {
+            "slug": "driveway-restoration",
+            "title_en": "Driveway & Pool Deck Restoration",
+            "title_es": "Restauración de Driveway y Terraza de Piscina",
+            "description_en": "Pressure washing, oil stain removal and travertine sealing.",
+            "description_es": "Hidrolavado, remoción de manchas de aceite y sellado de travertino.",
+            "long_description_en": "Restored a heavily stained driveway and pool deck: oil removal, deep clean and travertine seal to protect the surface for years.",
+            "long_description_es": "Restauramos un driveway y terraza de piscina muy manchados: remoción de aceite, limpieza profunda y sellado de travertino para proteger la superficie por años.",
+            "category_id": cleaning_cat.id if cleaning_cat else None,
+            "location": "Pinecrest, FL",
+            "cover_image": "https://images.unsplash.com/photo-1581579188871-45ea61f2a0c8?w=1600&auto=format&fit=crop&q=85",
+            "before_image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&auto=format&fit=crop&q=85",
+            "after_image": "https://images.unsplash.com/photo-1581579188871-45ea61f2a0c8?w=1600&auto=format&fit=crop&q=85",
+            "services_used": "Pressure Washing",
+            "duration": "1 day",
+            "year": "2025",
+            "is_featured": False,
+            "order": 6,
+            "images": [
+                "https://images.unsplash.com/photo-1581579188871-45ea61f2a0c8?w=1600&auto=format&fit=crop&q=85",
+            ],
+        },
+        {
+            "slug": "pool-weekly-service",
+            "title_en": "Weekly Pool Service — Kendall",
+            "title_es": "Servicio Semanal de Piscina — Kendall",
+            "description_en": "Recurring weekly pool cleaning, balancing and tile care.",
+            "description_es": "Servicio semanal recurrente de piscina, balance y cuidado de azulejo.",
+            "long_description_en": "A bi-weekly pool service for a rental property: skimming, vacuuming, tile brushing, filter checks and full chemical balance.",
+            "long_description_es": "Un servicio quincenal de piscina para una propiedad de alquiler: skimming, aspirado, cepillado de azulejo, revisión de filtros y balance químico completo.",
+            "category_id": cleaning_cat.id if cleaning_cat else None,
+            "location": "Kendall, FL",
+            "cover_image": "https://images.unsplash.com/photo-1572331165267-854da2b64206?w=1600&auto=format&fit=crop&q=85",
+            "services_used": "Pool Cleaning",
+            "duration": "Ongoing",
+            "year": "2025",
+            "is_featured": False,
+            "order": 7,
+            "images": [
+                "https://images.unsplash.com/photo-1572331165267-854da2b64206?w=1600&auto=format&fit=crop&q=85",
+            ],
+        },
+        {
+            "slug": "deck-cleanup",
+            "title_en": "Backyard Deck Cleanup",
+            "title_es": "Limpieza de Deck del Patio",
+            "description_en": "Annual deck restoration: pressure wash, sand, seal and refinish.",
+            "description_es": "Restauración anual del deck: hidrolavado, lijado, sellado y repintado.",
+            "long_description_en": "Restored a weathered wood deck: deep clean, light sanding, premium seal and refinish to bring the wood back to life.",
+            "long_description_es": "Restauramos un deck de madera desgastado: limpieza profunda, lijado suave, sellado premium y repintado para devolver la madera a la vida.",
+            "category_id": cleaning_cat.id if cleaning_cat else None,
+            "location": "Coconut Grove, FL",
+            "cover_image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&auto=format&fit=crop&q=85",
+            "services_used": "Pressure Washing",
+            "duration": "1 day",
+            "year": "2025",
+            "is_featured": False,
+            "order": 8,
+            "images": [
+                "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&auto=format&fit=crop&q=85",
+            ],
+        },
+        {
+            "slug": "lobby-deep-clean",
+            "title_en": "Office Lobby Deep Clean",
+            "title_es": "Limpieza Profunda del Lobby de Oficina",
+            "description_en": "Detailed lobby, glass, floors and shared-space cleaning.",
+            "description_es": "Limpieza detallada de lobby, vidrio, pisos y áreas comunes.",
+            "long_description_en": "A monthly deep clean of a Brickell office lobby: floors, glass doors, elevator interiors, furniture and shared bathrooms — handled outside business hours.",
+            "long_description_es": "Una limpieza profunda mensual del lobby de una oficina en Brickell: pisos, puertas de vidrio, interiores de ascensores, muebles y baños comunes — atendido fuera del horario laboral.",
+            "category_id": cleaning_cat.id if cleaning_cat else None,
+            "location": "Brickell, Miami",
+            "cover_image": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&auto=format&fit=crop&q=85",
+            "services_used": "Professional Cleaning",
+            "duration": "Ongoing",
+            "year": "2025",
+            "is_featured": False,
+            "order": 9,
+            "images": [
+                "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&auto=format&fit=crop&q=85",
             ],
         },
         {
@@ -710,6 +969,44 @@ def _seed_service_projects(db: Session):
     add("commercial-painting", "boutique-office", 1)
     add("commercial-painting", "wynwood-restaurant-mural", 2)
 
+    # Professional Cleaning
+    add("professional-cleaning", "lobby-deep-clean", 0)
+    add("professional-cleaning", "facade-pressure-wash", 1)
+
+    # Window Cleaning
+    add("window-cleaning", "facade-pressure-wash", 0)
+    add("window-cleaning", "lobby-deep-clean", 1)
+
+    # Pool Cleaning
+    add("pool-cleaning", "pool-weekly-service", 0)
+
+    # Pressure Washing
+    add("pressure-washing", "facade-pressure-wash", 0)
+    add("pressure-washing", "driveway-restoration", 1)
+    add("pressure-washing", "deck-cleanup", 2)
+
+    # Bathroom Remodeling
+    add("bathroom-remodeling", "master-bath-refresh", 0)
+    add("bathroom-remodeling", "aventura-primary-bath", 1)
+
+    # Kitchen Remodeling
+    add("kitchen-remodeling", "pinecrest-kitchen", 0)
+
+    # Remodeling
+    add("remodeling", "waterfront-modern-villa", 0)
+    add("residential-painting", "waterfront-modern-villa", 3)
+    add("remodeling", "contemporary-penthouse", 1)
+    add("remodeling", "open-plan-loft", 2)
+
+    # Drywall & General Repairs
+    add("general-repairs", "brickell-guest-bedroom", 0)
+    add("general-repairs", "minimalist-family-home", 1)
+
+    # Property Maintenance
+    add("property-maintenance", "minimalist-family-home", 0)
+    add("property-maintenance", "contemporary-penthouse", 1)
+    add("property-maintenance", "coconut-grove-living", 2)
+
     # Artistic Murals
     add("artistic-murals", "ocean-inspired-mural", 0)
     add("artistic-murals", "wynwood-restaurant-mural", 1)
@@ -727,15 +1024,6 @@ def _seed_service_projects(db: Session):
     # Epoxy Countertops
     add("epoxy-countertops", "river-epoxy-countertop", 0)
     add("epoxy-countertops", "marble-epoxy-bathroom", 1)
-
-    # Remodeling
-    add("remodeling", "waterfront-modern-villa", 0)
-    add("remodeling", "contemporary-penthouse", 1)
-    add("remodeling", "open-plan-loft", 2)
-
-    # Renovations
-    add("renovations", "open-plan-loft", 0)
-    add("renovations", "waterfront-modern-villa", 1)
 
 
 def _seed_blog(db: Session):
@@ -797,10 +1085,10 @@ def _seed_blog(db: Session):
 def _seed_settings(db: Session):
     defaults = [
         {"key": "site_name", "value": "CSD Good Services", "group": "general", "label_en": "Site Name", "label_es": "Nombre del Sitio"},
-        {"key": "site_tagline_en", "value": "Quality. Creativity. Lasting Results.", "group": "general", "label_en": "Tagline (EN)", "label_es": "Lema (EN)"},
-        {"key": "site_tagline_es", "value": "Calidad. Creatividad. Resultados duraderos.", "group": "general", "label_en": "Tagline (ES)", "label_es": "Lema (ES)"},
-        {"key": "hero_subtitle_en", "value": "Artistic murals · Epoxy · Remodeling · Premium painting", "group": "general", "label_en": "Hero Subtitle (EN)", "label_es": "Subtítulo Hero (EN)"},
-        {"key": "hero_subtitle_es", "value": "Murales · Epóxico · Remodelación · Pintura premium", "group": "general", "label_en": "Hero Subtitle (ES)", "label_es": "Subtítulo Hero (ES)"},
+        {"key": "site_tagline_en", "value": "Painting · Remodeling · Cleaning · Maintenance · Miami", "group": "general", "label_en": "Tagline (EN)", "label_es": "Lema (EN)"},
+        {"key": "site_tagline_es", "value": "Pintura · Remodelación · Limpieza · Mantenimiento · Miami", "group": "general", "label_en": "Tagline (ES)", "label_es": "Lema (ES)"},
+        {"key": "hero_subtitle_en", "value": "Painting · Cleaning · Remodeling · Maintenance · Miami", "group": "general", "label_en": "Hero Subtitle (EN)", "label_es": "Subtítulo Hero (EN)"},
+        {"key": "hero_subtitle_es", "value": "Pintura · Limpieza · Remodelación · Mantenimiento · Miami", "group": "general", "label_en": "Hero Subtitle (ES)", "label_es": "Subtítulo Hero (ES)"},
         {"key": "contact_phone", "value": "+1 (305) 555-0123", "group": "contact", "label_en": "Phone", "label_es": "Teléfono"},
         {"key": "contact_email", "value": "info@csdgoodservices.com", "group": "contact", "label_en": "Email", "label_es": "Correo"},
         {"key": "contact_whatsapp", "value": "13055550123", "group": "contact", "label_en": "WhatsApp", "label_es": "WhatsApp"},
@@ -833,10 +1121,10 @@ def _seed_settings(db: Session):
         {"key": "home_about_side_note_en", "value": HOME_ABOUT_SIDE_NOTE_EN, "group": "media", "label_en": "About Side Note (EN)", "label_es": "Nota lateral About (EN)"},
         {"key": "home_about_side_note_es", "value": HOME_ABOUT_SIDE_NOTE_ES, "group": "media", "label_en": "About Side Note (ES)", "label_es": "Nota lateral About (ES)"},
 
-        {"key": "seo_meta_title_en", "value": "CSD Good Services | Premium Space Transformations", "group": "seo", "label_en": "SEO Title (EN)", "label_es": "Título SEO (EN)"},
-        {"key": "seo_meta_title_es", "value": "CSD Good Services | Transformaciones Premium de Espacios", "group": "seo", "label_en": "SEO Title (ES)", "label_es": "Título SEO (ES)"},
-        {"key": "seo_meta_description_en", "value": "Artistic murals, epoxy flooring, remodeling and premium painting in Miami. Transform your space with CSD Good Services.", "group": "seo", "label_en": "SEO Description (EN)", "label_es": "Descripción SEO (EN)"},
-        {"key": "seo_meta_description_es", "value": "Murales artísticos, pisos epóxicos, remodelaciones y pintura premium en Miami. Transforma tu espacio con CSD Good Services.", "group": "seo", "label_en": "SEO Description (ES)", "label_es": "Descripción SEO (ES)"},
+        {"key": "seo_meta_title_en", "value": "CSD Good Services | Miami Home Services — Painting, Remodeling, Cleaning", "group": "seo", "label_en": "SEO Title (EN)", "label_es": "Título SEO (EN)"},
+        {"key": "seo_meta_title_es", "value": "CSD Good Services | Servicios del Hogar en Miami — Pintura, Remodelación, Limpieza", "group": "seo", "label_en": "SEO Title (ES)", "label_es": "Título SEO (ES)"},
+        {"key": "seo_meta_description_en", "value": "Miami home services company for painting, remodeling, cleaning and ongoing home maintenance. One team for everything your home needs. Free estimates across South Florida.", "group": "seo", "label_en": "SEO Description (EN)", "label_es": "Descripción SEO (EN)"},
+        {"key": "seo_meta_description_es", "value": "Empresa de servicios del hogar en Miami para pintura, remodelación, limpieza y mantenimiento continuo. Un equipo para todo lo que tu casa necesita. Cotizaciones gratis en todo el sur de Florida.", "group": "seo", "label_en": "SEO Description (ES)", "label_es": "Descripción SEO (ES)"},
     ]
     for s in defaults:
         existing = db.query(SiteSettings).filter(SiteSettings.key == s["key"]).first()

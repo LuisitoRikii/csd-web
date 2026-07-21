@@ -20,13 +20,13 @@ export const HomePage = () => {
 
   const title =
     lang === 'es'
-      ? 'CSD Good Services | Pintura, Remodelación y Epóxico en Miami'
-      : 'CSD Good Services | Painting, Remodeling & Epoxy in Miami'
+      ? 'CSD Good Services | Servicios del Hogar en Miami — Pintura, Remodelación, Limpieza'
+      : 'CSD Good Services | Miami Home Services — Painting, Remodeling, Cleaning'
 
   const description =
     lang === 'es'
-      ? 'Pintura, remodelación, reparaciones, resina epóxica, murales personalizados y limpieza en Miami. Calidad y oficio desde 2014. Solicita tu presupuesto gratis.'
-      : 'Licensed Miami contractor for interior & exterior painting, epoxy resin, custom murals, home remodeling and recurring property maintenance. Free estimates across South Florida.'
+      ? 'Empresa de servicios del hogar en Miami: pintura, remodelación, limpieza y mantenimiento continuo. Un equipo para todo lo que tu casa necesita. Cotizaciones gratis en todo el sur de Florida.'
+      : 'Miami home services company for painting, remodeling, cleaning and ongoing home maintenance. One team for everything your home needs. Free estimates across South Florida.'
 
   return (
     <>
