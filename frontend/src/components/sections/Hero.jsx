@@ -21,7 +21,7 @@ const GRAIN_SVG = `data:image/svg+xml;utf8,${encodeURIComponent(`
 `)}`
 
 export const IMG = {
-  paintingInterior: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=1600&q=80',
+  paintingInterior: '/xl.jpg',
 }
 
 export const VIDEOS = {
