@@ -7,7 +7,7 @@ import { useSiteSettings } from '@/hooks/useSiteSettings'
 
 // These fallbacks are sourced from the backend `media` settings (hero_*_fallback_url).
 // They are used only when the admin hasn't uploaded custom media yet.
-const HERO_FALLBACK_IMG = '/logo.png'
+const HERO_FALLBACK_IMG = '/xdd.png'
 
 // Textura de grano en SVG (feTurbulence), codificada como data URI para no depender de un archivo externo
 const GRAIN_SVG = `data:image/svg+xml;utf8,${encodeURIComponent(`
