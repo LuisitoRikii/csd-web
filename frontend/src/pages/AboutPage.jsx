@@ -75,7 +75,7 @@ export const AboutPage = () => {
             <div className="lg:col-span-5">
               <div className="rounded-3xl overflow-hidden aspect-[4/5]">
                 <img
-                  src={storyImage || "https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1600&auto=format&fit=crop&q=85"}
+                  src={storyImage || "/d.jpg"}
                   alt=""
                   className="w-full h-full object-cover"
                 />
