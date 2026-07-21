@@ -6,10 +6,14 @@ import { PageHero } from '@/components/ui/PageHero'
 import { SEO, buildBreadcrumbSchema } from '@/components/ui/SEO'
 import { CTA } from '@/components/sections/CTA'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { useSiteSettings } from '@/hooks/useSiteSettings'
 
 export const AboutPage = () => {
   const { t } = useTranslation()
   const { lang } = useLanguage()
+  const { aboutPage } = useSiteSettings()
+  const storyImage = aboutPage.storyImage
+  const teamImage = aboutPage.teamImage
 
   const valueKeys = [
     { key: 1, color: '#5B2A8F' },
@@ -71,7 +75,7 @@ export const AboutPage = () => {
             <div className="lg:col-span-5">
               <div className="rounded-3xl overflow-hidden aspect-[4/5]">
                 <img
-                  src="https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1600&auto=format&fit=crop&q=85"
+                  src={storyImage || "https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1600&auto=format&fit=crop&q=85"}
                   alt=""
                   className="w-full h-full object-cover"
                 />
@@ -139,7 +143,7 @@ export const AboutPage = () => {
               >
                 <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-subtle mb-4">
                   <img
-                    src={`https://images.unsplash.com/photo-1568602471${i === 0 ? '122-7832951cc4c5' : i === 1 ? '577-b2c045efd7' : i === 2 ? '578-b0f6a4d8' : '577-b29d4f5d5'}-?w=400&auto=format&fit=crop&q=85`}
+                    src={teamImage || `https://images.unsplash.com/photo-1568602471${i === 0 ? '122-7832951cc4c5' : i === 1 ? '577-b2c045efd7' : i === 2 ? '578-b0f6a4d8' : '577-b29d4f5d5'}-?w=400&auto=format&fit=crop&q=85`}
                     alt=""
                     className="w-full h-full object-cover"
                   />

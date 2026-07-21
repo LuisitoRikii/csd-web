@@ -812,8 +812,14 @@ def _seed_settings(db: Session):
         {"key": "social_tiktok", "value": "https://tiktok.com/@csdgoodservices", "group": "social", "label_en": "TikTok", "label_es": "TikTok"},
         {"key": "social_youtube", "value": "", "group": "social", "label_en": "YouTube", "label_es": "YouTube"},
         {"key": "hero_video_url", "value": "https://cdn.pixabay.com/video/2020/03/27/34125-399680914_large.mp4", "group": "media", "label_en": "Hero Video URL", "label_es": "URL Video Hero"},
+        {"key": "hero_video_fallback_url", "value": "https://cdn.pixabay.com/video/2020/03/27/34125-399680914_large.mp4", "group": "media", "label_en": "Hero Video Fallback", "label_es": "Fallback Video Hero"},
         {"key": "hero_image_url", "value": HERO_FALLBACK, "group": "media", "label_en": "Hero Image", "label_es": "Imagen Hero"},
+        {"key": "hero_image_fallback_url", "value": HERO_FALLBACK, "group": "media", "label_en": "Hero Image Fallback", "label_es": "Fallback Imagen Hero"},
         {"key": "about_image_url", "value": ABOUT_IMAGE, "group": "media", "label_en": "About Image", "label_es": "Imagen Nosotros"},
+        {"key": "about_image_fallback_url", "value": "https://images.unsplash.com/photo-1562259949-e8e7689d7828?auto=format&fit=crop&w=1600&q=80", "group": "media", "label_en": "About Image Fallback", "label_es": "Fallback Imagen About"},
+        {"key": "about_story_image_url", "value": "https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1600&auto=format&fit=crop&q=85", "group": "media", "label_en": "About Page Story Image", "label_es": "Imagen Historia About"},
+        {"key": "about_team_image_url", "value": "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&auto=format&fit=crop&q=85", "group": "media", "label_en": "About Page Team Image", "label_es": "Imagen Equipo About"},
+        {"key": "quote_hero_image_url", "value": "https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1200&auto=format&fit=crop&q=85", "group": "media", "label_en": "Quote Page Hero Image", "label_es": "Imagen Hero Cotización"},
         {"key": "google_maps_embed", "value": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.7!2d-80.325!3d25.825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b1234567890%3A0x0!2s8215%20NW%2064th%20St%2C%20Medley%2C%20FL%2033166!5e0!3m2!1sen!2sus!4v1700000000000", "group": "media", "label_en": "Google Maps Embed", "label_es": "Embed Google Maps"},
 
         # === Home section content (JSON-encoded for rich structure) ===

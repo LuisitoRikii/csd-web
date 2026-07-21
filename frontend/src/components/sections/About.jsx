@@ -52,7 +52,7 @@ export const About = () => {
               className="relative rounded-3xl overflow-hidden aspect-[4/5] mb-12"
             >
               <img
-                src={about.imageUrl || IMG.paintingInterior}
+                src={about.imageUrl || about.imageFallbackUrl || IMG.paintingInterior}
                 alt={t('about.story_caption')}
                 className="h-full w-full object-cover"
                 loading="lazy"

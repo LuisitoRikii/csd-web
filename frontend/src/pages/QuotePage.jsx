@@ -12,9 +12,12 @@ import { useLanguage } from '@/contexts/LanguageContext'
 import { PageHero } from '@/components/ui/PageHero'
 import { SEO, buildBreadcrumbSchema } from '@/components/ui/SEO'
 
+import { useSiteSettings } from '@/hooks/useSiteSettings'
+
 export const QuotePage = () => {
   const { t } = useTranslation()
   const { lang } = useLanguage()
+  const { quote } = useSiteSettings()
   const { register, handleSubmit, formState: { errors, isSubmitting }, watch, trigger, getValues } = useForm({ mode: 'onTouched' })
   const [images, setImages] = useState([])
   const [uploading, setUploading] = useState(false)
@@ -394,7 +397,7 @@ export const QuotePage = () => {
               </div>
               <div className="lg:col-span-2 hidden lg:block relative bg-muted min-h-[280px]">
                 <img
-                  src="https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1200&auto=format&fit=crop&q=85"
+                  src={quote.heroImage || "https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1200&auto=format&fit=crop&q=85"}
                   alt=""
                   aria-hidden="true"
                   loading="lazy"

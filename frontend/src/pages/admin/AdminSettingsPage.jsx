@@ -17,7 +17,15 @@ const GROUP_LABELS = {
   seo: 'SEO',
 }
 
-const IMAGE_SETTINGS = new Set(['hero_image_url', 'about_image_url'])
+const IMAGE_SETTINGS = new Set([
+  'hero_image_url',
+  'hero_image_fallback_url',
+  'about_image_url',
+  'about_image_fallback_url',
+  'about_story_image_url',
+  'about_team_image_url',
+  'quote_hero_image_url',
+])
 
 const SettingControl = ({ setting, value, onChange, onUploadingChange, disabled }) => {
   if (setting.key === 'hero_video_url') {

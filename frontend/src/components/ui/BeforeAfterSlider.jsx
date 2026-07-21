@@ -59,10 +59,10 @@ export const BeforeAfterSlider = ({ before, after, beforeLabel, afterLabel, clas
         {beforeLabel || 'Before'}
       </span>
 
-      {/* AFTER — clipped on top */}
+      {/* AFTER — clipped on the right side, revealed by the handle */}
       <div
         className="absolute inset-0 overflow-hidden pointer-events-none"
-        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+        style={{ clipPath: `inset(0 0 0 ${pos}%)` }}
       >
         <img
           src={after}
