@@ -2,6 +2,10 @@ import { useMemo, useState, useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/pagination'
 import { Play, Pause, Video as VideoIcon } from 'lucide-react'
 import { projectService } from '@/services'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
@@ -155,11 +159,32 @@ export const Videos = () => {
         </div>
 
         {list.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {list.map((video) => (
-              <VideoCard key={video.id || video.src} video={video} isEs={isEs} />
-            ))}
-          </div>
+          <>
+            {/* Mobile carousel */}
+            <div className="md:hidden">
+              <Swiper
+                modules={[Pagination]}
+                spaceBetween={16}
+                slidesPerView={1.15}
+                centeredSlides
+                pagination={{ clickable: true }}
+                className="!pb-12"
+              >
+                {list.map((video) => (
+                  <SwiperSlide key={video.id || video.src} className="!h-auto">
+                    <VideoCard video={video} isEs={isEs} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+
+            {/* Desktop grid */}
+            <div className="hidden md:grid grid-cols-3 gap-5">
+              {list.map((video) => (
+                <VideoCard key={video.id || video.src} video={video} isEs={isEs} />
+              ))}
+            </div>
+          </>
         ) : (
           <div className="rounded-3xl border border-line bg-paper px-8 py-16 text-center">
             <VideoIcon size={32} className="text-steel mx-auto mb-4" aria-hidden="true" />
