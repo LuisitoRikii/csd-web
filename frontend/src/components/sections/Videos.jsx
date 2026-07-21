@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from 'react'
+import { useMemo, useState, useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
+import { useQuery } from '@tanstack/react-query'
 import { Play, Pause, Video as VideoIcon } from 'lucide-react'
-import { useSiteSettings } from '@/hooks/useSiteSettings'
+import { projectService } from '@/services'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 const VideoCard = ({ video, isEs }) => {
@@ -13,8 +14,6 @@ const VideoCard = ({ video, isEs }) => {
   const [playing, setPlaying] = useState(false)
   const [errored, setErrored] = useState(false)
 
-  // Autoplay when scrolled into view; pause when out. Respect reduced-motion
-  // (don't auto-play video if the user prefers no motion — show poster only).
   useEffect(() => {
     const v = vidRef.current
     if (!v || errored) return
@@ -32,8 +31,8 @@ const VideoCard = ({ video, isEs }) => {
     }
   }, [inView, errored, reduced])
 
-  const toggle = (e) => {
-    e.stopPropagation()
+  const toggle = (event) => {
+    event.stopPropagation()
     const v = vidRef.current
     if (!v) return
     if (v.paused) {
@@ -105,8 +104,25 @@ const VideoCard = ({ video, isEs }) => {
 export const Videos = () => {
   const { t, i18n } = useTranslation()
   const isEs = i18n.language === 'es'
-  const { videos } = useSiteSettings()
-  const list = videos.list || []
+
+  const { data: projects = [] } = useQuery({
+    queryKey: ['projects-home-videos'],
+    queryFn: () => projectService.list({ home_videos: true, limit: 24 }),
+  })
+
+  const list = useMemo(
+    () => projects
+      .filter((project) => project.video_url)
+      .map((project) => ({
+        id: project.id,
+        slug: project.slug,
+        label_en: project.title_en,
+        label_es: project.title_es,
+        poster: project.cover_image,
+        src: project.video_url,
+      })),
+    [projects]
+  )
 
   return (
     <section id="videos" className="relative py-24 lg:py-36 bg-subtle">
@@ -140,8 +156,8 @@ export const Videos = () => {
 
         {list.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {list.map((v) => (
-              <VideoCard key={v.id || v.src} video={v} isEs={isEs} />
+            {list.map((video) => (
+              <VideoCard key={video.id || video.src} video={video} isEs={isEs} />
             ))}
           </div>
         ) : (
@@ -149,8 +165,8 @@ export const Videos = () => {
             <VideoIcon size={32} className="text-steel mx-auto mb-4" aria-hidden="true" />
             <p className="text-sm text-charcoal/80">
               {isEs
-                ? 'Pronto vamos a cargar videos desde el admin.'
-                : 'Work videos coming soon — add entries from the admin.'}
+                ? 'Marca proyectos como “Work in Motion” desde el panel para verlos aquí.'
+                : 'Mark projects as “Work in Motion” from the admin to see them here.'}
             </p>
           </div>
         )}

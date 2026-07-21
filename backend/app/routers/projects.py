@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import or_
 from typing import Optional
 from app.database.session import get_db
 from app.models.project import Project, ProjectImage
@@ -24,6 +23,10 @@ def list_projects(
     category: Optional[str] = None,
     category_id: Optional[int] = None,
     featured: Optional[bool] = None,
+    home_videos: Optional[bool] = None,
+    home_before_after: Optional[bool] = None,
+    has_before_after: Optional[bool] = None,
+    has_video: Optional[bool] = None,
     published_only: bool = True,
     skip: int = 0,
     limit: int = 50,
@@ -45,9 +48,35 @@ def list_projects(
     if featured is not None:
         query = query.filter(Project.is_featured == featured)
 
-    projects = query.order_by(Project.order.asc(), Project.created_at.desc()).offset(skip).limit(limit).all()
-    for p in projects:
-        p.view_count += 1 if False else 0
+    if home_videos is not None:
+        query = query.filter(Project.show_on_home_videos == home_videos)
+        if home_videos:
+            query = query.filter(Project.video_url.isnot(None), Project.video_url != "")
+
+    if home_before_after is not None:
+        query = query.filter(Project.show_on_home_before_after == home_before_after)
+        if home_before_after:
+            query = query.filter(
+                Project.before_image.isnot(None), Project.before_image != "",
+                Project.after_image.isnot(None), Project.after_image != "",
+            )
+
+    if has_before_after:
+        query = query.filter(
+            Project.before_image.isnot(None), Project.before_image != "",
+            Project.after_image.isnot(None), Project.after_image != "",
+        )
+
+    if has_video:
+        query = query.filter(Project.video_url.isnot(None), Project.video_url != "")
+
+    order_columns = [Project.order.asc(), Project.created_at.desc()]
+    if home_videos:
+        order_columns = [Project.home_videos_order.asc(), Project.created_at.desc()]
+    elif home_before_after:
+        order_columns = [Project.home_before_after_order.asc(), Project.created_at.desc()]
+
+    projects = query.order_by(*order_columns).offset(skip).limit(limit).all()
     return projects
 
 

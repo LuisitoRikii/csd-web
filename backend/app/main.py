@@ -1,5 +1,6 @@
 import mimetypes
 import os
+from sqlalchemy import inspect, text
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, Response, StreamingResponse
@@ -13,6 +14,27 @@ from app.database.base import (
 
 def create_tables():
     Base.metadata.create_all(bind=engine)
+
+
+def ensure_project_columns():
+    """Add home-section columns to existing projects tables (SQLite has no
+    built-in schema migration, so we ALTER TABLE manually before the seed runs)."""
+    inspector = inspect(engine)
+    if "projects" not in inspector.get_table_names():
+        return
+
+    existing = {column["name"] for column in inspector.get_columns("projects")}
+    additions = [
+        ("show_on_home_videos", "BOOLEAN DEFAULT 0"),
+        ("home_videos_order", "INTEGER DEFAULT 0"),
+        ("show_on_home_before_after", "BOOLEAN DEFAULT 0"),
+        ("home_before_after_order", "INTEGER DEFAULT 0"),
+        ("home_before_after_tag", "VARCHAR"),
+    ]
+    with engine.begin() as connection:
+        for name, definition in additions:
+            if name not in existing:
+                connection.execute(text(f'ALTER TABLE projects ADD COLUMN {name} {definition}'))
 
 
 def create_app() -> FastAPI:
@@ -132,5 +154,6 @@ app = create_app()
 @app.on_event("startup")
 def on_startup():
     create_tables()
+    ensure_project_columns()
     from app.core.seed import seed_data
     seed_data()

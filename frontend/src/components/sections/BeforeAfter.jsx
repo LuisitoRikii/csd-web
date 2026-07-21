@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
+import { useQuery } from '@tanstack/react-query'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'
@@ -8,32 +9,55 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { BeforeAfterSlider } from '@/components/ui/BeforeAfterSlider'
 import { ArrowUpRight, ImageIcon } from 'lucide-react'
-import { useSiteSettings } from '@/hooks/useSiteSettings'
+import { projectService } from '@/services'
+
+const tagLabel = (tag, t) => {
+  if (!tag) return ''
+  return t(`beforeafter.${tag}`, tag)
+}
 
 export const BeforeAfter = () => {
   const { t, i18n } = useTranslation()
   const isEs = i18n.language === 'es'
-  const { beforeAfter } = useSiteSettings()
-  const pairs = beforeAfter.pairs || []
 
-  const tagsFromData = useMemo(() => {
+  const { data: projects = [] } = useQuery({
+    queryKey: ['projects-home-before-after'],
+    queryFn: () => projectService.list({ home_before_after: true, limit: 24 }),
+  })
+
+  const pairs = useMemo(
+    () => projects
+      .filter((project) => project.before_image && project.after_image)
+      .map((project) => ({
+        id: project.id,
+        slug: project.slug,
+        key: project.home_before_after_tag || project.slug,
+        tag: project.home_before_after_tag || '',
+        title_en: project.title_en,
+        title_es: project.title_es,
+        before: project.before_image,
+        after: project.after_image,
+        scope_en: project.long_description_en || project.description_en,
+        scope_es: project.long_description_es || project.description_es,
+      })),
+    [projects]
+  )
+
+  const tagKeys = useMemo(() => {
     const seen = new Set()
-    pairs.forEach((p) => p.tag && seen.add(p.tag))
+    pairs.forEach((pair) => pair.tag && seen.add(pair.tag))
     return Array.from(seen)
   }, [pairs])
 
   const tags = [
     { id: 'all', label: t('beforeafter.tag_all') },
-    ...tagsFromData.map((tag) => ({
-      id: tag,
-      label: t(`beforeafter.${tag}`, tag),
-    })),
+    ...tagKeys.map((tag) => ({ id: tag, label: tagLabel(tag, t) })),
   ]
   const [active, setActive] = useState('all')
 
   const filtered = useMemo(() => {
     if (active === 'all') return pairs
-    return pairs.filter((p) => p.key === active)
+    return pairs.filter((pair) => pair.key === active)
   }, [pairs, active])
 
   return (
@@ -68,28 +92,30 @@ export const BeforeAfter = () => {
 
         {pairs.length > 0 ? (
           <>
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="mb-10 flex flex-wrap items-center gap-2"
-            >
-              {tags.map((tag) => (
-                <button
-                  key={tag.id}
-                  onClick={() => setActive(tag.id)}
-                  className={`px-5 py-2 rounded-full text-xs uppercase tracking-[0.15em] font-medium transition-all duration-300 border ${
-                    active === tag.id
-                      ? 'text-paper border-transparent'
-                      : 'bg-transparent text-paper/70 border-paper/20 hover:border-paper/50 hover:text-paper'
-                  }`}
-                  style={active === tag.id ? { backgroundImage: 'linear-gradient(95deg, #91F2D7, #8A04F0, #D925A9)' } : undefined}
-                >
-                  {tag.label}
-                </button>
-              ))}
-            </motion.div>
+            {tags.length > 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+                className="mb-10 flex flex-wrap items-center gap-2"
+              >
+                {tags.map((tag) => (
+                  <button
+                    key={tag.id}
+                    onClick={() => setActive(tag.id)}
+                    className={`px-5 py-2 rounded-full text-xs uppercase tracking-[0.15em] font-medium transition-all duration-300 border ${
+                      active === tag.id
+                        ? 'text-paper border-transparent'
+                        : 'bg-transparent text-paper/70 border-paper/20 hover:border-paper/50 hover:text-paper'
+                    }`}
+                    style={active === tag.id ? { backgroundImage: 'linear-gradient(95deg, #91F2D7, #8A04F0, #D925A9)' } : undefined}
+                  >
+                    {tag.label}
+                  </button>
+                ))}
+              </motion.div>
+            )}
 
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
@@ -107,13 +133,13 @@ export const BeforeAfter = () => {
                 '--swiper-pagination-bullet-inactive-color': '#FFFFFF50',
               }}
             >
-              {filtered.map((p) => (
-                <SwiperSlide key={p.key || `${p.before}-${p.after}`}>
+              {filtered.map((pair) => (
+                <SwiperSlide key={pair.id || pair.slug}>
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
                     <div className="lg:col-span-8">
                       <BeforeAfterSlider
-                        before={p.before}
-                        after={p.after}
+                        before={pair.before}
+                        after={pair.after}
                         beforeLabel={t('beforeafter.before')}
                         afterLabel={t('beforeafter.after')}
                         className="shadow-lift"
@@ -121,20 +147,22 @@ export const BeforeAfter = () => {
                     </div>
                     <div className="lg:col-span-4">
                       <p className="text-xs uppercase tracking-[0.2em] text-paper/70 mb-3 font-medium">
-                        {tags.find((tg) => tg.id === p.key)?.label || p.tag}
+                        {tagLabel(pair.tag, t) || pair.tag}
                       </p>
                       <h3 className="font-serif text-3xl lg:text-4xl text-paper tracking-tight">
-                        {isEs ? p.title_es : p.title_en}
+                        {isEs ? pair.title_es : pair.title_en}
                       </h3>
                       <p className="mt-4 text-paper/70 leading-relaxed">
-                        {isEs ? p.scope_es : p.scope_en}
+                        {isEs ? pair.scope_es : pair.scope_en}
                       </p>
-                      <a
-                        href="/portfolio"
-                        className="mt-6 inline-flex items-center gap-2 text-sm text-paper border-b border-paper/30 hover:border-paper pb-1 transition-colors"
-                      >
-                        {isEs ? 'Ver proyecto completo' : 'See full project'} <ArrowUpRight size={14} />
-                      </a>
+                      {pair.slug && (
+                        <a
+                          href={`/portfolio/${pair.slug}`}
+                          className="mt-6 inline-flex items-center gap-2 text-sm text-paper border-b border-paper/30 hover:border-paper pb-1 transition-colors"
+                        >
+                          {isEs ? 'Ver proyecto completo' : 'See full project'} <ArrowUpRight size={14} />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </SwiperSlide>
@@ -146,8 +174,8 @@ export const BeforeAfter = () => {
             <ImageIcon size={32} className="text-paper/40 mx-auto mb-4" aria-hidden="true" />
             <p className="text-paper/70 text-sm">
               {isEs
-                ? 'Pronto vamos a cargar transformaciones antes/después desde el admin.'
-                : 'Before/after transformations coming soon — add pairs from the admin.'}
+                ? 'Marca proyectos con imágenes antes/después desde el panel para verlos aquí.'
+                : 'Mark projects with before/after images from the admin to see them here.'}
             </p>
           </div>
         )}

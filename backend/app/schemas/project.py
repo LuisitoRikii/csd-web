@@ -72,6 +72,11 @@ class ProjectBase(BaseModel):
     is_featured: bool = False
     is_published: bool = True
     order: int = 0
+    show_on_home_videos: bool = False
+    home_videos_order: int = 0
+    show_on_home_before_after: bool = False
+    home_before_after_order: int = 0
+    home_before_after_tag: Optional[str] = None
 
 
 class ProjectCreate(ProjectBase):
@@ -99,6 +104,11 @@ class ProjectUpdate(BaseModel):
     is_featured: Optional[bool] = None
     is_published: Optional[bool] = None
     order: Optional[int] = None
+    show_on_home_videos: Optional[bool] = None
+    home_videos_order: Optional[int] = None
+    show_on_home_before_after: Optional[bool] = None
+    home_before_after_order: Optional[int] = None
+    home_before_after_tag: Optional[str] = None
     images: Optional[List[str]] = None
 
 

@@ -11,14 +11,6 @@ const parse = (v, fallback) => {
   }
 }
 
-/**
- * useSiteSettings — fetches /settings/public and exposes typed accessors for
- * site-level content stored as JSON in SiteSettings (WhyUs reasons, Process steps,
- * BeforeAfter pairs, Videos list, Marquee items, hero/about media, etc.).
- *
- * Each accessor returns a sensible fallback so the UI never breaks when the
- * backend is empty or a setting is missing.
- */
 export function useSiteSettings() {
   const { data, isLoading } = useQuery({
     queryKey: ['settings-public'],
@@ -52,22 +44,6 @@ export function useSiteSettings() {
 
     process: {
       steps: parse(get('home_process_steps'), []),
-    },
-
-    beforeAfter: {
-      pairs: parse(get('home_before_after_pairs'), []).map((pair) => ({
-        ...pair,
-        before: resolveMediaUrl(pair.before),
-        after: resolveMediaUrl(pair.after),
-      })).filter((pair) => pair.before && pair.after),
-    },
-
-    videos: {
-      list: parse(get('home_videos_list'), []).map((video) => ({
-        ...video,
-        src: resolveMediaUrl(video.src),
-        poster: resolveMediaUrl(video.poster),
-      })).filter((video) => video.src),
     },
 
     marquee: {

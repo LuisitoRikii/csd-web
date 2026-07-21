@@ -34,6 +34,11 @@ const empty = {
   is_featured: false,
   is_published: true,
   order: 0,
+  show_on_home_videos: false,
+  home_videos_order: 0,
+  show_on_home_before_after: false,
+  home_before_after_order: 0,
+  home_before_after_tag: '',
   images: [],
 }
 
@@ -176,6 +181,9 @@ const ProjectModal = ({ open, onClose, initial, categories, onSubmit }) => {
       ...data,
       category_id: data.category_id ? Number(data.category_id) : null,
       order: Number(data.order) || 0,
+      home_videos_order: Number(data.home_videos_order) || 0,
+      home_before_after_order: Number(data.home_before_after_order) || 0,
+      home_before_after_tag: (data.home_before_after_tag || '').trim() || null,
     })
   }
 
@@ -262,6 +270,33 @@ const ProjectModal = ({ open, onClose, initial, categories, onSubmit }) => {
         <div className="flex items-center gap-6">
           <label className="flex items-center gap-2 text-sm"><input type="checkbox" {...register('is_featured')} /> {t('admin.badge_featured')}</label>
           <label className="flex items-center gap-2 text-sm"><input type="checkbox" {...register('is_published')} /> {t('admin.badge_published')}</label>
+        </div>
+
+        <div className="pt-4 border-t border-line space-y-3">
+          <p className="text-xs text-steel uppercase tracking-[0.18em] font-semibold">Mostrar en la portada</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="rounded-2xl border border-line p-4 space-y-2">
+              <label className="flex items-center gap-2 text-sm font-medium text-ink">
+                <input type="checkbox" {...register('show_on_home_videos')} /> Work in Motion
+              </label>
+              <p className="text-xs text-steel">Aparece en la sección de vídeos del home (requiere vídeo cargado).</p>
+              <Input label="Orden">
+                <input type="number" {...register('home_videos_order')} className="input-base" />
+              </Input>
+            </div>
+            <div className="rounded-2xl border border-line p-4 space-y-2">
+              <label className="flex items-center gap-2 text-sm font-medium text-ink">
+                <input type="checkbox" {...register('show_on_home_before_after')} /> Antes / después
+              </label>
+              <p className="text-xs text-steel">Aparece en la comparativa del home (requiere imágenes antes y después).</p>
+              <Input label="Orden">
+                <input type="number" {...register('home_before_after_order')} className="input-base" />
+              </Input>
+              <Input label="Etiqueta (cocina, baño, fachada…)">
+                <input {...register('home_before_after_tag')} className="input-base" placeholder="kitchen" />
+              </Input>
+            </div>
+          </div>
         </div>
         <div className="flex justify-end gap-3 pt-4 border-t border-line">
           <button type="button" onClick={onClose} disabled={isUploading} className="px-4 py-2 rounded-xl border border-line text-sm disabled:opacity-50">{t('admin.cancel')}</button>
