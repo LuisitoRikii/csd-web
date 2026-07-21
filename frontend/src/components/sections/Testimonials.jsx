@@ -1,17 +1,18 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { Quote, Star } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { testimonialService } from '@/services'
 
 export const Testimonials = () => {
   const { t, i18n } = useTranslation()
   const isEs = i18n.language === 'es'
 
-  // Empty until real reviews come in (don't fabricate names/quotes).
-  const items = [
-    { quote: t('testimonials.t1'), author: t('testimonials.t1_author') },
-    { quote: t('testimonials.t2'), author: t('testimonials.t2_author') },
-    { quote: t('testimonials.t3'), author: t('testimonials.t3_author') },
-  ].filter((it) => it.quote && it.author)
+  const { data: items = [] } = useQuery({
+    queryKey: ['testimonials-public'],
+    queryFn: () => testimonialService.list({ active_only: true, limit: 12 }),
+  })
 
   const hasData = items.length > 0
 
@@ -36,7 +37,7 @@ export const Testimonials = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {items.map((it, idx) => (
               <motion.figure
-                key={idx}
+                key={it.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
@@ -45,12 +46,19 @@ export const Testimonials = () => {
               >
                 <Quote size={24} className="text-violet mb-5" strokeWidth={1.4} />
                 <blockquote className="font-serif text-lg leading-snug tracking-tight flex-1 text-charcoal">
-                  "{it.quote}"
+                  &ldquo;{it.body}&rdquo;
                 </blockquote>
                 <figcaption className="mt-6 pt-4 border-t border-line flex items-center justify-between">
-                  <span className="text-xs font-medium text-ink tracking-wide">{it.author}</span>
+                  <span>
+                    <span className="block text-xs font-medium text-ink tracking-wide">{it.author}</span>
+                    {it.role && (
+                      <span className="block text-[10px] text-steel tracking-wide uppercase mt-0.5">
+                        {it.role}
+                      </span>
+                    )}
+                  </span>
                   <div className="flex gap-0.5 text-magenta">
-                    {[...Array(5)].map((_, j) => (
+                    {[...Array(Math.max(0, Math.min(5, it.rating || 0)))].map((_, j) => (
                       <Star key={j} size={14} className="fill-current" />
                     ))}
                   </div>
@@ -74,8 +82,8 @@ export const Testimonials = () => {
             </p>
             <p className="mt-5 text-xs uppercase tracking-[0.18em] text-steel">
               {isEs
-                ? 'Comparte tu experiencia y la agregaremos aquí.'
-                : 'Share your experience and we’ll add it here.'}
+                ? 'Agrega reseñas desde el panel para verlas aquí.'
+                : 'Add reviews from the admin to see them here.'}
             </p>
           </motion.div>
         )}

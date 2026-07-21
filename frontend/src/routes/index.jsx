@@ -28,6 +28,8 @@ import { AdminMessagesPage } from '@/pages/admin/AdminMessagesPage'
 import { AdminSettingsPage } from '@/pages/admin/AdminSettingsPage'
 import { AdminUsersPage } from '@/pages/admin/AdminUsersPage'
 import { AdminFilesPage } from '@/pages/admin/AdminFilesPage'
+import { AdminTestimonialsPage } from '@/pages/admin/AdminTestimonialsPage'
+import { AdminTeamPage } from '@/pages/admin/AdminTeamPage'
 
 export const AppRoutes = () => {
   return (
@@ -115,13 +117,29 @@ export const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
-        <Route
+<Route
           path="/admin/messages"
           element={
             <ProtectedRoute>
-              
-                <AdminMessagesPage />
-              
+
+              <AdminMessagesPage />
+
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/testimonials"
+          element={
+            <ProtectedRoute>
+              <AdminTestimonialsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/team"
+          element={
+            <ProtectedRoute>
+              <AdminTeamPage />
             </ProtectedRoute>
           }
         />

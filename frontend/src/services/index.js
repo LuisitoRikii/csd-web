@@ -126,6 +126,25 @@ export const settingsService = {
   update: (id, data) => unwrap(api.put(`/settings/${id}`, data)),
 }
 
+export const testimonialService = {
+  list: (params = {}) => unwrap(api.get('/testimonials', { params })),
+  create: (data) => unwrap(api.post('/testimonials', data)),
+  update: (id, data) => unwrap(api.put(`/testimonials/${id}`, data)),
+  remove: (id) => unwrap(api.delete(`/testimonials/${id}`)),
+}
+
+const normalizeTeamMember = (member) => member ? {
+  ...member,
+  photo_url: resolveMediaUrl(member.photo_url),
+} : member
+
+export const teamService = {
+  list: (params = {}) => unwrap(api.get('/team', { params })).then((items) => items.map(normalizeTeamMember)),
+  create: (data) => unwrap(api.post('/team', { ...data, photo_url: toStoredMediaUrl(data.photo_url) })).then(normalizeTeamMember),
+  update: (id, data) => unwrap(api.put(`/team/${id}`, { ...data, photo_url: toStoredMediaUrl(data.photo_url) })).then(normalizeTeamMember),
+  remove: (id) => unwrap(api.delete(`/team/${id}`)),
+}
+
 export const dashboardService = {
   stats: () => unwrap(api.get('/dashboard/stats')),
   recent: () => unwrap(api.get('/dashboard/recent')),
