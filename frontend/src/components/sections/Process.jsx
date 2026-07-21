@@ -1,14 +1,13 @@
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { ClipboardList, MapPin, FileText, Hammer, CheckCircle2 } from 'lucide-react'
+import { ClipboardList, MapPin, FileText, CheckCircle2 } from 'lucide-react'
 
-// The process flows through the tri-color spectrum: mint → violet → magenta → violet → mint
+// The process flows through the tri-color spectrum: mint → violet → magenta → mint
 const STEPS = [
   { titleKey: 'step_1_title', descKey: 'step_1_desc', Icon: ClipboardList, color: '#91F2D7', tone: 'mint' },
   { titleKey: 'step_2_title', descKey: 'step_2_desc', Icon: MapPin,       color: '#8A04F0', tone: 'violet' },
   { titleKey: 'step_3_title', descKey: 'step_3_desc', Icon: FileText,     color: '#D925A9', tone: 'magenta' },
-  { titleKey: 'step_4_title', descKey: 'step_4_desc', Icon: Hammer,       color: '#8A04F0', tone: 'violet' },
-  { titleKey: 'step_5_title', descKey: 'step_5_desc', Icon: CheckCircle2, color: '#91F2D7', tone: 'mint' },
+  { titleKey: 'step_4_title', descKey: 'step_4_desc', Icon: CheckCircle2, color: '#91F2D7', tone: 'mint' },
 ]
 
 const fade = {
@@ -50,7 +49,7 @@ export const Process = () => {
             className="absolute left-0 right-0 top-8 hidden lg:block h-[2px] bg-gradient-spectrum rounded-full opacity-90"
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6 relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 relative">
             {STEPS.map((step, i) => {
               const Icon = step.Icon
               return (
@@ -99,9 +98,7 @@ export const Process = () => {
                           ? 'linear-gradient(180deg, #91F2D7, #8A04F0)'
                           : i === 1
                             ? 'linear-gradient(180deg, #8A04F0, #D925A9)'
-                            : i === 2
-                              ? 'linear-gradient(180deg, #D925A9, #8A04F0)'
-                              : 'linear-gradient(180deg, #8A04F0, #91F2D7)',
+                            : 'linear-gradient(180deg, #D925A9, #91F2D7)',
                       }}
                     />
                   )}

@@ -142,10 +142,18 @@ export const Header = () => {
                     </Link>
                   </motion.div>
                 ))}
+                <button
+                  onClick={() => { toggleLang(); setOpen(false) }}
+                  className="mt-6 inline-flex items-center justify-between px-4 py-3 rounded-xl border border-line text-sm font-medium text-ink"
+                  aria-label="Toggle language"
+                >
+                  <span className="uppercase tracking-[0.18em] text-[11px] text-steel">Language</span>
+                  <span className="font-serif text-lg">{lang === 'es' ? 'English' : 'Español'}</span>
+                </button>
                 <Link
                   to="/quote"
                   onClick={() => setOpen(false)}
-                  className="mt-6 btn-primary justify-center"
+                  className="mt-3 btn-primary justify-center"
                 >
                   {t('nav.quote')} <ArrowUpRight size={14} />
                 </Link>
