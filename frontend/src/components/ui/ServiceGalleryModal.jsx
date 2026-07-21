@@ -139,7 +139,7 @@ export const ServiceGalleryModal = ({ service, open, onClose }) => {
           {/* Solid white panel — keeps backdrop separate from content */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative m-auto mt-[max(env(safe-area-inset-top),1rem)] mb-[max(env(safe-area-inset-bottom),1rem)] mr-[max(env(safe-area-inset-right),1rem)] ml-[max(env(safe-area-inset-left),1rem)] w-[min(96rem,calc(100vw-2rem))] max-h-[calc(100vh-2rem)] overflow-hidden rounded-3xl bg-paper border border-line shadow-lift flex flex-col"
+            className="relative m-auto mt-[max(env(safe-area-inset-top),1rem)] mb-[max(env(safe-area-inset-bottom),1rem)] mr-[max(env(safe-area-inset-right),1rem)] ml-[max(env(safe-area-inset-left),1rem)] w-[min(96rem,calc(100vw-2rem))] h-[min(820px,calc(100vh-2rem))] max-h-[calc(100vh-2rem)] overflow-hidden rounded-3xl bg-paper border border-line shadow-lift flex flex-col"
           >
             {/* Header */}
             <header className="flex items-start justify-between gap-6 px-8 py-6 border-b border-line">

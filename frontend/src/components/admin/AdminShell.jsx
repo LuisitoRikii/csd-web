@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, Briefcase, ImageIcon, Calendar, MessageSquare, FileText,
   Settings, LogOut, Menu, X, Users, ChevronRight, Search, Folder, KeyRound,
+  Quote, UserCircle2,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/contexts/AuthContext'
@@ -19,6 +20,8 @@ const NAV = [
   { to: '/admin/appointments', icon: Calendar, label: 'Appointments' },
   { to: '/admin/blog', icon: MessageSquare, label: 'Blog' },
   { to: '/admin/messages', icon: MessageSquare, label: 'Messages' },
+  { to: '/admin/testimonials', icon: Quote, label: 'Testimonials' },
+  { to: '/admin/team', icon: UserCircle2, label: 'Team' },
   { to: '/admin/files', icon: Folder, label: 'Files' },
   { to: '/admin/settings', icon: Settings, label: 'Settings' },
   { to: '/admin/users', icon: Users, label: 'Team' },

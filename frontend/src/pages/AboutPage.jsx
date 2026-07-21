@@ -7,6 +7,8 @@ import { SEO, buildBreadcrumbSchema } from '@/components/ui/SEO'
 import { CTA } from '@/components/sections/CTA'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { useSiteSettings } from '@/hooks/useSiteSettings'
+import { teamService } from '@/services'
+import { useQuery } from '@tanstack/react-query'
 
 export const AboutPage = () => {
   const { t } = useTranslation()
@@ -15,18 +17,16 @@ export const AboutPage = () => {
   const storyImage = aboutPage.storyImage
   const teamImage = aboutPage.teamImage
 
+  const { data: team = [] } = useQuery({
+    queryKey: ['team-public'],
+    queryFn: () => teamService.list({ active_only: true, limit: 24 }),
+  })
+
   const valueKeys = [
     { key: 1, color: '#5B2A8F' },
     { key: 2, color: '#A37052' },
     { key: 3, color: '#7DD8BC' },
     { key: 4, color: '#5B2A8F' },
-  ]
-
-  const team = [
-    { key: 'founder',    role: t('about_page.team_card_role_founder') },
-    { key: 'muralist',   role: t('about_page.team_card_role_muralist') },
-    { key: 'epoxy',      role: t('about_page.team_card_role_epoxy') },
-    { key: 'pm',         role: t('about_page.team_card_role_pm') },
   ]
 
   const title = lang === 'es' ? 'Nosotros | CSD Good Services' : 'About | CSD Good Services'
@@ -131,26 +131,46 @@ export const AboutPage = () => {
             </h2>
             <p className="mt-4 text-charcoal/80 max-w-lg">{t('about.team_subtitle')}</p>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-            {team.map((m, i) => (
-              <motion.div
-                key={m.key}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group"
-              >
-                <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-subtle mb-4">
+<div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            {team.length === 0 ? (
+              teamImage && (
+                <div className="col-span-2 lg:col-span-4 aspect-[4/5] max-w-sm mx-auto rounded-3xl overflow-hidden bg-subtle">
                   <img
-                    src={teamImage || `https://images.unsplash.com/photo-1568602471${i === 0 ? '122-7832951cc4c5' : i === 1 ? '577-b2c045efd7' : i === 2 ? '578-b0f6a4d8' : '577-b29d4f5d5'}-?w=400&auto=format&fit=crop&q=85`}
+                    src={teamImage}
                     alt=""
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <p className="text-sm text-steel">{m.role}</p>
-              </motion.div>
-            ))}
+              )
+            ) : (
+              team.map((member) => (
+                <motion.div
+                  key={member.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7 }}
+                  className="group"
+                >
+                  <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-subtle mb-4">
+                    {member.photo_url ? (
+                      <img
+                        src={member.photo_url}
+                        alt={member.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-steel text-sm">—</div>
+                    )}
+                  </div>
+                  <p className="text-sm font-medium text-ink">{member.name}</p>
+                  <p className="text-xs text-steel uppercase tracking-[0.12em] mt-1">
+                    {lang === 'es' ? member.role_es || member.role_en : member.role_en}
+                  </p>
+                </motion.div>
+              ))
+            )}
           </div>
         </div>
       </section>

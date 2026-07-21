@@ -8,3 +8,5 @@ from app.models.appointment import Appointment
 from app.models.blog import BlogPost
 from app.models.contact import ContactMessage
 from app.models.setting import SiteSettings
+from app.models.testimonial import Testimonial
+from app.models.team import TeamMember

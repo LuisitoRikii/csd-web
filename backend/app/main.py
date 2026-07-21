@@ -8,7 +8,7 @@ from app.core.config import settings
 from app.database.session import engine, Base
 from app.database.base import (
     User, Service, Category, Project, Quote, Appointment,
-    BlogPost, ContactMessage, SiteSettings,
+    BlogPost, ContactMessage, SiteSettings, Testimonial, TeamMember,
 )
 
 
@@ -115,6 +115,7 @@ def create_app() -> FastAPI:
         auth, users, services, categories, projects,
         quotes, appointments, blog, contact, uploads,
         settings as settings_router, dashboard, files,
+        testimonials, team,
     )
 
     prefix = settings.API_V1_PREFIX
@@ -131,6 +132,8 @@ def create_app() -> FastAPI:
     app.include_router(settings_router.router, prefix=prefix)
     app.include_router(dashboard.router, prefix=prefix)
     app.include_router(files.router, prefix=prefix)
+    app.include_router(testimonials.router, prefix=prefix)
+    app.include_router(team.router, prefix=prefix)
 
     @app.get("/")
     def root():
