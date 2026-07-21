@@ -44,8 +44,10 @@ export const BeforeAfterSlider = ({ before, after, beforeLabel, afterLabel, clas
   return (
     <div
       ref={wrapRef}
-      className={`relative aspect-[16/10] w-full overflow-hidden rounded-2xl select-none bg-subtle ${className}`}
+      className={`relative aspect-[16/10] w-full overflow-hidden rounded-2xl select-none bg-subtle swiper-no-swiping ${className}`}
+      style={{ touchAction: 'none', WebkitUserSelect: 'none', userSelect: 'none' }}
       onClick={(e) => updateFromClientX(e.clientX)}
+      onDragStart={(e) => e.preventDefault()}
     >
       {/* BEFORE — full background */}
       <img
@@ -54,6 +56,7 @@ export const BeforeAfterSlider = ({ before, after, beforeLabel, afterLabel, clas
         className="absolute inset-0 h-full w-full object-cover pointer-events-none"
         draggable={false}
         loading="lazy"
+        style={{ WebkitUserDrag: 'none', userDrag: 'none', pointerEvents: 'none' }}
       />
       <span className="absolute top-3 left-3 z-10 px-3 py-1.5 rounded-full bg-ink/85 backdrop-blur-sm text-paper text-[10px] tracking-[0.2em] uppercase">
         {beforeLabel || 'Before'}
@@ -62,7 +65,7 @@ export const BeforeAfterSlider = ({ before, after, beforeLabel, afterLabel, clas
       {/* AFTER — clipped on the right side, revealed by the handle */}
       <div
         className="absolute inset-0 overflow-hidden pointer-events-none"
-        style={{ clipPath: `inset(0 0 0 ${pos}%)` }}
+        style={{ clipPath: `inset(0 0 0 ${pos}%)`, touchAction: 'none' }}
       >
         <img
           src={after}
@@ -70,6 +73,7 @@ export const BeforeAfterSlider = ({ before, after, beforeLabel, afterLabel, clas
           className="absolute inset-0 h-full w-full object-cover"
           draggable={false}
           loading="lazy"
+          style={{ WebkitUserDrag: 'none', userDrag: 'none', pointerEvents: 'none' }}
         />
       </div>
       <span
@@ -95,6 +99,7 @@ export const BeforeAfterSlider = ({ before, after, beforeLabel, afterLabel, clas
       <div
         ref={trackRef}
         className="absolute inset-0 z-30 cursor-ew-resize touch-none"
+        style={{ touchAction: 'none', userSelect: 'none', WebkitUserSelect: 'none' }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}

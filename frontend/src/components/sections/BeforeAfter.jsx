@@ -2,6 +2,11 @@ import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 import { BeforeAfterSlider } from '@/components/ui/BeforeAfterSlider'
 import { ArrowUpRight, ImageIcon } from 'lucide-react'
 import { projectService } from '@/services'
@@ -112,48 +117,62 @@ export const BeforeAfter = () => {
               </motion.div>
             )}
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay]}
+              spaceBetween={24}
+              slidesPerView={1}
+              navigation
+              pagination={{ clickable: true }}
+              autoplay={{ delay: 7000, disableOnInteraction: false }}
+              loop={filtered.length > 1}
+              noSwipingClass="swiper-no-swiping"
+              noSwipingSelector=".swiper-no-swiping"
+              preventInteractionOnTransition
+              className="!pb-14"
+              style={{
+                '--swiper-navigation-color': '#FFFFFF',
+                '--swiper-navigation-size': '22px',
+                '--swiper-pagination-color': '#91F2D7',
+                '--swiper-pagination-bullet-inactive-color': '#FFFFFF50',
+              }}
+            >
               {filtered.map((pair) => (
-                <motion.article
-                  key={pair.id || pair.slug}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.8 }}
-                  className="space-y-5"
-                >
-                  <BeforeAfterSlider
-                    before={pair.before}
-                    after={pair.after}
-                    beforeLabel={t('beforeafter.before')}
-                    afterLabel={t('beforeafter.after')}
-                  />
-                  <div>
-                    {pair.tag && (
-                      <p className="text-xs uppercase tracking-[0.2em] text-paper/70 mb-2 font-medium">
+                <SwiperSlide key={pair.id || pair.slug}>
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+                    <div className="lg:col-span-8">
+                      <BeforeAfterSlider
+                        before={pair.before}
+                        after={pair.after}
+                        beforeLabel={t('beforeafter.before')}
+                        afterLabel={t('beforeafter.after')}
+                        className="shadow-lift"
+                      />
+                    </div>
+                    <div className="lg:col-span-4">
+                      <p className="text-xs uppercase tracking-[0.2em] text-paper/70 mb-3 font-medium">
                         {tagLabel(pair.tag, t) || pair.tag}
                       </p>
-                    )}
-                    <h3 className="font-serif text-2xl lg:text-3xl text-paper tracking-tight">
-                      {isEs ? pair.title_es : pair.title_en}
-                    </h3>
-                    {(isEs ? pair.scope_es : pair.scope_en) && (
-                      <p className="mt-3 text-paper/70 leading-relaxed text-sm">
-                        {isEs ? pair.scope_es : pair.scope_en}
-                      </p>
-                    )}
-                    {pair.slug && (
-                      <a
-                        href={`/portfolio/${pair.slug}`}
-                        className="mt-4 inline-flex items-center gap-2 text-sm text-paper border-b border-paper/30 hover:border-paper pb-1 transition-colors"
-                      >
-                        {isEs ? 'Ver proyecto completo' : 'See full project'} <ArrowUpRight size={14} />
-                      </a>
-                    )}
+                      <h3 className="font-serif text-3xl lg:text-4xl text-paper tracking-tight">
+                        {isEs ? pair.title_es : pair.title_en}
+                      </h3>
+                      {(isEs ? pair.scope_es : pair.scope_en) && (
+                        <p className="mt-4 text-paper/70 leading-relaxed">
+                          {isEs ? pair.scope_es : pair.scope_en}
+                        </p>
+                      )}
+                      {pair.slug && (
+                        <a
+                          href={`/portfolio/${pair.slug}`}
+                          className="mt-6 inline-flex items-center gap-2 text-sm text-paper border-b border-paper/30 hover:border-paper pb-1 transition-colors"
+                        >
+                          {isEs ? 'Ver proyecto completo' : 'See full project'} <ArrowUpRight size={14} />
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </motion.article>
+                </SwiperSlide>
               ))}
-            </div>
+            </Swiper>
           </>
         ) : (
           <div className="rounded-3xl border border-paper/10 px-8 py-16 text-center">
