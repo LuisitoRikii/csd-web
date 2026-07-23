@@ -55,7 +55,13 @@ export const Hero = () => {
   }, [videoUrl])
 
   return (
-    <section ref={ref} className="relative h-screen min-h-[700px] w-full overflow-hidden bg-canvas">
+    <section
+      ref={ref}
+      className="relative h-[80vh] min-h-[650px] w-full overflow-hidden bg-canvas"
+      style={{
+        clipPath: "ellipse(140% 90% at 50% 0%)"
+      }}
+    >
       {/* Background media */}
       <motion.div
         className="absolute inset-0 z-0"
@@ -126,6 +132,7 @@ export const Hero = () => {
           {t('hero.description')}
         </motion.p>
 
+        {/* CTA row — two pill buttons side by side, dental-hero style */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -149,26 +156,6 @@ export const Hero = () => {
         </motion.div>
       </motion.div>
 
-      {/* Bottom bar */}
-      <motion.div
-        className="absolute bottom-0 inset-x-0 z-20 border-t border-paper/15 backdrop-blur-md bg-ink/30"
-        style={{ opacity }}
-      >
-        <div className="container-x py-5 flex flex-wrap items-center justify-between gap-4 text-paper text-xs">
-          <span className="tracking-[0.18em]  opacity-80"></span>
-          <a href="#about" className="group flex items-center gap-2 hover:gap-3 transition-all">
-            <span className="tracking-[0.18em] uppercase opacity-80">{t('hero.scroll')}</span>
-            <ArrowDown size={14} className="animate-bounce" />
-          </a>
-        </div>
-      </motion.div>
-
-      {/* Tri-color accent bar — the brand's signature stripe */}
-      <div className="absolute bottom-0 left-0 right-0 h-1.5 z-30 flex">
-        <div className="flex-1 bg-mint" />
-        <div className="flex-1 bg-violet" />
-        <div className="flex-1 bg-magenta" />
-      </div>
     </section>
   )
 }

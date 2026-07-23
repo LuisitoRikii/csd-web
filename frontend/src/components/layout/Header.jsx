@@ -62,9 +62,14 @@ export const Header = () => {
               <Link
                 key={l.to}
                 to={l.to}
-                className={`relative px-4 py-2 text-sm tracking-wide transition-colors ${
-                  lightText ? 'text-paper' : 'text-ink'
-                } hover:opacity-80`}
+                className={`relative px-4 py-2
+                  font-lato
+                  uppercase
+                  tracking-[0.08em]
+                  text-sm
+                  transition-colors
+                  ${lightText ? 'text-paper' : 'text-ink'}
+                  hover:opacity-80`}
               >
                 {l.label}
                 {isActive(l.to) && (

@@ -18,7 +18,13 @@ router = APIRouter(prefix="/services", tags=["Services"])
 
 
 def _build_response(service: Service) -> ServiceResponse:
-    projects = [link.project for link in sorted(service.project_links, key=lambda l: (l.order, l.id))]
+    # Filter out orphaned ServiceProject rows whose project was deleted, so
+    # we never dereference a None project in the gallery payload.
+    projects = [
+        link.project
+        for link in sorted(service.project_links, key=lambda l: (l.order, l.id))
+        if link.project is not None
+    ]
     gallery = [
         ServiceGalleryProject(
             id=p.id,
