@@ -143,8 +143,8 @@ export const BeforeAfter = () => {
                       <BeforeAfterSlider
                         before={pair.before}
                         after={pair.after}
-                        beforeLabel={t('beforeafter.before')}
-                        afterLabel={t('beforeafter.after')}
+                        beforeLabel={t('before')}
+                        afterLabel={t('after')}
                         className="shadow-lift"
                       />
                     </div>
