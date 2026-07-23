@@ -63,6 +63,7 @@ export default {
         display: ['"Spectral"', 'Georgia', 'serif'],
         serif: ['"Spectral"', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        lato: ['Lato', 'sans-serif'],
       },
       fontSize: {
         'display-xl': ['clamp(3rem, 7.5vw, 6.5rem)', { lineHeight: '1', letterSpacing: '-0.035em' }],

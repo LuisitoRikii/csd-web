@@ -42,7 +42,13 @@ export const Hero = () => {
   }, [videoUrl])
 
   return (
-    <section ref={ref} className="relative h-[95vh] min-h-[600px] max-h-[890px] w-full overflow-hidden bg-ink">
+    <section
+      ref={ref}
+      className="relative h-[80vh] min-h-[650px] w-full overflow-hidden bg-canvas"
+      style={{
+        clipPath: "ellipse(140% 90% at 50% 0%)"
+      }}
+    >
       {/* Background media */}
       <motion.div className="absolute inset-0 z-0" style={{ y }}>
         {videoUrl && !videoError ? (
@@ -94,6 +100,7 @@ export const Hero = () => {
           {t('hero.description')}
         </motion.p>
 
+        {/* CTA row — two pill buttons side by side, dental-hero style */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -114,7 +121,6 @@ export const Hero = () => {
           </Link>
         </motion.div>
       </motion.div>
-      <div className="absolute bottom-0 inset-x-0 h-12 md:h-16 z-10 bg-gradient-to-b from-transparent to-paper pointer-events-none" />
     </section>
   )
 }

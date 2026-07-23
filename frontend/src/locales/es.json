@@ -17,6 +17,7 @@
     "title_l3": "Un equipo para todo.",
     "subtitle": "Profesional · Confiable · Cercano",
     "description": "Pintura interior y exterior, remodelaciones de baños y cocinas, limpieza profunda y mantenimiento continuo del hogar — para propietarios, administradores de propiedades y negocios en todo el sur de Florida.",
+    "cta_call": "Llamar",
     "cta_primary": "Solicitar Cotización GRATIS",
     "cta_phone": "Llamar Ahora",
     "cta_secondary": "Ver Proyectos",
@@ -25,7 +26,10 @@
     "stat_1": "Proyectos completados",
     "stat_2": "Años en obra",
     "stat_3": "Servicios bajo un mismo techo",
-    "stat_4": "Satisfacción del cliente"
+    "stat_4": "Satisfacción del cliente",
+    "below_l1": "Servicios de confianza en",
+    "below_bold": "Miami-Dade y Broward.",
+    "below_cta": "Reservar Cotización GRATIS"
   },
   "trust": {
     "title": "Confianza de propietarios, administradores de propiedades y negocios en todo el sur de Florida"

@@ -18,7 +18,10 @@ export const About = () => {
   const { about } = useSiteSettings()
 
   return (
-    <section id="about" className="relative py-16 lg:py-30 bg-paper">
+    <section
+      id="about"
+      className="relative lg:-mt-36 z-30 py-24 lg:py-36 rounded-t-[100px]"
+    >
       <div className="container-x">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           {/* Title column — sticky on desktop so the title stays pinned while

@@ -17,6 +17,7 @@
     "title_l3": "One team for everything.",
     "subtitle": "Professional · Trusted · Reliable",
     "description": "Interior and exterior painting, bathroom and kitchen remodels, deep cleaning and ongoing home maintenance — for homeowners, property managers and businesses across South Florida.",
+    "cta_call": "Call",
     "cta_primary": "Get a FREE Estimate",
     "cta_phone": "Call Now",
     "cta_secondary": "See Our Work",
@@ -25,7 +26,10 @@
     "stat_1": "Projects completed",
     "stat_2": "Years on the tools",
     "stat_3": "Services under one roof",
-    "stat_4": "Client satisfaction"
+    "stat_4": "Client satisfaction",
+    "below_l1": "Trusted home services across",
+    "below_bold": "Miami-Dade & Broward.",
+    "below_cta": "Book a FREE Estimate"
   },
   "trust": {
     "title": "Trusted by homeowners, property managers and businesses across South Florida"
