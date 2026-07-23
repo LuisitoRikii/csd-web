@@ -52,6 +52,20 @@ export default {
           ink:     '#000000',
         },
 
+        // Header aliases — reuse the existing tri-color tokens instead of
+        // inventing new colors outside the system.
+        // accent: background voice for the top utility bar (kept neutral by default,
+        //         see comment in Header.jsx to switch to a chromatic version).
+        // ruby:   the CTA voice — mapped to magenta, your "fire" accent.
+        accent: {
+          DEFAULT: '#000000', // = ink. Swap to '#8A04F0' (violet) for a louder bar.
+          ink:     '#FFFFFF', // text color to pair with accent.DEFAULT
+        },
+        ruby: {
+          DEFAULT: '#D925A9', // = magenta
+          dark:    '#A91B82', // = magenta.dark
+        },
+
         // Status
         ok:   '#16A34A',
         warn: '#D97706',
@@ -59,17 +73,23 @@ export default {
         info: '#2563EB',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['"Spectral"', 'Georgia', 'serif'],
-        serif: ['"Spectral"', 'Georgia', 'serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
-        lato: ['Lato', 'sans-serif'],
+        sans: ['"Work Sans"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        // Fallback chain ends in `serif` (system default) instead of Georgia.
+        // Georgia is denser and chunkier than Fraunces — when the web font
+        // swap in late (or fails to load), Georgia makes every headline look
+        // noticeably off. The OS default serif is closer in personality.
+        display: ['Fraunces', 'ui-serif', 'serif'],
+        serif: ['Fraunces', 'ui-serif', 'serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {
-        'display-xl': ['clamp(3rem, 7.5vw, 6.5rem)', { lineHeight: '1', letterSpacing: '-0.035em' }],
-        'display-lg': ['clamp(2.4rem, 5.5vw, 4.5rem)', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
-        'display-md': ['clamp(1.9rem, 4vw, 3.25rem)', { lineHeight: '1.1', letterSpacing: '-0.025em' }],
-        'display-sm': ['clamp(1.4rem, 2.4vw, 2rem)',   { lineHeight: '1.2', letterSpacing: '-0.02em' }],
+        // Sizes match the reference index.html exactly:
+        //   .section-head h2 { font-size: clamp(28px,4vw,42px); line-height: 1.15; }
+        //   .hero h1         { font-size: clamp(38px,6vw,74px); line-height: 1.03; }
+        'display-xl': ['clamp(3rem, 7.5vw, 6.5rem)',  { lineHeight: '1.03', letterSpacing: '-0.01em' }],
+        'display-lg': ['clamp(2.375rem, 6vw, 4.625rem)', { lineHeight: '1.03', letterSpacing: '-0.01em' }],
+        'display-md': ['clamp(1.75rem, 4vw, 2.625rem)',  { lineHeight: '1.15', letterSpacing: '-0.01em' }],
+        'display-sm': ['clamp(1.25rem, 2.2vw, 1.625rem)', { lineHeight: '1.25', letterSpacing: '-0.005em' }],
         'eyebrow': ['0.72rem', { lineHeight: '1.2', letterSpacing: '0.22em' }],
       },
       backgroundImage: {
@@ -104,7 +124,7 @@ export default {
       },
       boxShadow: {
         'soft':   '0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 4px 16px -4px rgba(0, 0, 0, 0.06)',
-        'lift':   '0 24px 56px -20px rgba(0, 0, 0, 0.18)',
+         'lift':   '0 8px 24px -10px rgba(0, 0, 0, 0.10)',
         'card':   '0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 8px 24px -8px rgba(0, 0, 0, 0.08)',
         'card-hover': '0 2px 4px 0 rgba(0, 0, 0, 0.05), 0 16px 40px -12px rgba(0, 0, 0, 0.14)',
         // Subtle tri-color glows — used sparingly to support the sober palette.
@@ -119,6 +139,13 @@ export default {
       maxWidth: {
         'container': '1440px',
         'reading': '640px',
+      },
+      // Per-section color accents — pick the brand voice for each block
+      // so the page reads as a single composition, not a list of cards.
+      accentColor: {
+        mint:    '#2DA88A',
+        violet:  '#8A04F0',
+        magenta: '#D925A9',
       },
     },
   },

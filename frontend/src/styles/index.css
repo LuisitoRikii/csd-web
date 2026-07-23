@@ -8,6 +8,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+
   html {
     scroll-behavior: smooth;
     background: #FFFFFF;
@@ -19,12 +20,28 @@
   body {
     background: #FFFFFF;
     color: #000000;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-feature-settings: 'cv11', 'ss01';
+    font-family: 'Work Sans', system-ui, sans-serif;
+    font-feature-settings: 'ss01';
     /* `overflow-x: clip` prevents horizontal scrollbar without creating a
        scrolling container — unlike `hidden`, it does NOT break `position:
        sticky` on descendants (Safari + Chrome both honor this). */
     overflow-x: clip;
+  }
+
+  /* Fraunces has a variable optical-size axis. Headlines (>= 24px) should
+     use the "display" cut (more refined, tighter spacing, sharper serifs).
+     Body text (>= 9px and <= 24px) uses the "text" cut by default. The
+     explicit auto setting + custom utility classes below make the cut
+     consistent across browsers that don't auto-size reliably. */
+  .font-serif, .font-display {
+    font-optical-sizing: auto;
+    font-variation-settings: 'opsz' 144;
+  }
+  .font-serif.text-base,
+  .font-serif.text-sm,
+  .font-serif.text-xs,
+  .font-serif.text-lg {
+    font-variation-settings: 'opsz' 14;
   }
 
   .skip-link {
@@ -42,12 +59,12 @@
   }
   .skip-link:focus {
     top: 1rem;
-    outline: 2px solid #8A04F0;
+    outline: 2px solid #1F1F26;
     outline-offset: 2px;
   }
 
   :focus-visible {
-    outline: 2px solid #8A04F0;
+    outline: 2px solid #1F1F26;
     outline-offset: 3px;
     border-radius: 4px;
   }
@@ -55,12 +72,12 @@
   a:focus-visible,
   button:focus-visible,
   [role="button"]:focus-visible {
-    outline: 2px solid #8A04F0;
+    outline: 2px solid #1F1F26;
     outline-offset: 3px;
   }
 
   ::selection {
-    background: #8A04F0;
+    background: #1F1F26;
     color: #FFFFFF;
   }
 
@@ -80,9 +97,12 @@
   }
 
   h1, h2, h3, h4 {
-    font-family: 'Spectral', Georgia, serif;
-    font-weight: 500;
-    letter-spacing: -0.02em;
+    font-family: 'Fraunces', ui-serif, serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    /* Fraunces display cut — 144 opsz — gives a sharper, more
+       editorial headline than the default text cut. */
+    font-variation-settings: 'opsz' 144;
   }
 }
 
@@ -91,42 +111,57 @@
     @apply max-w-[1440px] mx-auto px-5 md:px-10 lg:px-16;
   }
 
-  /* Gradient text utility — applied via bg-clip on a span.
-     Order is strict: mint → violet → magenta (#91F2D7 → #8A04F0 → #D925A9). */
   .text-gradient {
-    background: linear-gradient(95deg, #91F2D7 0%, #8A04F0 50%, #D925A9 100%);
-    -webkit-background-clip: text;
-            background-clip: text;
-    -webkit-text-fill-color: transparent;
-            color: transparent;
+    color: #1F1F26;
   }
 
-  /* Primary CTA — sober gradient pill, spectrum order locked */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full text-paper font-medium text-sm tracking-wide transition-all duration-500 ease-smooth;
-    background: linear-gradient(95deg, #91F2D7 0%, #8A04F0 50%, #D925A9 100%);
-    background-size: 200% 100%;
-    background-position: 0% 50%;
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-lg bg-ink text-paper font-medium text-sm tracking-wide transition-colors duration-300 ease-smooth;
   }
   .btn-primary:hover {
-    background-position: 100% 50%;
+    @apply bg-graphite;
     transform: translateY(-1px);
   }
   .btn-primary:focus-visible {
-    outline: 2px solid #8A04F0;
+    outline: 2px solid #1F1F26;
     outline-offset: 3px;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-transparent text-ink border border-ink/20 font-medium text-sm tracking-wide transition-all duration-500 ease-smooth hover:bg-ink hover:text-paper hover:border-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-lg bg-transparent text-ink border border-ink/20 font-medium text-sm tracking-wide transition-colors duration-300 ease-smooth hover:bg-ink hover:text-paper hover:border-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
   }
 
   .btn-light {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-paper text-ink font-medium text-sm tracking-wide transition-all duration-500 ease-smooth hover:bg-subtle hover:shadow-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-lg bg-paper text-ink font-medium text-sm tracking-wide transition-colors duration-300 ease-smooth hover:bg-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
   }
 
   .btn-outline-light {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full border border-paper/30 text-paper font-medium text-sm tracking-wide transition-all duration-500 ease-smooth hover:bg-paper/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-paper focus-visible:ring-offset-2 focus-visible:ring-offset-ink;
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-lg border border-paper/50 text-paper font-medium text-sm tracking-wide transition-colors duration-300 ease-smooth hover:bg-paper hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-paper focus-visible:ring-offset-2 focus-visible:ring-offset-ink;
+  }
+
+  /* Tinted, brand-voice CTAs. Same shape as btn-primary but in the
+     tri-color voices so the page has chromatic punctuation. */
+  .btn-violet {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-lg bg-violet text-paper font-medium text-sm tracking-wide transition-all duration-300 ease-smooth hover:bg-violet-dark hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
+  }
+  .btn-mint {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-lg bg-mint-deep text-paper font-medium text-sm tracking-wide transition-all duration-300 ease-smooth hover:bg-mint-dark hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
+  }
+  .btn-magenta {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-lg bg-magenta text-paper font-medium text-sm tracking-wide transition-all duration-300 ease-smooth hover:bg-magenta-dark hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
+  }
+
+  /* Eyebrow accent — the small uppercase label above each headline.
+     The dot picks up the section's brand voice; default ink for sober sections. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 font-mono text-[11px] tracking-[0.22em] uppercase;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 1.75rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.6;
   }
 
   /* Marquee */
@@ -137,7 +172,7 @@
 
   /* Card */
   .card-soft {
-    @apply relative overflow-hidden rounded-2xl bg-paper border border-line transition-all duration-500 ease-smooth;
+    @apply relative overflow-hidden rounded-xl bg-paper border border-line transition-all duration-500 ease-smooth;
   }
   .card-soft:hover {
     border-color: rgba(0, 0, 0, 0.16);
@@ -145,19 +180,19 @@
   }
 
   .bento-tile {
-    @apply relative overflow-hidden rounded-3xl bg-paper border border-line transition-all duration-500 ease-smooth;
+    @apply relative overflow-hidden rounded-2xl bg-paper border border-line transition-all duration-500 ease-smooth;
   }
 
   .figure-frame {
-    @apply relative overflow-hidden rounded-2xl bg-muted;
+    @apply relative overflow-hidden rounded-xl bg-muted;
   }
 
   .input-base {
-    @apply w-full px-4 py-3.5 rounded-2xl border border-line bg-paper text-sm focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/15 transition-colors placeholder:text-steel/60;
+     @apply w-full px-4 py-3.5 rounded-lg border border-line bg-paper text-sm focus:outline-none focus:border-ink focus:ring-2 focus:ring-ink/10 transition-colors placeholder:text-steel/60;
   }
 
   .chip {
-    @apply inline-flex items-center gap-2 px-4 py-2 rounded-full bg-paper border border-line text-xs font-medium tracking-wide;
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-paper border border-line text-xs font-medium tracking-wide;
   }
 
   /* Gradient underline link — the underline IS the brand */
@@ -218,10 +253,6 @@
   .scrim-left {
     background: linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.08) 60%, transparent 100%);
   }
-  .scrim-violet {
-    background: linear-gradient(180deg, rgba(138, 4, 240, 0.0) 0%, rgba(106, 3, 189, 0.6) 100%);
-  }
-
   .no-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;

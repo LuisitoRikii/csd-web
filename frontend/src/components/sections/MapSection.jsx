@@ -1,100 +1,66 @@
-import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { MapPin, Navigation, Phone, Mail } from 'lucide-react'
+import { MapPin, Navigation, Phone, Mail, Clock } from 'lucide-react'
 import { BUSINESS } from '@/config'
 
 export const MapSection = () => {
   const { t } = useTranslation()
-  const phoneClean = BUSINESS.phone.replace(/[^+\d]/g, '')
+
+  const phoneCards = (BUSINESS.phones || [BUSINESS.phone]).map((ph) => ({
+    icon: Phone,
+    content: ph,
+    isLink: true,
+    href: `tel:${ph.replace(/[^+\d]/g, '')}`,
+  }))
 
   const cards = [
-    {
-      icon: MapPin,
-      content: BUSINESS.address,
-      isLink: false,
-    },
-    {
-      icon: Phone,
-      content: BUSINESS.phone,
-      isLink: true,
-      href: `tel:${phoneClean}`,
-    },
-    {
-      icon: Mail,
-      content: BUSINESS.email,
-      isLink: true,
-      href: `mailto:${BUSINESS.email}`,
-      break: true,
-    },
+    { icon: MapPin, content: BUSINESS.address, isLink: false },
+    ...phoneCards,
+    { icon: Mail, content: BUSINESS.email, isLink: true, href: `mailto:${BUSINESS.email}`, break: true },
+    { icon: Clock, content: BUSINESS.hours, isLink: false },
   ]
 
   return (
-    <section className="relative py-24 lg:py-32 bg-subtle">
+    <section className="relative py-16 lg:py-24 bg-canvas border-t border-line">
       <div className="container-x">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start mb-8">
           <div className="lg:col-span-2">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.9 }}
-              className="mt-4 font-serif text-display-md tracking-tight text-ink"
-            >
+            <h2 className="mt-4 font-serif text-display-md tracking-tight text-ink text-balance">
               {t('service_area.title')}
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="mt-4 text-charcoal/80 max-w-2xl"
-            >
+            </h2>
+            <p className="mt-4 text-steel max-w-2xl text-base lg:text-lg leading-relaxed">
               {t('service_area.subtitle')}
-            </motion.p>
+            </p>
           </div>
           <div className="space-y-3">
             {cards.map((card, idx) => {
               const Icon = card.icon
               const inner = (
-                <div className="flex items-start gap-3 p-4 rounded-2xl bg-paper border border-line hover:border-ink/30 transition-colors">
-                  <Icon size={18} className="mt-0.5 text-violet shrink-0" />
-                  <span className={`text-charcoal text-sm ${card.break ? 'break-all' : ''}`}>
+                <div className="flex items-start gap-3 p-4 rounded-lg bg-paper border border-line hover:border-ink/30 transition-colors">
+                  <Icon size={16} className="mt-0.5 text-ink shrink-0" />
+                  <span className={`text-ink text-sm ${card.break ? 'break-all' : ''}`}>
                     {card.content}
                   </span>
                 </div>
               )
               return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-40px' }}
-                  transition={{ delay: idx * 0.08, duration: 0.7 }}
-                >
+                <div key={idx}>
                   {card.isLink ? <a href={card.href}>{inner}</a> : inner}
-                </motion.div>
+                </div>
               )
             })}
             <a
               href="https://maps.google.com/?q=8215+NW+64th+Street+Medley+FL+33166"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-ink text-paper text-sm font-medium hover:bg-graphite transition-colors w-full"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-ink text-paper text-sm font-medium hover:bg-graphite transition-colors w-full"
             >
               <Navigation size={14} />
-              Get Directions
+              {t('service_area.directions_cta')}
             </a>
           </div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="relative aspect-[16/7] rounded-3xl overflow-hidden border border-line"
-        >
-          <div aria-hidden="true" className="absolute top-0 inset-x-0 h-1 z-10 bg-gradient-spectrum" />
+        <div className="relative aspect-[16/7] rounded-lg overflow-hidden border border-line">
           <iframe
             title="CSD Good Services Location"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3592.7!2d-80.325!3d25.825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b1234567890%3A0x0!2s8215%20NW%2064th%20St%2C%20Medley%2C%20FL%2033166!5e0!3m2!1sen!2sus"
@@ -105,7 +71,7 @@ export const MapSection = () => {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
-        </motion.div>
+        </div>
       </div>
     </section>
   )

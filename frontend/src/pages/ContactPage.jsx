@@ -115,7 +115,15 @@ export const ContactPage = () => {
           <aside className="lg:col-span-5 space-y-8">
             <div className="space-y-5">
               <ContactItem icon={MapPin} label={t('contact_page.field_address')} value={BUSINESS.address} />
-              <ContactItem icon={Phone} label={t('contact_page.field_phone')} value={BUSINESS.phone} href={`tel:${BUSINESS.phone}`} />
+              {(BUSINESS.phones || [BUSINESS.phone]).map((ph) => (
+                <ContactItem
+                  key={ph}
+                  icon={Phone}
+                  label={t('contact_page.field_phone')}
+                  value={ph}
+                  href={`tel:${ph.replace(/[^+\d]/g, '')}`}
+                />
+              ))}
               <ContactItem icon={Mail} label={t('contact_page.field_email')} value={BUSINESS.email} href={`mailto:${BUSINESS.email}`} />
               <ContactItem icon={Clock} label={t('contact_page.field_hours')} value={BUSINESS.hours} />
             </div>

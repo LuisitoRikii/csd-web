@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     SMTP_PORT: int = 587
     SMTP_USER: str = ""
     SMTP_PASSWORD: str = ""
-    EMAIL_FROM: str = "noreply@csdgoodservices.com"
+    EMAIL_FROM: str = "csdgoodservices@gmail.com"
 
     ADMIN_EMAIL: str = "admin@csdgoodservices.com"
     ADMIN_PASSWORD: str = "Admin123!"
@@ -37,10 +37,11 @@ class Settings(BaseSettings):
 
     BUSINESS_NAME: str = "CSD Good Services"
     BUSINESS_ADDRESS: str = "8215 NW 64th Street, Medley, FL 33166"
-    BUSINESS_PHONE: str = "+1 (305) 555-0123"
-    BUSINESS_EMAIL: str = "info@csdgoodservices.com"
-    BUSINESS_HOURS: str = "Mon-Sat: 8:00 AM - 6:00 PM"
-    WHATSAPP_NUMBER: str = "13055550123"
+    BUSINESS_PHONE: str = "+1 (786) 295-7057"
+    BUSINESS_PHONES: List[str] = ["+1 (786) 295-7057", "+1 (863) 488-6716"]
+    BUSINESS_EMAIL: str = "csdgoodservices@gmail.com"
+    BUSINESS_HOURS: str = "8:00 AM - 6:00 PM"
+    WHATSAPP_NUMBER: str = "17862957057"
 
     class Config:
         env_file = ".env"

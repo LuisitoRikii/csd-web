@@ -25,8 +25,8 @@ export const HomePage = () => {
 
   const description =
     lang === 'es'
-      ? 'Empresa de servicios del hogar en Miami: pintura, remodelación, limpieza y mantenimiento continuo. Un equipo para todo lo que tu casa necesita. Cotizaciones gratis en todo el sur de Florida.'
-      : 'Miami home services company for painting, remodeling, cleaning and ongoing home maintenance. One team for everything your home needs. Free estimates across South Florida.'
+      ? 'CSD Good Services LLC ofrece servicios profesionales de pintura, remodelación, limpieza y mantenimiento continuo de propiedades en el sur de Florida. Cotizaciones gratuitas.'
+      : 'CSD Good Services LLC provides professional painting, remodeling, cleaning and ongoing property maintenance across South Florida. Complimentary estimates.'
 
   return (
     <>

@@ -20,14 +20,15 @@ export const toStoredMediaUrl = (url) => {
 }
 
 export const WHATSAPP_NUMBER =
-  import.meta.env.VITE_WHATSAPP || '13055550123'
+  import.meta.env.VITE_WHATSAPP || '17862957057'
 
 export const BUSINESS = {
   name: 'CSD Good Services',
-  phone: '+1 (305) 555-0123',
-  email: 'info@csdgoodservices.com',
+  phone: '+1 (786) 295-7057',
+  phones: ['+1 (786) 295-7057', '+1 (863) 488-6716'],
+  email: 'csdgoodservices@gmail.com',
   address: '8215 NW 64th Street, Medley, FL 33166',
-  hours: 'Mon-Sat: 8:00 AM - 6:00 PM',
+  hours: '8:00 AM - 6:00 PM',
 }
 
 export const SOCIAL = {

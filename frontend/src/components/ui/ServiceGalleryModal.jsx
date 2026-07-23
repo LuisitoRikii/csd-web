@@ -158,7 +158,7 @@ export const ServiceGalleryModal = ({ service, open, onClose }) => {
                 type="button"
                 onClick={onClose}
                 aria-label={t('common.close', 'Close')}
-                className="shrink-0 w-10 h-10 rounded-full bg-subtle hover:bg-muted text-ink flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+                className="shrink-0 w-10 h-10 rounded-full bg-subtle hover:bg-muted text-ink flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
               >
                 <X size={18} aria-hidden="true" />
               </button>
@@ -185,7 +185,7 @@ export const ServiceGalleryModal = ({ service, open, onClose }) => {
                               setActiveImageIndex(0)
                             }}
                             aria-pressed={active}
-                            className={`group w-full text-left flex items-center gap-3 p-2.5 rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${
+                            className={`group w-full text-left flex items-center gap-3 p-2.5 rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${
                               active ? 'bg-muted' : 'hover:bg-subtle'
                             }`}
                           >
@@ -218,7 +218,7 @@ export const ServiceGalleryModal = ({ service, open, onClose }) => {
                             {active && (
                               <span
                                 aria-hidden="true"
-                                className="w-1 self-stretch rounded-full bg-gradient-spectrum"
+                                className="w-1 self-stretch rounded-sm bg-line"
                               />
                             )}
                           </button>
@@ -257,7 +257,7 @@ export const ServiceGalleryModal = ({ service, open, onClose }) => {
                             type="button"
                             onClick={goPrev}
                             aria-label={t('services.gallery_prev', 'Previous image')}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-paper/90 backdrop-blur text-ink flex items-center justify-center hover:bg-paper transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+                            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-paper/90 backdrop-blur text-ink flex items-center justify-center hover:bg-paper transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink"
                           >
                             <ChevronLeft size={18} aria-hidden="true" />
                           </button>
@@ -265,7 +265,7 @@ export const ServiceGalleryModal = ({ service, open, onClose }) => {
                             type="button"
                             onClick={goNext}
                             aria-label={t('services.gallery_next', 'Next image')}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-paper/90 backdrop-blur text-ink flex items-center justify-center hover:bg-paper transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet"
+                            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-paper/90 backdrop-blur text-ink flex items-center justify-center hover:bg-paper transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink"
                           >
                             <ChevronRight size={18} aria-hidden="true" />
                           </button>
@@ -292,7 +292,7 @@ export const ServiceGalleryModal = ({ service, open, onClose }) => {
                         )}
                         <Link
                           to={`/portfolio/${activeProject.slug}`}
-                          className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.16em] text-ink hover:text-violet transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-full px-3 py-1.5"
+                          className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.16em] text-ink hover:text-charcoal transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-full px-3 py-1.5"
                         >
                           {t('services.view_project', 'View project')}
                           <ExternalLink size={12} aria-hidden="true" />

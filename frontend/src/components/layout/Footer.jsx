@@ -20,7 +20,6 @@ import logo from '@/assets/logo.png'
 export const Footer = () => {
   const { t } = useTranslation()
   const { lang } = useLanguage()
-  const phoneClean = BUSINESS.phone.replace(/[^+\d]/g, '')
   const waLink = `https://wa.me/${WHATSAPP_NUMBER}`
 
   const { data: servicesData = [] } = useQuery({
@@ -28,7 +27,6 @@ export const Footer = () => {
     queryFn: () => serviceService.list({ active_only: true }),
   })
 
-  // Take up to 12 services for the footer grid (2 columns × 6 rows)
   const services = (servicesData || []).slice(0, 12).map((s) => ({
     id: s.id,
     slug: s.slug,
@@ -36,8 +34,8 @@ export const Footer = () => {
   }))
 
   const explore = [
-    { to: '/',         label: t('nav.home') },
-    { to: '/services', label: t('nav.services') },
+    { to: '/',          label: t('nav.home') },
+    { to: '/services',  label: t('nav.services') },
     { to: '/portfolio', label: t('nav.portfolio') },
     { to: '/about',     label: t('nav.about') },
     { to: '/blog',      label: t('nav.blog') },
@@ -52,105 +50,79 @@ export const Footer = () => {
   ]
 
   return (
-    <footer className="relative bg-ink text-paper/85">
-      {/* Tri-color top stripe — the brand's signature */}
-      <div aria-hidden="true" className="absolute top-0 inset-x-0 h-1 bg-gradient-spectrum" />
-
+    <footer className="relative bg-ink text-paper/85 border-t border-line">
       <div className="container-x py-16 lg:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* Brand block */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
           <div className="lg:col-span-4">
             <Link to="/" aria-label="CSD Good Services home">
               <img
                 src={logo}
                 alt="CSD Good Services"
-                className="h-28 w-auto rounded-md"
+                className="h-24 w-auto rounded-md"
               />
             </Link>
-            <p className="mt-7 text-xl lg:text-2xl font-serif leading-tight max-w-md text-paper">
+            <p className="mt-6 text-lg lg:text-xl font-serif leading-snug max-w-md text-paper">
               {t('footer.tagline')}
             </p>
 
-            <div className="mt-8 space-y-3 text-sm">
+            <div className="mt-6 space-y-2.5 text-sm">
               <div className="flex items-start gap-3 text-paper/70">
-                <MapPin size={16} className="mt-0.5 text-paper/50 shrink-0" aria-hidden="true" />
+                <MapPin size={14} className="mt-0.5 text-paper/50 shrink-0" aria-hidden="true" />
                 <span>{BUSINESS.address}</span>
               </div>
-              <a
-                href={`tel:${phoneClean}`}
-                className="flex items-center gap-3 text-paper/70 hover:text-paper transition-colors"
-              >
-                <Phone size={16} className="text-paper/50 shrink-0" aria-hidden="true" />
-                {BUSINESS.phone}
-              </a>
-              <a
-                href={`mailto:${BUSINESS.email}`}
-                className="flex items-center gap-3 text-paper/70 hover:text-paper transition-colors break-all"
-              >
-                <Mail size={16} className="text-paper/50 shrink-0" aria-hidden="true" />
+              {(BUSINESS.phones || [BUSINESS.phone]).map((ph) => (
+                <a
+                  key={ph}
+                  href={`tel:${ph.replace(/[^+\d]/g, '')}`}
+                  className="flex items-center gap-3 text-paper/70 hover:text-paper transition-colors"
+                >
+                  <Phone size={14} className="text-paper/50 shrink-0" aria-hidden="true" />
+                  {ph}
+                </a>
+              ))}
+              <a href={`mailto:${BUSINESS.email}`} className="flex items-center gap-3 text-paper/70 hover:text-paper transition-colors break-all">
+                <Mail size={14} className="text-paper/50 shrink-0" aria-hidden="true" />
                 {BUSINESS.email}
               </a>
-              <a
-                href={waLink}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-3 text-paper/70 hover:text-paper transition-colors"
-              >
+              <a href={waLink} target="_blank" rel="noreferrer" className="flex items-center gap-3 text-paper/70 hover:text-paper transition-colors">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-paper/50 shrink-0" aria-hidden="true">
                   <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
-                  <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" />
                 </svg>
                 WhatsApp
               </a>
               <div className="flex items-center gap-3 text-paper/70">
-                <Clock size={16} className="text-paper/50 shrink-0" aria-hidden="true" />
+                <Clock size={14} className="text-paper/50 shrink-0" aria-hidden="true" />
                 <span>{BUSINESS.hours}</span>
               </div>
             </div>
 
-            <div className="mt-8 flex items-center gap-3">
+            <div className="mt-6 flex items-center gap-2">
               {SOCIAL.instagram && (
-                <a
-                  href={SOCIAL.instagram}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Instagram"
-                  className="w-10 h-10 rounded-full border border-paper/15 flex items-center justify-center hover:bg-mint hover:text-ink hover:border-mint transition-all"
-                >
-                  <Instagram size={16} aria-hidden="true" />
+                <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" aria-label="Instagram"
+                  className="w-9 h-9 rounded-lg border border-paper/15 flex items-center justify-center hover:bg-paper hover:text-ink hover:border-paper transition-colors">
+                  <Instagram size={14} aria-hidden="true" />
                 </a>
               )}
               {SOCIAL.facebook && (
-                <a
-                  href={SOCIAL.facebook}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Facebook"
-                  className="w-10 h-10 rounded-full border border-paper/15 flex items-center justify-center hover:bg-violet hover:text-paper hover:border-violet transition-all"
-                >
-                  <Facebook size={16} aria-hidden="true" />
+                <a href={SOCIAL.facebook} target="_blank" rel="noreferrer" aria-label="Facebook"
+                  className="w-9 h-9 rounded-lg border border-paper/15 flex items-center justify-center hover:bg-paper hover:text-ink hover:border-paper transition-colors">
+                  <Facebook size={14} aria-hidden="true" />
                 </a>
               )}
               {SOCIAL.tiktok && (
-                <a
-                  href={SOCIAL.tiktok}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="TikTok"
-                  className="w-10 h-10 rounded-full border border-paper/15 flex items-center justify-center hover:bg-magenta hover:text-paper hover:border-magenta transition-all"
-                >
-                  <Music2 size={16} aria-hidden="true" />
+                <a href={SOCIAL.tiktok} target="_blank" rel="noreferrer" aria-label="TikTok"
+                  className="w-9 h-9 rounded-lg border border-paper/15 flex items-center justify-center hover:bg-paper hover:text-ink hover:border-paper transition-colors">
+                  <Music2 size={14} aria-hidden="true" />
                 </a>
               )}
             </div>
           </div>
 
-          {/* Explore */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs font-semibold uppercase tracking-[0.22em] text-paper/50 mb-5">
+            <h4 className="text-[11px] font-medium uppercase tracking-[0.22em] text-paper/50 mb-4">
               {t('footer.explore')}
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2 text-sm">
               {explore.map((l) => (
                 <li key={l.to}>
                   <Link to={l.to} className="text-paper/70 hover:text-paper transition-colors">
@@ -161,20 +133,15 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Services — from backend */}
           <div className="lg:col-span-4">
-            <h4 className="text-xs font-semibold uppercase tracking-[0.22em] text-paper/50 mb-5">
+            <h4 className="text-[11px] font-medium uppercase tracking-[0.22em] text-paper/50 mb-4">
               {t('footer.services')}
             </h4>
             {services.length > 0 ? (
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-2.5 gap-x-6 text-sm">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6 text-sm">
                 {services.map((s) => (
                   <li key={s.id}>
-                    <Link
-                      to={`/services`}
-                      state={{ openServiceSlug: s.slug }}
-                      className="text-paper/70 hover:text-paper transition-colors"
-                    >
+                    <Link to="/services" state={{ openServiceSlug: s.slug }} className="text-paper/70 hover:text-paper transition-colors">
                       {s.label}
                     </Link>
                   </li>
@@ -188,12 +155,11 @@ export const Footer = () => {
             )}
           </div>
 
-          {/* Service Area */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs font-semibold uppercase tracking-[0.22em] text-paper/50 mb-5">
+            <h4 className="text-[11px] font-medium uppercase tracking-[0.22em] text-paper/50 mb-4">
               {t('footer.service_area_label')}
             </h4>
-            <ul className="space-y-2 text-sm text-paper/70">
+            <ul className="space-y-1.5 text-sm text-paper/70">
               {cities.map((c) => (
                 <li key={c}>{c}</li>
               ))}
@@ -201,16 +167,12 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-paper/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="mt-12 pt-6 border-t border-paper/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <p className="text-xs text-paper/50">{t('footer.legal')}</p>
-          <div className="flex items-center gap-4 text-xs text-paper/60">
-            <Link to="/contact" className="hover:text-paper transition-colors">
-              {t('nav.contact')}
-            </Link>
+          <div className="flex items-center gap-3 text-xs text-paper/60">
+            <Link to="/contact" className="hover:text-paper transition-colors">{t('nav.contact')}</Link>
             <span className="text-paper/20">·</span>
-            <Link to="/quote" className="hover:text-paper transition-colors">
-              {t('nav.quote')}
-            </Link>
+            <Link to="/quote" className="hover:text-paper transition-colors">{t('nav.quote')}</Link>
           </div>
         </div>
       </div>

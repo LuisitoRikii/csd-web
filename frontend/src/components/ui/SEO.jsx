@@ -59,16 +59,35 @@ export const SEO = ({
   )
 }
 
-export const buildBusinessSchema = (lang, extras = {}) => ({
+export const buildBusinessSchema = (lang, extras = {}) => {
+  const phones = BUSINESS.phones || [BUSINESS.phone]
+  return {
   '@context': 'https://schema.org',
   '@type': 'GeneralContractor',
   '@id': `${BASE}/#business`,
   name: BUSINESS.name,
   url: BASE,
-  telephone: BUSINESS.phone,
+  telephone: phones[0],
   email: BUSINESS.email,
   image: DEFAULT_OG,
   priceRange: '$$',
+  // Schema.org best practice for multiple phone lines is `contactPoint`
+  // array, each entry a `ContactPoint`. Both numbers get indexed.
+  contactPoint: phones.map((telephone) => ({
+    '@type': 'ContactPoint',
+    telephone,
+    contactType: 'customer service',
+    areaServed: 'US',
+    availableLanguage: ['English', 'Spanish'],
+  })),
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      opens: '08:00',
+      closes: '18:00',
+    },
+  ],
   address: {
     '@type': 'PostalAddress',
     streetAddress: '8215 NW 64th Street',
@@ -82,21 +101,14 @@ export const buildBusinessSchema = (lang, extras = {}) => ({
     latitude: 25.8617,
     longitude: -80.3189,
   },
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '08:00',
-      closes: '18:00',
-    },
-  ],
   knowsLanguage: ['en', 'es'],
   description:
     lang === 'es'
       ? 'Pintura, remodelación, reparaciones, resina epóxica, murales personalizados y limpieza en Miami. Calidad y oficio desde 2014.'
       : 'Painting, remodeling, repairs, epoxy resin, custom murals and cleaning in Miami. Quality craftsmanship since 2014.',
   ...extras,
-})
+  }
+}
 
 export const buildFaqSchema = (faqs) => ({
   '@context': 'https://schema.org',

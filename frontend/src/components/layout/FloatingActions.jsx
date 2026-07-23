@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageCircle, X } from 'lucide-react'
-import { WHATSAPP_NUMBER } from '@/config'
+import { MessageCircle, Phone, X } from 'lucide-react'
+import { BUSINESS, WHATSAPP_NUMBER } from '@/config'
 
 // Using the mint accent (instead of WhatsApp green) to stay on-palette.
 // Mint #91F2D7 reads as a fresh teal-green and remains visually similar enough
 // to communicate the WhatsApp affordance while honoring the tri-color system.
-const WA_BG = '#91F2D7'
+const WA_BG = '#0A0A0F'
 
 export const FloatingActions = () => {
   const [open, setOpen] = useState(false)
@@ -20,20 +20,19 @@ export const FloatingActions = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.97 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-paper rounded-2xl shadow-lift w-72 border border-line overflow-hidden"
+            className="bg-paper rounded-2xl shadow-lift w-80 border border-line overflow-hidden"
           >
             <div className="px-5 pt-5 pb-3 flex items-start justify-between gap-3 border-b border-line/70">
               <div className="flex items-center gap-3">
                 <div
-                  className="w-10 h-10 rounded-full text-ink flex items-center justify-center text-sm font-semibold"
-                  style={{ background: WA_BG }}
-                >
+                  className="w-10 h-10 rounded-lg bg-ink text-paper flex items-center justify-center text-sm font-semibold"
+               >
                   CS
                 </div>
                 <div>
                   <p className="text-sm font-medium text-ink">CSD Good Services</p>
                   <p className="text-xs text-steel flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-mint animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-ink" />
                     Typically replies in minutes
                   </p>
                 </div>
@@ -54,12 +53,24 @@ export const FloatingActions = () => {
                 href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hello! I'd like to learn more about your services.`}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-4 flex items-center justify-center gap-2 w-full py-3 rounded-full text-ink text-sm font-semibold transition-all hover:shadow-glow-mint"
+                className="mt-4 flex items-center justify-center gap-2 w-full py-3 rounded-lg bg-ink text-paper text-sm font-semibold transition-colors hover:bg-graphite"
                 style={{ background: WA_BG }}
               >
                 <MessageCircle size={16} />
                 Start Chat on WhatsApp
               </a>
+              <div className="mt-3 flex flex-col gap-2">
+                {(BUSINESS.phones || [BUSINESS.phone]).map((ph) => (
+                  <a
+                    key={ph}
+                    href={`tel:${ph.replace(/[^+\d]/g, '')}`}
+                    className="flex items-center gap-2 text-xs text-steel hover:text-ink transition-colors"
+                  >
+                    <Phone size={12} />
+                    {ph}
+                  </a>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}
@@ -70,7 +81,7 @@ export const FloatingActions = () => {
         whileTap={{ scale: 0.92 }}
         whileHover={{ scale: 1.06 }}
         transition={{ type: 'spring', stiffness: 380, damping: 22 }}
-        className="relative w-14 h-14 rounded-full text-ink shadow-glow-mint flex items-center justify-center"
+        className="relative w-14 h-14 rounded-lg bg-ink text-paper shadow-soft flex items-center justify-center"
         style={{ background: WA_BG }}
         aria-label="WhatsApp"
       >

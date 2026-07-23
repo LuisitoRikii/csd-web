@@ -101,7 +101,7 @@ export const QuotePage = () => {
             animate={{ opacity: 1, y: 0 }}
             className="container-x max-w-2xl text-center"
           >
-            <div className="w-20 h-20 mx-auto rounded-full bg-violet/10 text-violet flex items-center justify-center mb-6">
+            <div className="w-20 h-20 mx-auto rounded-full bg-subtle text-ink border border-line flex items-center justify-center mb-6">
               <CheckCircle2 size={40} />
             </div>
             <h2 className="font-serif text-display-md tracking-tight mb-4">
@@ -143,10 +143,10 @@ export const QuotePage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="relative rounded-3xl bg-paper border border-line shadow-card overflow-hidden"
+            className="relative rounded-2xl bg-paper border border-line shadow-card overflow-hidden"
           >
             {/* Tri-color accent stripe at the top — the brand mark */}
-            <div aria-hidden="true" className="absolute top-0 inset-x-0 h-1 bg-gradient-spectrum" />
+            <div aria-hidden="true" className="absolute top-0 inset-x-0 h-1 bg-ink" />
 
             {/* Stepper */}
             <div className="px-8 pt-12 pb-8 border-b border-line">
@@ -159,11 +159,10 @@ export const QuotePage = () => {
                           step > s.id
                             ? 'bg-ink text-paper'
                             : step === s.id
-                              ? 'text-paper shadow-glow-violet'
+                              ? 'bg-ink text-paper'
                               : 'bg-muted text-steel'
                         }`}
-                        style={step === s.id ? { backgroundImage: 'linear-gradient(95deg, #91F2D7, #8A04F0, #D925A9)' } : undefined}
-                      >
+                       >
                         {step > s.id ? <CheckCircle2 size={16} /> : s.id}
                       </div>
                       <span
@@ -177,7 +176,7 @@ export const QuotePage = () => {
                     {i < STEPS.length - 1 && (
                       <div className="flex-1 h-px bg-line relative overflow-hidden">
                         <div
-                          className="absolute inset-y-0 left-0 bg-gradient-spectrum transition-all duration-500 ease-smooth"
+                          className="absolute inset-y-0 left-0 bg-ink transition-all duration-500 ease-smooth"
                           style={{ width: step > s.id ? '100%' : '0%' }}
                         />
                       </div>
@@ -289,8 +288,8 @@ export const QuotePage = () => {
                     </label>
                     <div
                       {...getRootProps()}
-                      className={`border-2 border-dashed rounded-3xl p-10 text-center cursor-pointer transition-all ${
-                        isDragActive ? 'border-violet bg-violet/5' : 'border-line bg-subtle hover:border-ink/40'
+                      className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all ${
+                        isDragActive ? 'border-ink bg-subtle' : 'border-line bg-subtle hover:border-ink/40'
                       }`}
                     >
                       <input {...getInputProps()} />
@@ -373,11 +372,11 @@ export const QuotePage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
-            className="mt-12 lg:mt-16 rounded-3xl bg-paper border border-line shadow-soft overflow-hidden"
+            className="mt-12 lg:mt-16 rounded-2xl bg-paper border border-line shadow-soft overflow-hidden"
           >
             <div className="grid grid-cols-1 lg:grid-cols-5 items-stretch">
               <div className="lg:col-span-3 p-8 lg:p-12">
-                <div className="inline-flex w-11 h-11 rounded-full bg-violet/10 text-violet items-center justify-center mb-5">
+                <div className="inline-flex w-11 h-11 rounded-full bg-subtle text-ink border border-line items-center justify-center mb-5">
                   <FileImage size={18} aria-hidden="true" />
                 </div>
                 <h3 className="font-serif text-2xl lg:text-3xl tracking-tight mb-3 text-ink">
@@ -389,7 +388,7 @@ export const QuotePage = () => {
                 <ul className="space-y-3 text-sm">
                   {[1, 2, 3, 4].map((n) => (
                     <li key={n} className="flex items-start gap-3">
-                      <CheckCircle2 size={16} className="text-violet shrink-0 mt-0.5" />
+                      <CheckCircle2 size={16} className="text-ink shrink-0 mt-0.5" />
                       <span className="text-charcoal">{t(`quote_page.why_feature_${n}`)}</span>
                     </li>
                   ))}
