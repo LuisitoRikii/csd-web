@@ -9,6 +9,7 @@ import 'swiper/css/pagination'
 import { BeforeAfterSlider } from '@/components/ui/BeforeAfterSlider'
 import { ArrowUpRight, ImageIcon } from 'lucide-react'
 import { projectService } from '@/services'
+import { FadeUp } from '@/components/ui/Reveal'
 
 const tagLabel = (tag, t) => {
   if (!tag) return ''
@@ -62,7 +63,7 @@ export const BeforeAfter = () => {
   return (
     <section className="relative py-16 lg:py-24 bg-ink text-paper border-t border-line">
       <div className="container-x">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-10 items-end">
+        <FadeUp className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-10 items-end">
           <div className="lg:col-span-7">
             <h2 className="mt-4 font-serif text-display-md tracking-tight text-paper text-balance">
               {t('beforeafter.title_l1')}
@@ -77,12 +78,12 @@ export const BeforeAfter = () => {
               {t('beforeafter.subtitle')}
             </p>
           </div>
-        </div>
+        </FadeUp>
 
         {pairs.length > 0 ? (
           <>
             {tags.length > 1 && (
-              <div className="mb-8 flex flex-wrap items-center gap-2">
+              <FadeUp delay={0.1} className="mb-8 flex flex-wrap items-center gap-2">
                 {tags.map((tag) => {
                   const isActive = active === tag.id
                   return (
@@ -99,9 +100,10 @@ export const BeforeAfter = () => {
                     </button>
                   )
                 })}
-              </div>
+              </FadeUp>
             )}
 
+            <FadeUp y={16} delay={0.15}>
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
               spaceBetween={24}
@@ -157,6 +159,7 @@ export const BeforeAfter = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
+            </FadeUp>
           </>
         ) : (
           <div className="rounded-lg border border-paper/10 px-8 py-14 text-center">

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, MessageCircle, Mail, Phone } from 'lucide-react'
 import { WHATSAPP_NUMBER, BUSINESS } from '@/config'
+import { FadeUp } from '@/components/ui/Reveal'
 
 export const CTA = () => {
   const { t } = useTranslation()
@@ -12,6 +13,7 @@ export const CTA = () => {
   return (
     <section className="relative py-16 lg:py-24 bg-canvas border-t border-line">
       <div className="container-x">
+        <FadeUp>
         <div className="relative rounded-lg bg-ink text-paper overflow-hidden">
           <div className="relative px-8 py-14 md:px-14 md:py-20">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -57,7 +59,9 @@ export const CTA = () => {
             </div>
           </div>
         </div>
+        </FadeUp>
 
+        <FadeUp delay={0.15}>
         <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 px-6 py-5 rounded-lg bg-paper border border-line">
           {(BUSINESS.phones || [BUSINESS.phone]).map((ph) => (
             <a
@@ -93,6 +97,7 @@ export const CTA = () => {
             </div>
           </a>
         </div>
+        </FadeUp>
       </div>
     </section>
   )

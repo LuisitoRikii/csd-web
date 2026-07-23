@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { MapPin, Navigation, Phone, Mail, Clock } from 'lucide-react'
 import { BUSINESS } from '@/config'
+import { FadeUp, FadeStagger, FadeStaggerItem } from '@/components/ui/Reveal'
 
 export const MapSection = () => {
   const { t } = useTranslation()
@@ -23,15 +24,15 @@ export const MapSection = () => {
     <section className="relative py-16 lg:py-24 bg-canvas border-t border-line">
       <div className="container-x">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start mb-8">
-          <div className="lg:col-span-2">
+          <FadeUp className="lg:col-span-2">
             <h2 className="mt-4 font-serif text-display-md tracking-tight text-ink text-balance">
               {t('service_area.title')}
             </h2>
             <p className="mt-4 text-steel max-w-2xl text-base lg:text-lg leading-relaxed">
               {t('service_area.subtitle')}
             </p>
-          </div>
-          <div className="space-y-3">
+          </FadeUp>
+          <FadeStagger className="space-y-3" staggerDelay={0.06}>
             {cards.map((card, idx) => {
               const Icon = card.icon
               const inner = (
@@ -43,9 +44,9 @@ export const MapSection = () => {
                 </div>
               )
               return (
-                <div key={idx}>
+                <FadeStaggerItem key={idx}>
                   {card.isLink ? <a href={card.href}>{inner}</a> : inner}
-                </div>
+                </FadeStaggerItem>
               )
             })}
             <a
@@ -57,9 +58,10 @@ export const MapSection = () => {
               <Navigation size={14} />
               {t('service_area.directions_cta')}
             </a>
-          </div>
+          </FadeStagger>
         </div>
 
+        <FadeUp y={16} delay={0.2}>
         <div className="relative aspect-[16/7] rounded-lg overflow-hidden border border-line">
           <iframe
             title="CSD Good Services Location"
@@ -72,6 +74,7 @@ export const MapSection = () => {
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
+        </FadeUp>
       </div>
     </section>
   )

@@ -11,6 +11,7 @@ import Lightbox from 'yet-another-react-lightbox'
 import 'yet-another-react-lightbox/styles.css'
 import { projectService, categoryService } from '@/services'
 import { useLanguage } from '@/contexts/LanguageContext'
+import { FadeUp, FadeStagger, FadeStaggerItem } from '@/components/ui/Reveal'
 
 const ProjectSlide = ({ project, lang, onImageClick }) => {
   const title = lang === 'es' ? project.title_es : project.title_en
@@ -90,7 +91,7 @@ export const Portfolio = () => {
     <section id="portfolio" className="relative py-16 lg:py-24 bg-canvas border-t border-line">
       <div className="container-x">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
-          <div className="max-w-2xl">
+          <FadeUp className="max-w-2xl">
             <h2 className="mt-4 font-serif text-display-md tracking-tight text-ink text-balance">
               {t('portfolio.title_l1')}
               <br />
@@ -99,15 +100,17 @@ export const Portfolio = () => {
             <p className="mt-4 text-steel max-w-lg text-base lg:text-lg leading-relaxed">
               {t('portfolio.subtitle')}
             </p>
-          </div>
+          </FadeUp>
 
-          <Link to="/portfolio" className="hidden lg:inline-flex items-center gap-2 text-sm text-ink link-underline">
-            {t('portfolio.view_all')}
-            <ArrowUpRight size={14} />
-          </Link>
+          <FadeUp delay={0.1}>
+            <Link to="/portfolio" className="hidden lg:inline-flex items-center gap-2 text-sm text-ink link-underline">
+              {t('portfolio.view_all')}
+              <ArrowUpRight size={14} />
+            </Link>
+          </FadeUp>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 mb-8">
+        <FadeUp delay={0.1} className="flex flex-wrap items-center gap-2 mb-8">
           <FilterPill
             active={activeFilter === 'all'}
             onClick={() => setActiveFilter('all')}
@@ -121,35 +124,37 @@ export const Portfolio = () => {
               label={lang === 'es' ? c.name_es : c.name_en}
             />
           ))}
-        </div>
+        </FadeUp>
 
         <div className="lg:hidden">
-          <Swiper
-            modules={[Pagination]}
-            spaceBetween={16}
-            slidesPerView={1.15}
-            centeredSlides
-            pagination={{ clickable: true }}
-            breakpoints={{
-              640: { slidesPerView: 2.15, spaceBetween: 20 },
-              1024: { slidesPerView: 3, spaceBetween: 20 },
-            }}
-            className="!pb-12"
-          >
-            {filtered.map((project) => (
-              <SwiperSlide key={project.id} className="!h-auto">
-                <ProjectSlide project={project} lang={lang} onImageClick={openLightbox} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <FadeUp y={16} delay={0.15}>
+            <Swiper
+              modules={[Pagination]}
+              spaceBetween={16}
+              slidesPerView={1.15}
+              centeredSlides
+              pagination={{ clickable: true }}
+              breakpoints={{
+                640: { slidesPerView: 2.15, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 20 },
+              }}
+              className="!pb-12"
+            >
+              {filtered.map((project) => (
+                <SwiperSlide key={project.id} className="!h-auto">
+                  <ProjectSlide project={project} lang={lang} onImageClick={openLightbox} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </FadeUp>
         </div>
 
-        <div className="hidden lg:block columns-3 xl:columns-4 gap-5">
+        <FadeStagger className="hidden lg:block columns-3 xl:columns-4 gap-5" staggerDelay={0.06}>
           {filtered.map((p, i) => {
             const heights = ['aspect-[3/4]', 'aspect-[4/5]', 'aspect-square', 'aspect-[5/7]']
             const aspect = heights[i % heights.length]
             return (
-              <div key={p.id} className="mb-5 break-inside-avoid">
+              <FadeStaggerItem key={p.id} y={16} className="mb-5 break-inside-avoid">
                 <div className={`relative ${aspect} group overflow-hidden rounded-lg cursor-pointer bg-muted`}>
                   <Link to={`/portfolio/${p.slug}`}>
                     <img
@@ -177,20 +182,20 @@ export const Portfolio = () => {
                     <Expand size={12} />
                   </button>
                 </div>
-              </div>
+              </FadeStaggerItem>
             )
           })}
-        </div>
+        </FadeStagger>
 
         {filtered.length === 0 && (
           <div className="text-center py-16 text-steel">{t('portfolio.no_projects')}</div>
         )}
 
-        <div className="mt-10 flex justify-center lg:hidden">
+        <FadeUp delay={0.15} className="mt-10 flex justify-center lg:hidden">
           <Link to="/portfolio" className="btn-primary">
             {t('portfolio.view_all')}
           </Link>
-        </div>
+        </FadeUp>
       </div>
 
       <Lightbox
