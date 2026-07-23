@@ -10,6 +10,7 @@ import { serviceService } from '@/services'
 import { useLanguage } from '@/contexts/LanguageContext'
 import { Images } from 'lucide-react'
 import { ServiceGalleryModal } from '@/components/ui/ServiceGalleryModal'
+import { FadeUp } from '@/components/ui/Reveal'
 
 export const Services = () => {
   const { t } = useTranslation()
@@ -25,7 +26,7 @@ export const Services = () => {
   return (
     <section id="services" className="relative py-16 lg:py-20 bg-canvas border-t border-line">
       <div className="container-x">
-        <div className="max-w-2xl mb-10">
+        <FadeUp className="max-w-2xl mb-10">
           <h2 className="mt-4 font-serif text-display-md tracking-tight text-ink text-balance">
             {t('services.title_l1')}
             <br />
@@ -34,10 +35,11 @@ export const Services = () => {
           <p className="mt-4 text-steel text-base lg:text-lg max-w-xl leading-relaxed">
             {t('services.subtitle')}
           </p>
-        </div>
+        </FadeUp>
       </div>
 
-      <div className="pl-5 md:pl-10 lg:pl-16">
+      <FadeUp y={16} delay={0.1}>
+        <div className="pl-5 md:pl-10 lg:pl-16">
         <Swiper
           modules={[Navigation, Autoplay]}
           spaceBetween={28}
@@ -132,13 +134,16 @@ export const Services = () => {
             )
           })}
         </Swiper>
-      </div>
+        </div>
+      </FadeUp>
 
-      <div className="container-x mt-10 flex justify-center">
-        <Link to="/services" className="btn-primary">
-          {t('services.view_all')}
-        </Link>
-      </div>
+      <FadeUp delay={0.15}>
+        <div className="container-x mt-10 flex justify-center">
+          <Link to="/services" className="btn-primary">
+            {t('services.view_all')}
+          </Link>
+        </div>
+      </FadeUp>
 
       <ServiceGalleryModal
         service={activeService}

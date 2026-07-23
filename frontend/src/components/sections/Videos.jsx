@@ -9,6 +9,7 @@ import 'swiper/css/pagination'
 import { Play, Pause, Video as VideoIcon } from 'lucide-react'
 import { projectService } from '@/services'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { FadeUp, FadeStagger, FadeStaggerItem } from '@/components/ui/Reveal'
 
 const VideoCard = ({ video, isEs }) => {
   const wrapRef = useRef(null)
@@ -127,7 +128,7 @@ export const Videos = () => {
   return (
     <section id="videos" className="relative py-16 lg:py-24 bg-canvas border-t border-line">
       <div className="container-x">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-10 items-end">
+        <FadeUp className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-10 items-end">
           <div className="lg:col-span-7">
 
             <h2 className="mt-4 font-serif text-display-md tracking-tight text-ink text-balance">
@@ -141,11 +142,11 @@ export const Videos = () => {
               {t('videos.subtitle')}
             </p>
           </div>
-        </div>
+        </FadeUp>
 
         {list.length > 0 ? (
           <>
-            <div className="md:hidden">
+            <FadeUp y={16} delay={0.1} className="md:hidden">
               <Swiper
                 modules={[Pagination]}
                 spaceBetween={16}
@@ -160,13 +161,15 @@ export const Videos = () => {
                   </SwiperSlide>
                 ))}
               </Swiper>
-            </div>
+            </FadeUp>
 
-            <div className="hidden md:grid grid-cols-3 gap-5">
+            <FadeStagger className="hidden md:grid grid-cols-3 gap-5" staggerDelay={0.1}>
               {list.map((video) => (
-                <VideoCard key={video.id || video.src} video={video} isEs={isEs} />
+                <FadeStaggerItem key={video.id || video.src}>
+                  <VideoCard video={video} isEs={isEs} />
+                </FadeStaggerItem>
               ))}
-            </div>
+            </FadeStagger>
           </>
         ) : (
           <div className="rounded-lg border border-line bg-paper px-8 py-14 text-center">
