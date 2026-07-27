@@ -62,6 +62,15 @@ export function useSiteSettings() {
       items: parse(get('home_marquee_items'), []),
     },
 
+    promise: {
+      leftImages: parse(get('home_promise_left_images'), [])
+        .map((url) => resolveMediaUrl(url))
+        .filter(Boolean),
+      rightImages: parse(get('home_promise_right_images'), [])
+        .map((url) => resolveMediaUrl(url))
+        .filter(Boolean),
+    },
+
     maps: {
       embed: get('google_maps_embed', ''),
     },
