@@ -73,13 +73,11 @@ export default {
         info: '#2563EB',
       },
       fontFamily: {
-        sans: ['"Work Sans"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        // Fallback chain ends in `serif` (system default) instead of Georgia.
-        // Georgia is denser and chunkier than Fraunces — when the web font
-        // swap in late (or fails to load), Georgia makes every headline look
-        // noticeably off. The OS default serif is closer in personality.
-        display: ['Fraunces', 'ui-serif', 'serif'],
-        serif: ['Fraunces', 'ui-serif', 'serif'],
+        sans: ['"Inter"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        // Profesional y corporativo: DM Sans para display (moderno, limpio, corporativo)
+        // fallback a sans-serif del sistema para consistencia.
+        display: ['"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {

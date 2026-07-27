@@ -47,11 +47,7 @@ export const Hero = () => {
       ref={ref}
       className="relative h-[85vh] min-h-[680px] w-full overflow-hidden bg-ink"
     >
-<<<<<<< HEAD
-      {/* Background media */}
-=======
       {/* Background media — overlay simple y uniforme, sin grano ni recorte curvo */}
->>>>>>> 93d575cdefd76bb0881b14f7f01c05c53c442eb1
       <motion.div className="absolute inset-0 z-0" style={{ y }}>
         {videoUrl && !videoError ? (
           <video
