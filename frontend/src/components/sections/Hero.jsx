@@ -45,9 +45,13 @@ export const Hero = () => {
   return (
     <section
       ref={ref}
-      className="relative h-[78vh] min-h-[600px] w-full overflow-hidden bg-ink"
+      className="relative h-[85vh] min-h-[680px] w-full overflow-hidden bg-ink"
     >
+<<<<<<< HEAD
+      {/* Background media */}
+=======
       {/* Background media — overlay simple y uniforme, sin grano ni recorte curvo */}
+>>>>>>> 93d575cdefd76bb0881b14f7f01c05c53c442eb1
       <motion.div className="absolute inset-0 z-0" style={{ y }}>
         {videoUrl && !videoError ? (
           <video
@@ -70,10 +74,9 @@ export const Hero = () => {
             className="w-full h-full object-cover"
           />
         )}
-        <div className="absolute inset-0 bg-ink/55" />
-        {/* Subtle tri-color warmth — keeps the overlay from reading as flat black. */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-mint/15 via-transparent to-magenta/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
+        {/* Overlay más liviano: menos wash general + gradiente inferior más suave */}
+        <div className="absolute inset-0 bg-white/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
       </motion.div>
 
       {/* Content */}
