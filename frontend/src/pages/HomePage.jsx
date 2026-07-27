@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { SEO, buildBusinessSchema } from '@/components/ui/SEO'
 import { Hero }           from '@/components/sections/Hero'
+import { PromiseBand }    from '@/components/sections/PromiseBand'
 import { Marquee }        from '@/components/sections/Marquee'
 import { About }          from '@/components/sections/About'
 import { Services }       from '@/components/sections/Services'
@@ -38,6 +39,7 @@ export const HomePage = () => {
       />
 
       <Hero />
+      <PromiseBand />
       <About />
       <Services />
       <BeforeAfter />

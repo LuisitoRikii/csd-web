@@ -12,6 +12,30 @@ const parseList = (value) => {
   }
 }
 
+export const PromiseImagesEditor = ({ value, onChange, onUploadingChange, disabled = false }) => {
+  const items = parseList(value)
+  const [uploadsInProgress, setUploadsInProgress] = useState(0)
+  const isUploading = uploadsInProgress > 0
+  const handleUploadingChange = (active) => {
+    setUploadsInProgress((current) => Math.max(0, current + (active ? 1 : -1)))
+    onUploadingChange?.(active)
+  }
+
+  return (
+    <fieldset disabled={disabled || isUploading} aria-busy={isUploading} className="disabled:opacity-75">
+      <ImageUploader
+        value={items}
+        onChange={(urls) => onChange(JSON.stringify(urls))}
+        multiple
+        maxFiles={12}
+        folder="settings/promise"
+        disabled={disabled || isUploading}
+        onUploadingChange={handleUploadingChange}
+      />
+    </fieldset>
+  )
+}
+
 const Field = ({ label, children }) => (
   <label className="block">
     <span className="block text-xs text-steel mb-1.5">{label}</span>

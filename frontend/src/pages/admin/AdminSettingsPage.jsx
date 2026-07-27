@@ -7,7 +7,7 @@ import { settingsService } from '@/services'
 import { AdminShell } from '@/components/admin/AdminShell'
 import { ImageUploader } from '@/components/admin/ImageUploader'
 import { MediaUploader } from '@/components/admin/MediaUploader'
-import { BeforeAfterEditor, HomeVideosEditor } from '@/components/admin/MediaSettingsEditors'
+import { BeforeAfterEditor, HomeVideosEditor, PromiseImagesEditor } from '@/components/admin/MediaSettingsEditors'
 
 const GROUP_LABELS = {
   general: 'General',
@@ -59,6 +59,10 @@ const SettingControl = ({ setting, value, onChange, onUploadingChange, disabled 
 
   if (setting.key === 'home_videos_list') {
     return <HomeVideosEditor value={value} onChange={onChange} disabled={disabled} onUploadingChange={onUploadingChange} />
+  }
+
+  if (setting.key === 'home_promise_left_images' || setting.key === 'home_promise_right_images') {
+    return <PromiseImagesEditor value={value} onChange={onChange} disabled={disabled} onUploadingChange={onUploadingChange} />
   }
 
   if (setting.key === 'home_before_after_pairs') {

@@ -63,6 +63,15 @@
       { "num": "04", "text": "Today, one team coordinates everything your home needs." }
     ]
   },
+  "promise": {
+    "brand_name": "CSD Good Services",
+    "brand_subtitle": "Miami · Since 2014",
+    "title": "Your project, on time.",
+    "description": "From the first call to the final walkthrough, our experienced crews deliver on-time, on-spec, on-budget service — coordinated by one team across Miami-Dade and Broward.",
+    "cta": "Ask us about our process",
+    "image_alt_left": "CSD crew working on a residential project",
+    "image_alt_right": "Completed project by CSD Good Services"
+  },
   "services": {
     "eyebrow": "What we offer",
     "title_l1": "Services that keep",

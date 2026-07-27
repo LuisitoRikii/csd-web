@@ -174,6 +174,18 @@ VIDEOS_LIST = [
     },
 ]
 
+PROMISE_LEFT_IMAGES = [
+    "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1200&auto=format&fit=crop&q=85",
+    "https://images.unsplash.com/photo-1561409037-c7be81613c1f?w=1200&auto=format&fit=crop&q=85",
+    "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&auto=format&fit=crop&q=85",
+]
+
+PROMISE_RIGHT_IMAGES = [
+    "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&auto=format&fit=crop&q=85",
+    "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&auto=format&fit=crop&q=85",
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop&q=85",
+]
+
 HOME_ABOUT_QUOTE_EN = '"One team for everything your home needs. Painting, remodeling, cleaning and maintenance — coordinated, reliable, easy."'
 HOME_ABOUT_QUOTE_ES = '"Un equipo para todo lo que tu hogar necesita. Pintura, remodelación, limpieza y mantenimiento — coordinado, confiable y fácil."'
 
@@ -1116,6 +1128,8 @@ def _seed_settings(db: Session):
         {"key": "home_process_steps", "value": json.dumps(PROCESS_STEPS), "group": "media", "label_en": "Process Steps (JSON array)", "label_es": "Pasos del Proceso (JSON)"},
         {"key": "home_before_after_pairs", "value": json.dumps(BEFORE_AFTER_PAIRS), "group": "media", "label_en": "Before/After Pairs (JSON array)", "label_es": "Pares Antes/Después (JSON)"},
         {"key": "home_videos_list", "value": json.dumps(VIDEOS_LIST), "group": "media", "label_en": "Videos List (JSON array)", "label_es": "Lista de Videos (JSON)"},
+        {"key": "home_promise_left_images", "value": json.dumps(PROMISE_LEFT_IMAGES), "group": "media", "label_en": "Promise Band — Left Side Images (JSON array)", "label_es": "Promise Band — Imágenes Izquierdas (JSON)"},
+        {"key": "home_promise_right_images", "value": json.dumps(PROMISE_RIGHT_IMAGES), "group": "media", "label_en": "Promise Band — Right Side Images (JSON array)", "label_es": "Promise Band — Imágenes Derechas (JSON)"},
         {"key": "home_about_quote_en", "value": HOME_ABOUT_QUOTE_EN, "group": "media", "label_en": "About Editorial Quote (EN)", "label_es": "Cita Editorial About (EN)"},
         {"key": "home_about_quote_es", "value": HOME_ABOUT_QUOTE_ES, "group": "media", "label_en": "About Editorial Quote (ES)", "label_es": "Cita Editorial About (ES)"},
         {"key": "home_about_side_note_en", "value": HOME_ABOUT_SIDE_NOTE_EN, "group": "media", "label_en": "About Side Note (EN)", "label_es": "Nota lateral About (EN)"},

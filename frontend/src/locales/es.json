@@ -63,6 +63,15 @@
       { "num": "04", "text": "Hoy, un único equipo coordina todo lo que su hogar necesita." }
     ]
   },
+  "promise": {
+    "brand_name": "CSD Good Services",
+    "brand_subtitle": "Miami · Desde 2014",
+    "title": "Su proyecto, a tiempo.",
+    "description": "Desde la primera llamada hasta la entrega final, nuestras cuadrillas experimentadas ofrecen un servicio puntual, conforme al alcance y dentro del presupuesto — coordinado por un único equipo en Miami-Dade y Broward.",
+    "cta": "Conozca nuestro proceso",
+    "image_alt_left": "Cuadrilla de CSD trabajando en un proyecto residencial",
+    "image_alt_right": "Proyecto finalizado por CSD Good Services"
+  },
   "services": {
     "eyebrow": "Servicios ofrecidos",
     "title_l1": "Servicios que mantienen",
