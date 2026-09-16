@@ -191,13 +191,13 @@ HOME_ABOUT_QUOTE_ES = '"Un equipo para todo lo que tu hogar necesita. Pintura, r
 
 HOME_ABOUT_SIDE_NOTE_EN = (
     "Today we offer painting, remodeling, deep cleaning and ongoing home maintenance — "
-    "for homeowners, property managers and businesses across Miami-Dade and Broward. "
+    "for homeowners, property managers and businesses across Miami. "
     "One team, one schedule, one number to call."
 )
 
 HOME_ABOUT_SIDE_NOTE_ES = (
     "Hoy ofrecemos pintura, remodelación, limpieza profunda y mantenimiento continuo del hogar — "
-    "para propietarios, administradores de propiedades y negocios en Miami-Dade y Broward. "
+    "para propietarios, administradores de propiedades y negocios en Miami. "
     "Un equipo, un cronograma, un número para llamar."
 )
 
@@ -1102,7 +1102,7 @@ def _seed_settings(db: Session):
         {"key": "hero_subtitle_en", "value": "Painting · Cleaning · Remodeling · Maintenance · Miami", "group": "general", "label_en": "Hero Subtitle (EN)", "label_es": "Subtítulo Hero (EN)"},
         {"key": "hero_subtitle_es", "value": "Pintura · Limpieza · Remodelación · Mantenimiento · Miami", "group": "general", "label_en": "Hero Subtitle (ES)", "label_es": "Subtítulo Hero (ES)"},
         {"key": "contact_phone", "value": "+1 (305) 555-0123", "group": "contact", "label_en": "Phone", "label_es": "Teléfono"},
-        {"key": "contact_email", "value": "info@csdgoodservices.com", "group": "contact", "label_en": "Email", "label_es": "Correo"},
+        {"key": "contact_email", "value": "admin@csdgoodservices.com", "group": "contact", "label_en": "Email", "label_es": "Correo"},
         {"key": "contact_whatsapp", "value": "13055550123", "group": "contact", "label_en": "WhatsApp", "label_es": "WhatsApp"},
         {"key": "contact_address", "value": "8215 NW 64th Street, Medley, FL 33166", "group": "contact", "label_en": "Address", "label_es": "Dirección"},
         {"key": "contact_hours_en", "value": "Mon-Sat: 8:00 AM - 6:00 PM", "group": "contact", "label_en": "Hours (EN)", "label_es": "Horario (EN)"},

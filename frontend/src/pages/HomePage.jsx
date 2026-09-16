@@ -46,10 +46,11 @@ export const HomePage = () => {
       <Portfolio />
       <Videos />
       {/*<WhyUs />*/}
-      <Process />
+      {/*<Process />*/}
+      <CTA />
       <Testimonials />
       <MapSection />
-      <CTA />
+      
       <FloatingActions />
     </>
   )

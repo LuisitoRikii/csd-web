@@ -26,7 +26,7 @@ export const BUSINESS = {
   name: 'CSD Good Services',
   phone: '+1 (786) 295-7057',
   phones: ['+1 (786) 295-7057', '+1 (863) 488-6716'],
-  email: 'csdgoodservices@gmail.com',
+  email: 'admin@csdgoodservices.com',
   address: '8215 NW 64th Street, Medley, FL 33166',
   hours: '8:00 AM - 6:00 PM',
 }

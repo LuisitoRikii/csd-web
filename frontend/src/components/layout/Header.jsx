@@ -87,7 +87,7 @@ export const Header = () => {
 
           <Link
             to="/quote"
-            className="inline-flex items-center rounded-full bg-ruby hover:bg-ruby-dark text-paper text-sm font-bold uppercase tracking-wide px-7 py-3.5 shadow-glow-vibe active:scale-[0.98] transition"
+            className="inline-flex items-center rounded-full bg-ruby hover:bg-ruby-dark text-paper text-xs md:text-sm font-bold uppercase tracking-wide px-4 py-2 md:px-7 md:py-3.5 shadow-glow-vibe active:scale-[0.98] transition"
           >
             {t('nav.quote')}
           </Link>

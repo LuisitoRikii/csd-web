@@ -43,10 +43,10 @@ export const Footer = () => {
   ]
 
   const cities = [
-    'Miami', 'Doral', 'Hialeah', 'Miami Lakes', 'Pembroke Pines',
-    'Aventura', 'Brickell', 'Pinecrest', 'Kendall', 'Homestead',
-    'Coral Gables', 'Coconut Grove', 'Key Biscayne', 'Miami Beach',
-    'Fort Lauderdale', 'Hollywood',
+    'Miami-Dade County (Primary Service Area)',
+    'Broward County',
+    'Palm Beach County',
+    'Serving all of Florida',
   ]
 
   return (

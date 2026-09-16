@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { settingsService } from '@/services'
 import { resolveMediaUrl } from '@/config'
@@ -15,7 +16,8 @@ export function useSiteSettings() {
   const { data, isLoading } = useQuery({
     queryKey: ['settings-public'],
     queryFn: () => settingsService.public(),
-    staleTime: 1000 * 60 * 5,
+    staleTime: 0,
+    refetchOnMount: 'always',
   })
 
   const get = (key, fallback = null) => (data && key in data ? data[key] : fallback)
@@ -62,14 +64,14 @@ export function useSiteSettings() {
       items: parse(get('home_marquee_items'), []),
     },
 
-    promise: {
+    promise: useMemo(() => ({
       leftImages: parse(get('home_promise_left_images'), [])
         .map((url) => resolveMediaUrl(url))
         .filter(Boolean),
       rightImages: parse(get('home_promise_right_images'), [])
         .map((url) => resolveMediaUrl(url))
         .filter(Boolean),
-    },
+    }), [data]),
 
     maps: {
       embed: get('google_maps_embed', ''),

@@ -121,60 +121,6 @@ export const AboutPage = () => {
           </div>
         </div>
       </section>
-
-      {/* Team */}
-      <section className="py-20 lg:py-32">
-        <div className="container-x">
-          <div className="max-w-2xl mb-16">
-            <h2 className="font-serif text-display-md tracking-tight">
-              {t('about.team_heading')}
-            </h2>
-            <p className="mt-4 text-charcoal/80 max-w-lg">{t('about.team_subtitle')}</p>
-          </div>
-<div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-            {team.length === 0 ? (
-              teamImage && (
-                <div className="col-span-2 lg:col-span-4 aspect-[4/5] max-w-sm mx-auto rounded-3xl overflow-hidden bg-subtle">
-                  <img
-                    src={teamImage}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )
-            ) : (
-              team.map((member) => (
-                <motion.div
-                  key={member.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.7 }}
-                  className="group"
-                >
-                  <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-subtle mb-4">
-                    {member.photo_url ? (
-                      <img
-                        src={member.photo_url}
-                        alt={member.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-steel text-sm">—</div>
-                    )}
-                  </div>
-                  <p className="text-sm font-medium text-ink">{member.name}</p>
-                  <p className="text-xs text-steel uppercase tracking-[0.12em] mt-1">
-                    {lang === 'es' ? member.role_es || member.role_en : member.role_en}
-                  </p>
-                </motion.div>
-              ))
-            )}
-          </div>
-        </div>
-      </section>
-
       <CTA />
     </>
   )

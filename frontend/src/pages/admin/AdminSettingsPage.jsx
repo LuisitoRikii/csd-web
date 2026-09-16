@@ -111,6 +111,7 @@ export const AdminSettingsPage = () => {
       })))
       setIsDirty(false)
       qc.invalidateQueries(['admin-settings'])
+      qc.invalidateQueries(['settings-public'])
       toast.success('Settings saved')
     },
   })
